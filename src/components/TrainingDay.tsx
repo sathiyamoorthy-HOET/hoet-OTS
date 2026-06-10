@@ -441,8 +441,24 @@ function AdTaskTypes() {
             <div className="mt-3">
               <p className="font-label text-muted-foreground">Sample videos</p>
               <div className="mt-2 flex flex-wrap gap-3">
-                {t.videos.map((id, i) => (
-                  <RefVideo key={id} id={id} vertical title={`Sample ${i + 1}`} />
+                {t.videos.map((v, i) => (
+                  <RefVideo key={v.id} id={v.id} vertical title={v.label ?? `Sample ${i + 1}`} />
+                ))}
+              </div>
+            </div>
+          )}
+          {t.comparisons && (
+            <div className="mt-3">
+              <p className="font-label text-muted-foreground">Before / after samples</p>
+              <div className="mt-2 space-y-4">
+                {t.comparisons.map((c) => (
+                  <div key={c.label}>
+                    <p className="text-sm font-medium text-foreground">{c.label}</p>
+                    <div className="mt-1 flex flex-wrap gap-3">
+                      <RefVideo id={c.before} vertical title={`${c.label} — Before`} />
+                      <RefVideo id={c.after} vertical title={`${c.label} — After`} />
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>

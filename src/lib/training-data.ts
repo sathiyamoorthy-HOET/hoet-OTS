@@ -264,13 +264,17 @@ export const COMM_TOOLS: Tool[] = [
 //  - note: a highlighted callout (e.g. the Outro/CTA update rule)
 //  - workflow: a step pipeline shown as an arrow chain; a step that is an array
 //    of strings renders its items as alternatives (an "or" branch)
-//  - videos: YouTube Shorts IDs shown as sample embeds
+//  - videos: sample YouTube Shorts shown as embeds; each may carry a label
+//  - comparisons: before/after Shorts pairs shown side by side
+export type SampleVideo = { id: string; label?: string };
+export type VideoComparison = { label: string; before: string; after: string };
 export type AdTaskType = {
   name: string;
   desc: string;
   note?: string;
   workflow?: (string | string[])[];
-  videos?: string[];
+  videos?: SampleVideo[];
+  comparisons?: VideoComparison[];
 };
 
 export const AD_TASK_TYPES: AdTaskType[] = [
@@ -278,21 +282,33 @@ export const AD_TASK_TYPES: AdTaskType[] = [
     name: "New ads (raw / HeyGen)",
     desc: "Fresh ads cut from raw shoot footage, or built with HeyGen AI avatars when there's no shoot.",
     workflow: ["Script", ["Shoot — raw footage", "AI avatar — HeyGen + ElevenLabs"], "Editing", "Final delivery"],
+    videos: [
+      { id: "u4vnzLw9rU0", label: "AI avatar — HeyGen generated" },
+      { id: "YYIVW9VGUeg", label: "Raw footage" },
+    ],
   },
   {
     name: "Rehash",
     desc: "A re-edit of an existing ad — restructured or refreshed from the same assets to extend its life.",
     note: "Always update the outro to the new version of the Outro / CTA — never carry over the old endscreen from the source ad.",
+    comparisons: [
+      { label: "Sample 1", before: "NZGlDSI-FOw", after: "XY03n55moSU" },
+      { label: "Sample 2", before: "LyRH_wBdCGU", after: "YqRe79SA9fc" },
+    ],
   },
   {
     name: "Motion graphic",
     desc: "An ad built primarily from motion graphics and animated text rather than footage.",
-    videos: ["4gYP-z5zZQA", "KRqfMNpLW2Y", "Db0hSMXC4Fg"],
+    videos: [{ id: "4gYP-z5zZQA" }, { id: "KRqfMNpLW2Y" }, { id: "Db0hSMXC4Fg" }],
   },
   {
     name: "Hook change",
     desc: "Swapping only the opening hook of an existing ad to test new openings while keeping the body.",
     note: "Even when only the hook changes, update the outro to the new version of the Outro / CTA — never leave the old endscreen on the ad.",
+    comparisons: [
+      { label: "Sample 1", before: "Nb-QUxvcswQ", after: "ZJYcg2Vw4y0" },
+      { label: "Sample 2", before: "EEZPyE97-7s", after: "Eh9e9J27MlI" },
+    ],
   },
 ];
 
