@@ -450,15 +450,12 @@ function AdTaskTypes() {
           {t.comparisons && (
             <div className="mt-3">
               <p className="font-label text-muted-foreground">Before / after samples</p>
-              <div className="mt-2 space-y-4">
-                {t.comparisons.map((c) => (
-                  <div key={c.label}>
-                    <p className="text-sm font-medium text-foreground">{c.label}</p>
-                    <div className="mt-1 grid grid-cols-2 gap-3">
-                      <RefVideo id={c.before} vertical title={`${c.label} — Before`} />
-                      <RefVideo id={c.after} vertical title={`${c.label} — After`} />
-                    </div>
-                  </div>
+              <div className="mt-2 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {t.comparisons.flatMap((c) => [
+                  { id: c.before, title: `${c.label} — Before` },
+                  { id: c.after, title: `${c.label} — After` },
+                ]).map((v) => (
+                  <RefVideo key={v.id} id={v.id} vertical title={v.title} />
                 ))}
               </div>
             </div>
@@ -534,42 +531,63 @@ function RefVideo({ id, vertical, title }: { id: string; vertical?: boolean; tit
   );
 }
 
+function WorkflowDiagram({ phases }: { phases: { phase: string }[] }) {
+  return (
+    <div className="rounded-lg border border-white/10 bg-background/40 p-3">
+      <p className="font-label mb-2 text-center text-muted-foreground">Flow</p>
+      <div className="flex flex-col items-center">
+        {phases.map((p, i) => (
+          <div key={p.phase} className="flex w-full flex-col items-center">
+            <div className="w-full rounded-md border border-sky-400/30 bg-sky-400/10 px-3 py-1.5 text-center text-xs font-medium text-sky-100">{p.phase}</div>
+            {i < phases.length - 1 && <span className="my-0.5 text-sm text-muted-foreground" aria-hidden>↓</span>}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function EditingPipeline() {
   return (
     <div className="mt-3 space-y-5">
       <p className="text-sm text-muted-foreground">Every video runs through one of three workflows by content type. Each goes from assignment through production, review and revision to final delivery.</p>
       {EDITING_WORKFLOWS.map((w) => (
         <div key={w.num} className="rounded-lg border border-white/10 bg-card p-5">
-          <div className="flex items-baseline gap-2">
-            <span className="font-label text-sky-300">{w.num}</span>
-            <h4 className="text-base font-semibold text-foreground">{w.title}</h4>
-          </div>
-          {w.subtitle && <p className="mt-0.5 text-xs italic text-muted-foreground">{w.subtitle}</p>}
-          {w.note && (
-            <p className="mt-2 rounded-md border border-amber-400/25 bg-amber-400/5 px-3 py-1.5 text-xs text-amber-300">
-              <span className="font-medium">Important:</span> {w.note}
-            </p>
-          )}
-          <div className="mt-3 space-y-3">
-            {w.phases.map((p) => (
-              <div key={p.phase} className="border-l-2 border-white/10 pl-3">
-                <div className="text-sm font-medium text-foreground">{p.phase}</div>
-                <ul className="mt-1 space-y-1 text-sm text-muted-foreground">
-                  {p.items.map((it, idx) =>
-                    typeof it === "string" ? (
-                      <li key={idx}>{it}</li>
-                    ) : (
-                      <li key={idx}>
-                        {it.text}
-                        <ul className="mt-1 ml-4 list-disc space-y-0.5 marker:text-white/30">
-                          {it.sub.map((s, j) => <li key={j}>{s}</li>)}
-                        </ul>
-                      </li>
-                    )
-                  )}
-                </ul>
+          <div className="grid gap-5 lg:grid-cols-[1fr_200px] lg:items-start">
+            <div>
+              <div className="flex items-baseline gap-2">
+                <span className="font-label text-sky-300">{w.num}</span>
+                <h4 className="text-base font-semibold text-foreground">{w.title}</h4>
               </div>
-            ))}
+              {w.subtitle && <p className="mt-0.5 text-xs italic text-muted-foreground">{w.subtitle}</p>}
+              {w.note && (
+                <p className="mt-2 rounded-md border border-amber-400/25 bg-amber-400/5 px-3 py-1.5 text-xs text-amber-300">
+                  <span className="font-medium">Important:</span> {w.note}
+                </p>
+              )}
+              <div className="mt-3 space-y-3">
+                {w.phases.map((p) => (
+                  <div key={p.phase} className="border-l-2 border-white/10 pl-3">
+                    <div className="text-sm font-medium text-foreground">{p.phase}</div>
+                    <ul className="mt-1 space-y-1 text-sm text-muted-foreground">
+                      {p.items.map((it, idx) =>
+                        typeof it === "string" ? (
+                          <li key={idx}>{it}</li>
+                        ) : (
+                          <li key={idx}>
+                            {it.text}
+                            <ul className="mt-1 ml-4 list-disc space-y-0.5 marker:text-white/30">
+                              {it.sub.map((s, j) => <li key={j}>{s}</li>)}
+                            </ul>
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <WorkflowDiagram phases={w.phases} />
           </div>
         </div>
       ))}
