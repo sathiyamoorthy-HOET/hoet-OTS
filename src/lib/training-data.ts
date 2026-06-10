@@ -50,7 +50,7 @@ export const TRAINING_DAYS: TrainingDayData[] = [
       { session: "Communication flow", what: "Attendance and HR on Keka, communication on Slack, and reviews on Frame.io.", trainerLed: true },
     ],
     second: [
-      { session: "Assignment brief", what: "Give the assignment and explain the delivery requirements — format, aspect ratios, duration and the 7 PM deadline. Share references and expectations.", trainerLed: true },
+      { session: "Assignment brief", what: "Give the assignment and explain the delivery requirements — format, aspect ratios, duration and the 7 PM deadline. The assignment provided by the trainer must be raw footage. Share references and expectations.", trainerLed: true },
       { session: "Assignment + tech support", what: "The editor builds the assignment; the trainer is on hand for technical support only — help new joiners with any tooling, setup or export issues.", trainerLed: true },
       { session: "Submission & wrap-up", what: "Collect every submission on time — even if incomplete — sharply by 7 PM. Quick recap, and a look at the next day.", trainerLed: true },
     ],
@@ -252,6 +252,7 @@ export const ADOBE_APPS: Tool[] = [
 export const PROVIDED_TOOLS: Tool[] = [
   { name: "Higgsfield", desc: "AI image & video generation — for visuals, hooks and scenes when there's no shoot footage.", icon: favicon("higgsfield.ai") },
   { name: "Envato", desc: "Envato Elements — stock footage, music, templates and graphic assets.", icon: "https://cdn.simpleicons.org/envato" },
+  { name: "Storyblocks", desc: "Royalty-free music, stock video and sound effects on an unlimited plan — handy for background tracks and quick B-roll.", icon: favicon("storyblocks.com"), url: "https://www.storyblocks.com" },
 ];
 
 export const COMM_TOOLS: Tool[] = [
