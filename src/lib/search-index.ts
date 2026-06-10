@@ -51,7 +51,7 @@ export const SEARCH_INDEX: SearchEntry[] = [
   { title: "AI-TV App — Brand", path: "/brand-guidelines/ai-tv", section: "Brand", keywords: "ai tv app brand style guideline ads coming soon" },
   { title: "AI-TV App · Course Videos — Brand", path: "/brand-guidelines/ai-tv-course", section: "Brand", keywords: "ai tv app course videos informative brand book star motif indigo off-white periwinkle lavender poppins oswald lora montserrat captions cta licensing safe zone quality check handoff naming" },
   { title: "Organic Video — Brand", path: "/brand-guidelines/organic-video", section: "Brand", keywords: "organic video brand guideline coming soon youtube long form" },
-  { title: "Profit Union — Brand", path: "/brand-guidelines/profit-union", section: "Brand", keywords: "profit union brand guideline coming soon" },
+  { title: "Profit Uni — Brand", path: "/brand-guidelines/profit-uni", section: "Brand", keywords: "profit uni profit union brand guideline coming soon" },
 ];
 
 export function searchIndex(q: string): SearchEntry[] {

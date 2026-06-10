@@ -15,7 +15,7 @@ import { Route as BrandGuidelinesRouteImport } from './routes/brand-guidelines'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TrainingIndexRouteImport } from './routes/training.index'
 import { Route as BrandGuidelinesIndexRouteImport } from './routes/brand-guidelines.index'
-import { Route as BrandGuidelinesProfitUnionRouteImport } from './routes/brand-guidelines.profit-union'
+import { Route as BrandGuidelinesProfitUniRouteImport } from './routes/brand-guidelines.profit-uni'
 import { Route as BrandGuidelinesOrganicVideoRouteImport } from './routes/brand-guidelines.organic-video'
 import { Route as BrandGuidelinesBe10xRouteImport } from './routes/brand-guidelines.be10x'
 import { Route as BrandGuidelinesAiTvCourseRouteImport } from './routes/brand-guidelines.ai-tv-course'
@@ -53,10 +53,10 @@ const BrandGuidelinesIndexRoute = BrandGuidelinesIndexRouteImport.update({
   path: '/',
   getParentRoute: () => BrandGuidelinesRoute,
 } as any)
-const BrandGuidelinesProfitUnionRoute =
-  BrandGuidelinesProfitUnionRouteImport.update({
-    id: '/profit-union',
-    path: '/profit-union',
+const BrandGuidelinesProfitUniRoute =
+  BrandGuidelinesProfitUniRouteImport.update({
+    id: '/profit-uni',
+    path: '/profit-uni',
     getParentRoute: () => BrandGuidelinesRoute,
   } as any)
 const BrandGuidelinesOrganicVideoRoute =
@@ -101,7 +101,7 @@ export interface FileRoutesByFullPath {
   '/brand-guidelines/ai-tv-course': typeof BrandGuidelinesAiTvCourseRoute
   '/brand-guidelines/be10x': typeof BrandGuidelinesBe10xRoute
   '/brand-guidelines/organic-video': typeof BrandGuidelinesOrganicVideoRoute
-  '/brand-guidelines/profit-union': typeof BrandGuidelinesProfitUnionRoute
+  '/brand-guidelines/profit-uni': typeof BrandGuidelinesProfitUniRoute
   '/brand-guidelines/': typeof BrandGuidelinesIndexRoute
   '/training/': typeof TrainingIndexRoute
   '/training/$day/$session': typeof TrainingDaySessionRoute
@@ -114,7 +114,7 @@ export interface FileRoutesByTo {
   '/brand-guidelines/ai-tv-course': typeof BrandGuidelinesAiTvCourseRoute
   '/brand-guidelines/be10x': typeof BrandGuidelinesBe10xRoute
   '/brand-guidelines/organic-video': typeof BrandGuidelinesOrganicVideoRoute
-  '/brand-guidelines/profit-union': typeof BrandGuidelinesProfitUnionRoute
+  '/brand-guidelines/profit-uni': typeof BrandGuidelinesProfitUniRoute
   '/brand-guidelines': typeof BrandGuidelinesIndexRoute
   '/training': typeof TrainingIndexRoute
   '/training/$day/$session': typeof TrainingDaySessionRoute
@@ -130,7 +130,7 @@ export interface FileRoutesById {
   '/brand-guidelines/ai-tv-course': typeof BrandGuidelinesAiTvCourseRoute
   '/brand-guidelines/be10x': typeof BrandGuidelinesBe10xRoute
   '/brand-guidelines/organic-video': typeof BrandGuidelinesOrganicVideoRoute
-  '/brand-guidelines/profit-union': typeof BrandGuidelinesProfitUnionRoute
+  '/brand-guidelines/profit-uni': typeof BrandGuidelinesProfitUniRoute
   '/brand-guidelines/': typeof BrandGuidelinesIndexRoute
   '/training/': typeof TrainingIndexRoute
   '/training/$day/$session': typeof TrainingDaySessionRoute
@@ -147,7 +147,7 @@ export interface FileRouteTypes {
     | '/brand-guidelines/ai-tv-course'
     | '/brand-guidelines/be10x'
     | '/brand-guidelines/organic-video'
-    | '/brand-guidelines/profit-union'
+    | '/brand-guidelines/profit-uni'
     | '/brand-guidelines/'
     | '/training/'
     | '/training/$day/$session'
@@ -160,7 +160,7 @@ export interface FileRouteTypes {
     | '/brand-guidelines/ai-tv-course'
     | '/brand-guidelines/be10x'
     | '/brand-guidelines/organic-video'
-    | '/brand-guidelines/profit-union'
+    | '/brand-guidelines/profit-uni'
     | '/brand-guidelines'
     | '/training'
     | '/training/$day/$session'
@@ -175,7 +175,7 @@ export interface FileRouteTypes {
     | '/brand-guidelines/ai-tv-course'
     | '/brand-guidelines/be10x'
     | '/brand-guidelines/organic-video'
-    | '/brand-guidelines/profit-union'
+    | '/brand-guidelines/profit-uni'
     | '/brand-guidelines/'
     | '/training/'
     | '/training/$day/$session'
@@ -233,11 +233,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BrandGuidelinesIndexRouteImport
       parentRoute: typeof BrandGuidelinesRoute
     }
-    '/brand-guidelines/profit-union': {
-      id: '/brand-guidelines/profit-union'
-      path: '/profit-union'
-      fullPath: '/brand-guidelines/profit-union'
-      preLoaderRoute: typeof BrandGuidelinesProfitUnionRouteImport
+    '/brand-guidelines/profit-uni': {
+      id: '/brand-guidelines/profit-uni'
+      path: '/profit-uni'
+      fullPath: '/brand-guidelines/profit-uni'
+      preLoaderRoute: typeof BrandGuidelinesProfitUniRouteImport
       parentRoute: typeof BrandGuidelinesRoute
     }
     '/brand-guidelines/organic-video': {
@@ -290,7 +290,7 @@ interface BrandGuidelinesRouteChildren {
   BrandGuidelinesAiTvCourseRoute: typeof BrandGuidelinesAiTvCourseRoute
   BrandGuidelinesBe10xRoute: typeof BrandGuidelinesBe10xRoute
   BrandGuidelinesOrganicVideoRoute: typeof BrandGuidelinesOrganicVideoRoute
-  BrandGuidelinesProfitUnionRoute: typeof BrandGuidelinesProfitUnionRoute
+  BrandGuidelinesProfitUniRoute: typeof BrandGuidelinesProfitUniRoute
   BrandGuidelinesIndexRoute: typeof BrandGuidelinesIndexRoute
 }
 
@@ -299,7 +299,7 @@ const BrandGuidelinesRouteChildren: BrandGuidelinesRouteChildren = {
   BrandGuidelinesAiTvCourseRoute: BrandGuidelinesAiTvCourseRoute,
   BrandGuidelinesBe10xRoute: BrandGuidelinesBe10xRoute,
   BrandGuidelinesOrganicVideoRoute: BrandGuidelinesOrganicVideoRoute,
-  BrandGuidelinesProfitUnionRoute: BrandGuidelinesProfitUnionRoute,
+  BrandGuidelinesProfitUniRoute: BrandGuidelinesProfitUniRoute,
   BrandGuidelinesIndexRoute: BrandGuidelinesIndexRoute,
 }
 

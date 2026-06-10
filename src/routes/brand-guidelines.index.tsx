@@ -13,7 +13,7 @@ const BRANDS: { to?: string; name: string; tagline: string; type: string; status
   { to: "/brand-guidelines/ai-tv", name: "AI-TV App", tagline: "Stay Ahead of AI. In Minutes, Not Hours.", type: "Ads", status: "Coming soon", domain: "aitv.pro" },
   { to: "/brand-guidelines/ai-tv-course", name: "AI-TV App — Course Videos", tagline: "Stay Ahead of AI. In Minutes, Not Hours.", type: "", status: "Active", domain: "aitv.pro" },
   { to: "/brand-guidelines/be10x", name: "Be10X", tagline: "AI won't replace you, but a person using AI will.", type: "Ads", status: "Active", domain: "be10x.com" },
-  { to: "/brand-guidelines/profit-union", name: "Profit Union", tagline: "Funnel brand guideline.", type: "Ads", status: "Coming soon", domain: "profituni.in" },
+  { to: "/brand-guidelines/profit-uni", name: "Profit Uni", tagline: "Funnel brand guideline.", type: "Ads", status: "Coming soon", domain: "profituni.in" },
   { name: "Office Master", tagline: "Excel using AI.", type: "Ads", status: "Coming soon", domain: "officemaster.in" },
   { name: "AI for Techies", tagline: "Python using AI.", type: "Ads", status: "Coming soon", domain: "aifortechies.in" },
   { name: "SpringPad", tagline: "Stock market using AI.", type: "Ads", status: "Coming soon", domain: "springpad.in" },
