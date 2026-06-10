@@ -79,7 +79,7 @@ export const TRAINING_DAYS: TrainingDayData[] = [
     summary: "Tool walkthroughs, then hands-on with each tool.",
     first: [
       { session: "Stock & assets", what: "Where to source footage, music, graphics and icons." },
-      { session: "Content & prompt engineering", what: "Use AI to draft scripts, hooks and copy — and learn to prompt for clean, usable output." },
+      { session: "AI assistants", what: "Use AI assistants to draft scripts, hooks and copy — and learn to prompt for clean, usable output." },
       { session: "AI generation", what: "Generate avatars, video and visuals with AI when there's no shoot footage." },
       { session: "Audio & sound", what: "Create voice-overs and build a clean, balanced sound mix." },
       { session: "Draftdeck", what: "House of EdTech's own script-to-video app — draft the script with AI, then generate the voice-over and avatar video in one place." },
@@ -326,10 +326,9 @@ export const DAY3_SECTIONS: Record<string, ToolWithVideo[]> = {
     { name: "Storyblocks in Premiere Pro", desc: "Browse and download Storyblocks stock footage, music and SFX without leaving Adobe Premiere Pro. Install the Storyblocks panel, search and preview clips on the timeline, then download and place them directly into your sequence — a faster B-roll and audio workflow.", video: "fFHcUPZm7l8", url: "storyblocks.com" },
     { name: "Earn Edits", desc: "Downloadable After Effects project files (AEP) built from proven viral edits — fully editable compositions with neatly labelled layers, built-in colour controls and suggested SFX/music. Customise the text, colours and timing to ship high-impact short-form reels fast.", url: "earnedits.com" },
   ],
-  "Content & prompt engineering": [
+  "AI assistants": [
     { name: "Claude", desc: "Anthropic's AI assistant — strong at long-form scripting, ideation, rewriting and following detailed instructions. Use it to draft scripts, hooks and angles.", video: "r2vYObllqJU", url: "claude.ai" },
     { name: "ChatGPT (GPT)", desc: "OpenAI's versatile assistant for scripts, hooks, copy and quick research — great for brainstorming variations fast.", video: "gi6o2yYWrzw", url: "chatgpt.com" },
-    { name: "Prompt engineering", desc: "Writing clear, structured prompts — role, context, references, format and constraints — to get clean, usable output the first time.", video: "ysPbXH0LpIE" },
   ],
   "AI generation": [
     { name: "HeyGen", desc: "AI video and talking-head avatar generation from a script — used when there's no shoot footage. Pick an avatar and voice, paste the script, and generate.", video: "bcXeQAguN7s", url: "heygen.com" },
