@@ -77,6 +77,7 @@ function Page() {
         {[
           ["#rules-of-thumb","Rules of Thumb"],
           ["#file-naming","File Naming"],
+          ["#project-backup","Project Backup"],
           ["#dos","Do's & Don'ts"],
           ["#non-neg","Non-Negotiables"],
           ["#organic-safe-zone","Organic Safe Zone"],
@@ -146,6 +147,11 @@ function Page() {
           </table>
         </div>
         <p className="mt-3 text-xs italic">Separate every field with an underscore (_) and keep the order exactly as shown.</p>
+      </Section>
+
+      <Section id="project-backup" title="Project Backup & Handoff">
+        <p>For <strong className="text-foreground">every deliverable except ads</strong> — organic videos, organic shorts and course videos — the editor must hand over the <strong className="text-foreground">complete project backup, including all project files</strong> (project/source files, linked assets, graphics and audio), packaged and named <strong className="text-foreground">as per the SOP</strong>.</p>
+        <p className="mt-2 text-sm">This keeps every non-ad project re-openable and re-editable by the team later. Ads follow the file-naming and delivery convention above and do not require the full project backup.</p>
       </Section>
 
       <Section id="dos" title="Do's & Don'ts">

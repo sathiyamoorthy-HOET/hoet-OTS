@@ -174,6 +174,7 @@ export const EDITING_WORKFLOWS: EditingWorkflow[] = [
         "Long-form → 16:9",
         "Shorts → 9:16",
         "Upload to Google Drive → Organic folder (respective subfolders)",
+        "Deliver the complete project backup, including project files, as per the SOP",
       ] },
     ],
   },
@@ -192,6 +193,7 @@ export const EDITING_WORKFLOWS: EditingWorkflow[] = [
       { phase: "Final Delivery", items: [
         { text: "Export only:", sub: ["9:16 vertical"] },
         "Upload to Google Drive → Course folder (episode-wise naming)",
+        "Deliver the complete project backup, including project files, as per the SOP",
       ] },
     ],
   },
