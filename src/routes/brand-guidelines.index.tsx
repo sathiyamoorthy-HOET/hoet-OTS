@@ -1,23 +1,24 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHeader } from "@/components/PageHeader";
 import { ArrowRight } from "lucide-react";
+import { brandLogo } from "@/lib/training-data";
 
 export const Route = createFileRoute("/brand-guidelines/")({
   head: () => ({ meta: [{ title: "Brand Guidelines — HOET" }] }),
   component: Page,
 });
 
-const BRANDS: { to?: string; name: string; tagline: string; type: string; status: string }[] = [
+const BRANDS: { to?: string; name: string; tagline: string; type: string; status: string; domain?: string }[] = [
   { to: "/brand-guidelines/organic-video", name: "Organic Video", tagline: "Long-form & shorts brand direction.", type: "Organic", status: "Coming soon" },
-  { to: "/brand-guidelines/ai-tv", name: "AI-TV App", tagline: "Stay Ahead of AI. In Minutes, Not Hours.", type: "Ads", status: "Coming soon" },
-  { to: "/brand-guidelines/ai-tv-course", name: "AI-TV App — Course Videos", tagline: "Stay Ahead of AI. In Minutes, Not Hours.", type: "Course Videos", status: "Active" },
-  { to: "/brand-guidelines/be10x", name: "Be10X", tagline: "AI won't replace you, but a person using AI will.", type: "Ads", status: "Active" },
-  { to: "/brand-guidelines/profit-union", name: "Profit Union", tagline: "Funnel brand guideline.", type: "Ads", status: "Coming soon" },
-  { name: "Office Master", tagline: "Excel using AI.", type: "Ads", status: "Coming soon" },
-  { name: "AI for Techies", tagline: "Python using AI.", type: "Ads", status: "Coming soon" },
-  { name: "SpringPad", tagline: "Stock market using AI.", type: "Ads", status: "Coming soon" },
-  { name: "Dr. Finance", tagline: "Personal finance & mutual funds.", type: "Ads", status: "Coming soon" },
-  { name: "Divinelane", tagline: "Gemstones & consultation.", type: "Ads", status: "Coming soon" },
+  { to: "/brand-guidelines/ai-tv", name: "AI-TV App", tagline: "Stay Ahead of AI. In Minutes, Not Hours.", type: "Ads", status: "Coming soon", domain: "aitv.pro" },
+  { to: "/brand-guidelines/ai-tv-course", name: "AI-TV App — Course Videos", tagline: "Stay Ahead of AI. In Minutes, Not Hours.", type: "", status: "Active", domain: "aitv.pro" },
+  { to: "/brand-guidelines/be10x", name: "Be10X", tagline: "AI won't replace you, but a person using AI will.", type: "Ads", status: "Active", domain: "be10x.com" },
+  { to: "/brand-guidelines/profit-union", name: "Profit Union", tagline: "Funnel brand guideline.", type: "Ads", status: "Coming soon", domain: "profituni.in" },
+  { name: "Office Master", tagline: "Excel using AI.", type: "Ads", status: "Coming soon", domain: "officemaster.in" },
+  { name: "AI for Techies", tagline: "Python using AI.", type: "Ads", status: "Coming soon", domain: "aifortechies.in" },
+  { name: "SpringPad", tagline: "Stock market using AI.", type: "Ads", status: "Coming soon", domain: "springpad.in" },
+  { name: "Dr. Finance", tagline: "Personal finance & mutual funds.", type: "Ads", status: "Coming soon", domain: "drfinance.in" },
+  { name: "Divinelane", tagline: "Gemstones & consultation.", type: "Ads", status: "Coming soon", domain: "divinelane.co" },
 ];
 
 function Page() {
@@ -36,11 +37,14 @@ function Page() {
         {BRANDS.map((b) => {
           const body = (
             <>
-              <div className="flex items-baseline justify-between gap-2">
-                <div className="text-lg font-semibold">{b.name}</div>
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex items-center gap-2.5">
+                  {b.domain && <img src={brandLogo(b.domain)} alt={`${b.name} logo`} loading="lazy" className={`h-9 w-9 shrink-0 rounded-md object-contain p-1 ${b.name === "Divinelane" ? "bg-neutral-900" : "bg-white"}`} />}
+                  <div className="text-lg font-semibold">{b.name}</div>
+                </div>
                 <span className="font-label shrink-0">{b.status}</span>
               </div>
-              <div className="mt-1"><span className="rounded-full border border-white/15 bg-white/5 px-2 py-0.5 text-[11px] font-medium text-muted-foreground">{b.type}</span></div>
+              {b.type && <div className="mt-2"><span className="text-xs font-medium text-sky-300 underline underline-offset-2">{b.type}</span></div>}
               <p className="mt-2 text-sm text-muted-foreground italic">"{b.tagline}"</p>
             </>
           );

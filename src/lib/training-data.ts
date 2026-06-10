@@ -4,8 +4,9 @@
 export type Session = { session: string; what: string; video?: string; trainerLed?: boolean; link?: { to: string; label: string } };
 
 export function brandLogo(domain: string): string {
-  // Falls back to a generic globe if the site has no icon.
-  return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+  // Falls back to a generic globe if the site has no icon. Small size (icons
+  // render at ≤48px) keeps the request light and fast.
+  return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
 }
 
 export function slugify(s: string): string {
@@ -237,15 +238,18 @@ export const BRAND_TARGETS: { name: string; domain: string; audience: string; ap
 ];
 
 const WIKI = "https://commons.wikimedia.org/wiki/Special:FilePath/";
-const favicon = (d: string) => `https://www.google.com/s2/favicons?domain=${d}&sz=128`;
+// Request a small rasterised thumbnail (icons render at ~40px) instead of the
+// full-resolution original — much lighter and faster to load.
+const wikiIcon = (file: string) => `${WIKI}${file}?width=64`;
+const favicon = (d: string) => `https://www.google.com/s2/favicons?domain=${d}&sz=64`;
 
 export type Tool = { name: string; desc: string; icon: string; url?: string };
 
 export const ADOBE_APPS: Tool[] = [
-  { name: "Premiere Pro", desc: "Primary editor — cutting, assembly, captions and final export.", icon: WIKI + "Adobe%20Premiere%20Pro%20CC%20icon.svg" },
-  { name: "After Effects", desc: "Motion graphics, animated text, logo reveals and visual effects.", icon: WIKI + "Adobe%20After%20Effects%20CC%20icon.svg" },
-  { name: "Photoshop", desc: "Image editing, thumbnails and graphic assets.", icon: WIKI + "Adobe%20Photoshop%20CC%20icon.svg" },
-  { name: "Audition", desc: "Audio cleanup, noise removal and mixing.", icon: WIKI + "Adobe%20Audition%20CC%20icon.svg" },
+  { name: "Premiere Pro", desc: "Primary editor — cutting, assembly, captions and final export.", icon: wikiIcon("Adobe%20Premiere%20Pro%20CC%20icon.svg") },
+  { name: "After Effects", desc: "Motion graphics, animated text, logo reveals and visual effects.", icon: wikiIcon("Adobe%20After%20Effects%20CC%20icon.svg") },
+  { name: "Photoshop", desc: "Image editing, thumbnails and graphic assets.", icon: wikiIcon("Adobe%20Photoshop%20CC%20icon.svg") },
+  { name: "Audition", desc: "Audio cleanup, noise removal and mixing.", icon: wikiIcon("Adobe%20Audition%20CC%20icon.svg") },
   { name: "Media Encoder", desc: "Batch and format-specific exports / encoding.", icon: favicon("adobe.com") },
 ];
 
