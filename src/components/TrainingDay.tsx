@@ -11,7 +11,7 @@ const FOUNDER_PHOTOS: Record<string, string> = {
   "Aditya Kachave": adityaKachave,
 };
 import {
-  TRAINING_DAYS, DELIVERY_REFERENCE, WORK_REPORT, INCENTIVE_FACTORS, COMPANY, ADOBE_APPS, PROVIDED_TOOLS, COMM_TOOLS, CREATIVE_TEAMS, AD_TASK_TYPES, BRAND_TARGETS,
+  TRAINING_DAYS, DELIVERY_REFERENCE, WORK_REPORT, INCENTIVE_FACTORS, COMPANY, ADOBE_APPS, PROVIDED_TOOLS, COMM_TOOLS, CREATIVE_TEAMS, AD_TASK_TYPES, ORGANIC_TASK_TYPES, BRAND_TARGETS,
   EDITING_WORKFLOWS, EXPORT_SPECS, FORMATS, ADS_PHASES, ORG_PHASES, SHORT_PHASES, DAY3_SECTIONS,
   brandLogo, findDay, daySessions, slugify, type Session, type Tool,
 } from "@/lib/training-data";
@@ -475,6 +475,32 @@ function AdTaskTypes() {
   );
 }
 
+function OrganicTaskTypes() {
+  return (
+    <div className="mt-3">
+      <p className="text-sm text-muted-foreground">The organic content task types you'll be assigned. Reference examples: <a href="https://www.youtube.com/@aitv-app" target="_blank" rel="noreferrer" className="underline text-foreground">AI-TV on YouTube →</a></p>
+      <ul className="mt-3 space-y-3">
+        {ORGANIC_TASK_TYPES.map((t) => (
+          <li key={t.name} className="rounded-lg border border-white/10 bg-card p-4">
+            <div className="font-medium text-foreground">{t.name}</div>
+            <p className="mt-1 text-sm text-muted-foreground">{t.desc}</p>
+            {t.videos && (
+              <div className="mt-3">
+                <p className="font-label text-muted-foreground">Sample videos</p>
+                <div className="mt-2 flex flex-wrap gap-3">
+                  {t.videos.map((v, i) => (
+                    <RefVideo key={v.id} id={v.id} vertical title={v.label ?? `Sample ${i + 1}`} />
+                  ))}
+                </div>
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 function PhaseTable({ rows }: { rows: [string, string, string][] }) {
   return (
     <div className="mt-3 overflow-x-auto">
@@ -698,6 +724,7 @@ function SessionExtra({ daySlug, session }: { daySlug: string; session: string }
   if (daySlug === "day-2" && session === "Editing Pipeline") return <EditingPipeline />;
   if (daySlug === "day-2" && session === "Deliverable Framework") return <DeliverableStructure />;
   if (daySlug === "day-2" && session === "Ad Task Types") return <AdTaskTypes />;
+  if (daySlug === "day-2" && session === "Organic Task Types") return <OrganicTaskTypes />;
   if (daySlug === "day-1" && session === "Company & brand overview") return <CompanyOverview />;
   if (daySlug === "day-1" && session === "Audience, marketing & brand targets") return <BrandTargets />;
   if (daySlug === "day-1" && session === "Creative department structure") return <CreativeStructure />;

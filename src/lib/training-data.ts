@@ -66,6 +66,7 @@ export const TRAINING_DAYS: TrainingDayData[] = [
       { session: "Deliverable Framework", what: "The four video formats, their export specs, and the on-screen anatomy of each — how every deliverable is built." },
       { session: "Editing Pipeline", what: "The three editing workflows — Ad, Organic and Course — each from assignment through production, review, revision and final delivery." },
       { session: "Ad Task Types", what: "The main ad editing task types you'll be assigned, and what each one means.", trainerLed: true },
+      { session: "Organic Task Types", what: "The organic content task types you'll be assigned — tutorials, roadmaps, AI updates and case studies.", trainerLed: true },
     ],
     second: [
       { session: "Editing SOP — ads, organic & course", what: "The House of EdTech editing standard applied to each format — ads, organic and course. The full SOP, do's & don'ts and on-screen rules live on the Editing Guidelines page.", link: { to: "/editing-guidelines", label: "Open Editing Guidelines" } },
@@ -382,6 +383,27 @@ export const AD_TASK_TYPES: AdTaskType[] = [
       { label: "Sample 1", before: "Nb-QUxvcswQ", after: "ZJYcg2Vw4y0" },
       { label: "Sample 2", before: "EEZPyE97-7s", after: "Eh9e9J27MlI" },
     ],
+  },
+];
+
+// Organic content task types. Add a sample `videos: [{ id: "..." }]` per type
+// when reference clips are picked from the AI-TV channel (youtube.com/@aitv-app).
+export const ORGANIC_TASK_TYPES: AdTaskType[] = [
+  {
+    name: "Tutorials",
+    desc: "Step-by-step guides and practical walkthroughs designed to help you learn new tools, techniques, workflows, and best practices with real-world examples.",
+  },
+  {
+    name: "Roadmaps",
+    desc: "Structured learning paths and growth plans that outline what to learn, when to learn it, and how to progress from beginner to advanced levels efficiently.",
+  },
+  {
+    name: "AI Updates",
+    desc: "Latest news, trends, feature releases, industry developments, and breakthroughs in Artificial Intelligence, helping you stay updated with the rapidly evolving AI landscape.",
+  },
+  {
+    name: "Case Studies",
+    desc: "In-depth analysis of real projects, business challenges, success stories, failures, and implementation strategies, showcasing practical applications and measurable outcomes.",
   },
 ];
 
