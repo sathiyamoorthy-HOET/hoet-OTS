@@ -569,7 +569,7 @@ function EditingPipeline() {
       <p className="text-sm text-muted-foreground">Every video runs through one of three workflows by content type. Each goes from assignment through production, review and revision to final delivery.</p>
       {EDITING_WORKFLOWS.map((w) => (
         <div key={w.num} className="rounded-lg border border-white/10 bg-card p-5">
-          <div className="grid gap-5 lg:grid-cols-[1fr_260px] lg:items-start">
+          <div className="grid gap-5 lg:grid-cols-[1fr_320px] lg:items-start">
             <div>
               <div className="flex items-baseline gap-2">
                 <span className="font-label text-sky-300">{w.num}</span>
