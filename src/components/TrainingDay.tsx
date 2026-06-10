@@ -481,17 +481,16 @@ function OrganicTaskTypes() {
       <p className="text-sm text-muted-foreground">The organic content task types you'll be assigned. Reference examples: <a href="https://www.youtube.com/@aitv-app" target="_blank" rel="noreferrer" className="underline text-foreground">AI-TV on YouTube →</a></p>
       <ul className="mt-3 space-y-3">
         {ORGANIC_TASK_TYPES.map((t) => (
-          <li key={t.name} className="rounded-lg border border-white/10 bg-card p-4">
-            <div className="font-medium text-foreground">{t.name}</div>
-            <p className="mt-1 text-sm text-muted-foreground">{t.desc}</p>
+          <li key={t.name} className={`grid gap-4 rounded-lg border border-white/10 bg-card p-4 lg:items-start ${t.videos ? "lg:grid-cols-[1fr_300px]" : ""}`}>
+            <div>
+              <div className="font-medium text-foreground">{t.name}</div>
+              <p className="mt-1 text-sm text-muted-foreground">{t.desc}</p>
+            </div>
             {t.videos && (
-              <div className="mt-3">
-                <p className="font-label text-muted-foreground">Sample videos</p>
-                <div className="mt-2 flex flex-wrap gap-3">
-                  {t.videos.map((v, i) => (
-                    <RefVideo key={v.id} id={v.id} vertical title={v.label ?? `Sample ${i + 1}`} />
-                  ))}
-                </div>
+              <div className="space-y-3">
+                {t.videos.map((v, i) => (
+                  <RefVideo key={v.id} id={v.id} title={v.label ?? `${t.name} — sample${t.videos!.length > 1 ? ` ${i + 1}` : ""}`} />
+                ))}
               </div>
             )}
           </li>

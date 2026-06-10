@@ -392,18 +392,22 @@ export const ORGANIC_TASK_TYPES: AdTaskType[] = [
   {
     name: "Tutorials",
     desc: "Step-by-step guides and practical walkthroughs designed to help you learn new tools, techniques, workflows, and best practices with real-world examples.",
+    videos: [{ id: "l7W3QzU8w5s" }],
   },
   {
     name: "Roadmaps",
     desc: "Structured learning paths and growth plans that outline what to learn, when to learn it, and how to progress from beginner to advanced levels efficiently.",
+    videos: [{ id: "QcBlhxh7vXM" }],
   },
   {
     name: "AI Updates",
     desc: "Latest news, trends, feature releases, industry developments, and breakthroughs in Artificial Intelligence, helping you stay updated with the rapidly evolving AI landscape.",
+    videos: [{ id: "geeSi2WAOgg" }],
   },
   {
     name: "Case Studies",
     desc: "In-depth analysis of real projects, business challenges, success stories, failures, and implementation strategies, showcasing practical applications and measurable outcomes.",
+    videos: [{ id: "eMqHdFnZxPY" }],
   },
 ];
 
