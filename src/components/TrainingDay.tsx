@@ -531,15 +531,31 @@ function RefVideo({ id, vertical, title }: { id: string; vertical?: boolean; tit
   );
 }
 
-function WorkflowDiagram({ phases }: { phases: { phase: string }[] }) {
+function WorkflowDiagram({ phases }: { phases: { phase: string; items: (string | { text: string; sub: string[] })[] }[] }) {
   return (
     <div className="rounded-lg border border-white/10 bg-background/40 p-3">
       <p className="font-label mb-2 text-center text-muted-foreground">Flow</p>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-stretch">
         {phases.map((p, i) => (
-          <div key={p.phase} className="flex w-full flex-col items-center">
-            <div className="w-full rounded-md border border-sky-400/30 bg-sky-400/10 px-3 py-1.5 text-center text-xs font-medium text-sky-100">{p.phase}</div>
-            {i < phases.length - 1 && <span className="my-0.5 text-sm text-muted-foreground" aria-hidden>↓</span>}
+          <div key={p.phase} className="flex flex-col items-stretch">
+            <div className="rounded-md border border-sky-400/30 bg-sky-400/10 px-2.5 py-1.5">
+              <div className="text-xs font-semibold text-sky-100">{p.phase}</div>
+              <ul className="mt-1 space-y-0.5 text-[11px] leading-snug text-muted-foreground">
+                {p.items.map((it, idx) =>
+                  typeof it === "string" ? (
+                    <li key={idx}>• {it}</li>
+                  ) : (
+                    <li key={idx}>
+                      • {it.text}
+                      <ul className="ml-3 space-y-0.5">
+                        {it.sub.map((s, j) => <li key={j}>– {s}</li>)}
+                      </ul>
+                    </li>
+                  )
+                )}
+              </ul>
+            </div>
+            {i < phases.length - 1 && <span className="my-0.5 self-center text-sm text-muted-foreground" aria-hidden>↓</span>}
           </div>
         ))}
       </div>
@@ -553,7 +569,7 @@ function EditingPipeline() {
       <p className="text-sm text-muted-foreground">Every video runs through one of three workflows by content type. Each goes from assignment through production, review and revision to final delivery.</p>
       {EDITING_WORKFLOWS.map((w) => (
         <div key={w.num} className="rounded-lg border border-white/10 bg-card p-5">
-          <div className="grid gap-5 lg:grid-cols-[1fr_200px] lg:items-start">
+          <div className="grid gap-5 lg:grid-cols-[1fr_260px] lg:items-start">
             <div>
               <div className="flex items-baseline gap-2">
                 <span className="font-label text-sky-300">{w.num}</span>
