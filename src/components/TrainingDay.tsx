@@ -546,11 +546,13 @@ function DeliverableStructure() {
         </ul>
       </div>
 
-      <div>
-        <h4 className="font-medium text-foreground">Ads — anatomy & timing</h4>
-        <p className="mt-1 text-xs italic">Timings reference a 40-second ad; scale within the 15–90 sec range. The 5-second outro CTA is mandatory.</p>
-        <p className="mt-1 text-sm">Reference channel: <a href="https://www.youtube.com/@be10x/shorts" target="_blank" rel="noreferrer" className="underline text-foreground">Be10X — shorts on YouTube →</a></p>
-        <PhaseTable rows={ADS_PHASES} />
+      <div className="grid gap-4 lg:grid-cols-[1fr_280px] lg:items-start">
+        <div>
+          <h4 className="font-medium text-foreground">Ads — anatomy & timing</h4>
+          <p className="mt-1 text-xs italic">Timings reference a 40-second ad; scale within the 15–90 sec range. The 5-second outro CTA is mandatory.</p>
+          <p className="mt-1 text-sm">Reference channel: <a href="https://www.youtube.com/@be10x/shorts" target="_blank" rel="noreferrer" className="underline text-foreground">Be10X — shorts on YouTube →</a></p>
+          <PhaseTable rows={ADS_PHASES} />
+        </div>
         <RefVideo id="rA3aMOED-mQ" vertical title="Ads reference" />
       </div>
 
@@ -560,19 +562,23 @@ function DeliverableStructure() {
         <p className="mt-1">Example course videos: <a href="https://drive.google.com/drive/folders/1RDVQfGi46xA1L34cXhk443vYjtBE1sEc" target="_blank" rel="noreferrer" className="underline text-foreground">reference folder →</a></p>
       </div>
 
-      <div>
-        <h4 className="font-medium text-foreground">Organic videos — anatomy</h4>
-        <p className="mt-1 text-xs italic">Long-form landscape for YouTube, 5–30 min. Timings reference a 10-minute video.</p>
-        <p className="mt-1 text-sm">Reference channel: <a href="https://www.youtube.com/@aitv-app" target="_blank" rel="noreferrer" className="underline text-foreground">AI-TV on YouTube →</a></p>
-        <PhaseTable rows={ORG_PHASES} />
+      <div className="grid gap-4 lg:grid-cols-[1fr_280px] lg:items-start">
+        <div>
+          <h4 className="font-medium text-foreground">Organic videos — anatomy</h4>
+          <p className="mt-1 text-xs italic">Long-form landscape for YouTube, 5–30 min. Timings reference a 10-minute video.</p>
+          <p className="mt-1 text-sm">Reference channel: <a href="https://www.youtube.com/@aitv-app" target="_blank" rel="noreferrer" className="underline text-foreground">AI-TV on YouTube →</a></p>
+          <PhaseTable rows={ORG_PHASES} />
+        </div>
         <RefVideo id="Z1WIDau4U2U" title="Organic reference" />
       </div>
 
-      <div>
-        <h4 className="font-medium text-foreground">Organic shorts — anatomy</h4>
-        <p className="mt-1 text-xs italic">Awareness-first for YT Shorts, IG/FB Reels, 15–90 sec. Timings reference a 60-second short.</p>
-        <p className="mt-1 text-sm">Reference channel: <a href="https://www.youtube.com/@aitv-app/shorts" target="_blank" rel="noreferrer" className="underline text-foreground">AI-TV — shorts on YouTube →</a></p>
-        <PhaseTable rows={SHORT_PHASES} />
+      <div className="grid gap-4 lg:grid-cols-[1fr_280px] lg:items-start">
+        <div>
+          <h4 className="font-medium text-foreground">Organic shorts — anatomy</h4>
+          <p className="mt-1 text-xs italic">Awareness-first for YT Shorts, IG/FB Reels, 15–90 sec. Timings reference a 60-second short.</p>
+          <p className="mt-1 text-sm">Reference channel: <a href="https://www.youtube.com/@aitv-app/shorts" target="_blank" rel="noreferrer" className="underline text-foreground">AI-TV — shorts on YouTube →</a></p>
+          <PhaseTable rows={SHORT_PHASES} />
+        </div>
         <RefVideo id="whhyAH_ufNU" vertical title="Shorts reference" />
       </div>
     </div>
@@ -663,7 +669,7 @@ function SessionExtra({ daySlug, session }: { daySlug: string; session: string }
   if (daySlug === "day-3" && session === "Hands-on with each tool") return <ReferenceScripts />;
   if (daySlug === "day-3" && DAY3_SECTIONS[session]) return <Day3Section section={session} />;
   if (daySlug === "day-2" && session === "Editing Pipeline") return <EditingPipeline />;
-  if (daySlug === "day-2" && session === "Deliverable structure") return <DeliverableStructure />;
+  if (daySlug === "day-2" && session === "Deliverable Framework") return <DeliverableStructure />;
   if (daySlug === "day-2" && session === "Ad Task Types") return <AdTaskTypes />;
   if (daySlug === "day-1" && session === "Company & brand overview") return <CompanyOverview />;
   if (daySlug === "day-1" && session === "Audience, marketing & brand targets") return <BrandTargets />;

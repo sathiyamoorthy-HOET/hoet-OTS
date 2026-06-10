@@ -64,7 +64,7 @@ export const TRAINING_DAYS: TrainingDayData[] = [
     first: [
       { session: "Review of Day 1 assignments", what: "Review each editor's assignment one by one, then share the feedback with all the new joiners together — calling out the common mistakes so everyone learns from them.", trainerLed: true },
       { session: "Editing Pipeline", what: "The eight-step post-production pipeline every video runs through — from ingest to final export." },
-      { session: "Deliverable structure", what: "The four video formats, their export specs, and the on-screen anatomy of each — how every deliverable is built." },
+      { session: "Deliverable Framework", what: "The four video formats, their export specs, and the on-screen anatomy of each — how every deliverable is built." },
       { session: "Ad Task Types", what: "The main ad editing task types you'll be assigned, and what each one means.", trainerLed: true },
     ],
     second: [
