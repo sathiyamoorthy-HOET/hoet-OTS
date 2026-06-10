@@ -12,7 +12,7 @@ const FOUNDER_PHOTOS: Record<string, string> = {
 };
 import {
   TRAINING_DAYS, DELIVERY_REFERENCE, WORK_REPORT, INCENTIVE_FACTORS, COMPANY, ADOBE_APPS, PROVIDED_TOOLS, COMM_TOOLS, CREATIVE_TEAMS, AD_TASK_TYPES, BRAND_TARGETS,
-  EDITING_PIPELINE, EXPORT_SPECS, FORMATS, ADS_PHASES, ORG_PHASES, SHORT_PHASES, DAY3_SECTIONS,
+  EDITING_WORKFLOWS, EXPORT_SPECS, FORMATS, ADS_PHASES, ORG_PHASES, SHORT_PHASES, DAY3_SECTIONS,
   brandLogo, findDay, daySessions, slugify, type Session, type Tool,
 } from "@/lib/training-data";
 
@@ -454,7 +454,7 @@ function AdTaskTypes() {
                 {t.comparisons.map((c) => (
                   <div key={c.label}>
                     <p className="text-sm font-medium text-foreground">{c.label}</p>
-                    <div className="mt-1 flex flex-wrap gap-3">
+                    <div className="mt-1 grid grid-cols-2 gap-3">
                       <RefVideo id={c.before} vertical title={`${c.label} — Before`} />
                       <RefVideo id={c.after} vertical title={`${c.label} — After`} />
                     </div>
@@ -511,17 +511,44 @@ function RefVideo({ id, vertical, title }: { id: string; vertical?: boolean; tit
 
 function EditingPipeline() {
   return (
-    <ol className="mt-3 grid gap-2 sm:grid-cols-2">
-      {EDITING_PIPELINE.map(([t, d], i) => (
-        <li key={t} className="rounded-md border border-white/10 bg-card p-3">
+    <div className="mt-3 space-y-5">
+      <p className="text-sm text-muted-foreground">Every video runs through one of three workflows by content type. Each goes from assignment through production, review and revision to final delivery.</p>
+      {EDITING_WORKFLOWS.map((w) => (
+        <div key={w.num} className="rounded-lg border border-white/10 bg-card p-5">
           <div className="flex items-baseline gap-2">
-            <span className="font-label">{String(i + 1).padStart(2, "0")}</span>
-            <div className="text-sm font-medium text-foreground">{t}</div>
+            <span className="font-label text-sky-300">{w.num}</span>
+            <h4 className="text-base font-semibold text-foreground">{w.title}</h4>
           </div>
-          <div className="mt-1 text-xs text-muted-foreground leading-snug">{d}</div>
-        </li>
+          {w.subtitle && <p className="mt-0.5 text-xs italic text-muted-foreground">{w.subtitle}</p>}
+          {w.note && (
+            <p className="mt-2 rounded-md border border-amber-400/25 bg-amber-400/5 px-3 py-1.5 text-xs text-amber-300">
+              <span className="font-medium">Important:</span> {w.note}
+            </p>
+          )}
+          <div className="mt-3 space-y-3">
+            {w.phases.map((p) => (
+              <div key={p.phase} className="border-l-2 border-white/10 pl-3">
+                <div className="text-sm font-medium text-foreground">{p.phase}</div>
+                <ul className="mt-1 space-y-1 text-sm text-muted-foreground">
+                  {p.items.map((it, idx) =>
+                    typeof it === "string" ? (
+                      <li key={idx}>{it}</li>
+                    ) : (
+                      <li key={idx}>
+                        {it.text}
+                        <ul className="mt-1 ml-4 list-disc space-y-0.5 marker:text-white/30">
+                          {it.sub.map((s, j) => <li key={j}>{s}</li>)}
+                        </ul>
+                      </li>
+                    )
+                  )}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
       ))}
-    </ol>
+    </div>
   );
 }
 

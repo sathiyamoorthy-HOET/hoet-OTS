@@ -63,8 +63,8 @@ export const TRAINING_DAYS: TrainingDayData[] = [
     summary: "Review, SOP, structures and content types, then editing & brand standards.",
     first: [
       { session: "Review of Day 1 assignments", what: "Review each editor's assignment one by one, then share the feedback with all the new joiners together — calling out the common mistakes so everyone learns from them.", trainerLed: true },
-      { session: "Editing Pipeline", what: "The eight-step post-production pipeline every video runs through — from ingest to final export." },
       { session: "Deliverable Framework", what: "The four video formats, their export specs, and the on-screen anatomy of each — how every deliverable is built." },
+      { session: "Editing Pipeline", what: "The three editing workflows — Ad, Organic and Course — each from assignment through production, review, revision and final delivery." },
       { session: "Ad Task Types", what: "The main ad editing task types you'll be assigned, and what each one means.", trainerLed: true },
     ],
     second: [
@@ -115,17 +115,85 @@ export const DELIVERY_REFERENCE: [string, string, string][] = [
   ["YouTube video", "16:9", "—"],
   ["YouTube Shorts", "9:16", "—"],
   ["Ads", "9:16 (master)", "1:1 and 16:9"],
+  ["Course", "9:16", "—"],
 ];
 
-export const EDITING_PIPELINE: [string, string][] = [
-  ["Ingest & Editing Report", "Import raw footage · label clips by Script ID · log takes in camera-roll order"],
-  ["Rough Cut", "Assemble best takes · follow script / storyboard · target duration"],
-  ["Fine Cut", "Trim frames · pacing & rhythm · add transitions · music bed"],
-  ["Graphics & Motion", "Lower thirds · kinetic text · logo animation · motion templates"],
-  ["Colour Grade", "Primary grade · LUT application · brand colour consistency"],
-  ["Audio Mix", "Dialogue levelling · music fade · SFX layering · loudness -14 LUFS · final peak -5 to -2 dB"],
-  ["Captions", "Auto-generate · proof-read · brand font · position & size per format"],
-  ["Export", "Format-specific export · file naming per convention · upload to shared drive"],
+// Editing workflows by content type. Each workflow has phases; each phase has
+// items, where an item is either a single line or a line with sub-bullets.
+export type WorkflowItem = string | { text: string; sub: string[] };
+export type WorkflowPhase = { phase: string; items: WorkflowItem[] };
+export type EditingWorkflow = { num: string; title: string; subtitle?: string; note?: string; phases: WorkflowPhase[] };
+
+export const EDITING_WORKFLOWS: EditingWorkflow[] = [
+  {
+    num: "01",
+    title: "Ad Workflow (Performance Ads)",
+    subtitle: "Shot / AI / Motion Ads",
+    phases: [
+      { phase: "Assignment", items: [
+        "Script assigned to editor",
+        { text: "Manager provides:", sub: ["Raw footage (shoot-based), OR", "Script only (AI avatar requirement)"] },
+      ] },
+      { phase: "Production", items: [
+        { text: "Edit using ad SOP:", sub: ["Hook → Build → Body → CTA"] },
+        { text: "If needed:", sub: ["HeyGen + ElevenLabs for avatar ads", "Motion graphics + typography as per brand style"] },
+      ] },
+      { phase: "Review", items: [
+        "Submit via Frame.io",
+        "Manager gives feedback + sheet status update",
+      ] },
+      { phase: "Revision", items: [
+        "Editor revises and resubmits until approved",
+      ] },
+      { phase: "Final Delivery", items: [
+        { text: "Export:", sub: ["9:16 (master)", "1:1", "16:9"] },
+        "Upload to Google Drive → Ads folder",
+      ] },
+    ],
+  },
+  {
+    num: "02",
+    title: "Organic Workflow (YouTube + Shorts + Reels)",
+    note: "Organic Shorts are included here.",
+    phases: [
+      { phase: "Assignment", items: ["Script or concept assigned to editor"] },
+      { phase: "Production", items: [
+        { text: "Editor creates content in required format:", sub: [
+          "Long-form Organic (YouTube) — 16:9 landscape (5–30 min)",
+          "Organic Shorts (Reels / Shorts / FB Reels) — 9:16 vertical (15–90 sec)",
+        ] },
+      ] },
+      { phase: "Structure Rules", items: [
+        { text: "Long-form:", sub: ["Intro → Context → Main Content → Recap"] },
+        { text: "Shorts:", sub: ["Hook → Value → Payoff → Soft CTA"] },
+      ] },
+      { phase: "Review", items: ["Submit via Frame.io", "Manager reviews and adds feedback"] },
+      { phase: "Revision", items: ["Update based on feedback and resubmit"] },
+      { phase: "Final Delivery", items: [
+        "Long-form → 16:9",
+        "Shorts → 9:16",
+        "Upload to Google Drive → Organic folder (respective subfolders)",
+      ] },
+    ],
+  },
+  {
+    num: "03",
+    title: "Course Workflow (AI TV / EdTech Courses)",
+    phases: [
+      { phase: "Assignment", items: ["Script + lesson plan assigned to editor"] },
+      { phase: "Production", items: [
+        "9:16 vertical educational videos (3–12 min each)",
+        { text: "May include:", sub: ["AI avatar (HeyGen + ElevenLabs)", "Screen recordings + motion graphics"] },
+        { text: "Must follow course structure:", sub: ["Intro → Teaching → Explanation → Recap"] },
+      ] },
+      { phase: "Review", items: ["Frame.io submission", "Manager checks clarity + accuracy + pacing"] },
+      { phase: "Revision", items: ["Apply feedback until approved"] },
+      { phase: "Final Delivery", items: [
+        { text: "Export only:", sub: ["9:16 vertical"] },
+        "Upload to Google Drive → Course folder (episode-wise naming)",
+      ] },
+    ],
+  },
 ];
 
 export const EXPORT_SPECS: [string, string, string, string, string][] = [
