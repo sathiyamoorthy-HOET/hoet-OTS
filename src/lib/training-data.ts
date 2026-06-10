@@ -140,7 +140,7 @@ export const EDITING_WORKFLOWS: EditingWorkflow[] = [
         { text: "If needed:", sub: ["HeyGen + ElevenLabs for avatar ads", "Motion graphics + typography as per brand style"] },
       ] },
       { phase: "Review", items: [
-        "Submit via Frame.io",
+        "Submit via Frame.io — share the 9:16 (master) ratio",
         "Manager gives feedback + sheet status update",
       ] },
       { phase: "Revision", items: [
