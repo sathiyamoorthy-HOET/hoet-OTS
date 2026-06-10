@@ -135,7 +135,7 @@ export const EDITING_WORKFLOWS: EditingWorkflow[] = [
         "Script assigned to editor",
         { text: "Manager provides:", sub: ["Raw footage (shoot-based), OR", "Script only (AI avatar requirement)"] },
       ] },
-      { phase: "Production", items: [
+      { phase: "Editing", items: [
         { text: "Edit using ad SOP:", sub: ["Hook → Build → Body → CTA"] },
         { text: "If needed:", sub: ["HeyGen + ElevenLabs for avatar ads", "Motion graphics + typography as per brand style"] },
       ] },
@@ -158,7 +158,7 @@ export const EDITING_WORKFLOWS: EditingWorkflow[] = [
     note: "Organic Shorts are included here.",
     phases: [
       { phase: "Assignment", items: ["Script or concept assigned to editor"] },
-      { phase: "Production", items: [
+      { phase: "Editing", items: [
         { text: "Editor creates content in required format:", sub: [
           "Long-form Organic (YouTube) — 16:9 landscape (5–30 min)",
           "Organic Shorts (Reels / Shorts / FB Reels) — 9:16 vertical (15–90 sec)",
@@ -182,7 +182,7 @@ export const EDITING_WORKFLOWS: EditingWorkflow[] = [
     title: "Course Workflow (AI TV / EdTech Courses)",
     phases: [
       { phase: "Assignment", items: ["Script + lesson plan assigned to editor"] },
-      { phase: "Production", items: [
+      { phase: "Editing", items: [
         "9:16 vertical educational videos (3–12 min each)",
         { text: "May include:", sub: ["AI avatar (HeyGen + ElevenLabs)", "Screen recordings + motion graphics"] },
         { text: "Must follow course structure:", sub: ["Intro → Teaching → Explanation → Recap"] },
