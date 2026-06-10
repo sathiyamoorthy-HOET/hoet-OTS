@@ -413,9 +413,9 @@ function WorkflowPipeline({ steps }: { steps: (string | string[])[] }) {
           <div className="flex flex-col justify-center gap-1.5 rounded-md border border-white/15 bg-background/40 px-3 py-2 text-center text-sm text-foreground">
             {Array.isArray(step) ? (
               step.map((opt, j) => (
-                <span key={j} className="flex items-center gap-1.5">
-                  {j > 0 && <span className="font-label text-[10px] uppercase text-muted-foreground">or</span>}
+                <span key={j} className="flex items-center justify-center gap-1.5">
                   <span>{opt}</span>
+                  {j < step.length - 1 && <span className="font-label text-[10px] uppercase text-muted-foreground">or</span>}
                 </span>
               ))
             ) : (
