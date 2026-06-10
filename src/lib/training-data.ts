@@ -312,16 +312,19 @@ export const AD_TASK_TYPES: AdTaskType[] = [
   },
 ];
 
-// Day 3 tool walkthroughs — keyed by session name. Each tool has its own tutorial video.
-export type ToolWithVideo = { name: string; desc: string; video: string; url?: string; sop?: string };
+// Day 3 tool walkthroughs — keyed by session name. Most tools have a tutorial
+// video; `video` is optional so a tool can be listed without one.
+export type ToolWithVideo = { name: string; desc: string; video?: string; url?: string; sop?: string };
 
 export const DAY3_SECTIONS: Record<string, ToolWithVideo[]> = {
   "Stock & assets": [
+    { name: "Mr Horse", desc: "Mister Horse — a drag-and-drop motion-design plugin for Premiere Pro and After Effects. Its libraries (Premiere Composer / Animation Composer) bundle ready-made transitions, titles, lower-thirds, text animations, overlays and sound effects you drop straight onto the timeline.", url: "misterhorse.com" },
     { name: "Magnific", desc: "Freepik's AI image generation and upscaling, plus the Freepik library of stock graphics, vectors and photos. Search by style, customise, and download — always check usage rights.", video: "lGHW4CR2HfA", url: "magnific.com" },
+    { name: "Flaticon", desc: "Millions of icons across many styles. Pick one consistent style per video, customise colour and size, and export SVG or PNG.", video: "wPbg4kAqopM", url: "flaticon.com" },
     { name: "Envato", desc: "Envato Elements — one subscription for stock footage, music, motion templates, graphics and SFX. The go-to for B-roll and template-based motion.", video: "Q6audyAUjEM", url: "elements.envato.com" },
     { name: "Storyblocks", desc: "Royalty-free music, stock video and sound effects on an unlimited plan — handy for background tracks and quick B-roll.", video: "NA0EyFp-h3U", url: "storyblocks.com" },
     { name: "Storyblocks in Premiere Pro", desc: "Browse and download Storyblocks stock footage, music and SFX without leaving Adobe Premiere Pro. Install the Storyblocks panel, search and preview clips on the timeline, then download and place them directly into your sequence — a faster B-roll and audio workflow.", video: "fFHcUPZm7l8", url: "storyblocks.com" },
-    { name: "Flaticon", desc: "Millions of icons across many styles. Pick one consistent style per video, customise colour and size, and export SVG or PNG.", video: "wPbg4kAqopM", url: "flaticon.com" },
+    { name: "Earn Edits", desc: "Downloadable After Effects project files (AEP) built from proven viral edits — fully editable compositions with neatly labelled layers, built-in colour controls and suggested SFX/music. Customise the text, colours and timing to ship high-impact short-form reels fast.", url: "earnedits.com" },
   ],
   "Content & prompt engineering": [
     { name: "Claude", desc: "Anthropic's AI assistant — strong at long-form scripting, ideation, rewriting and following detailed instructions. Use it to draft scripts, hooks and angles.", video: "r2vYObllqJU", url: "claude.ai" },
@@ -341,7 +344,10 @@ export const DAY3_SECTIONS: Record<string, ToolWithVideo[]> = {
     { name: "Draftdeck", desc: "House of EdTech's own web app that runs the whole script-to-video pipeline in one place. Create a project, pick an AI model (Claude / Anthropic), and use the AI Script Writer with reusable Skills (e.g. ad-script-generator) to draft and approve a script. Then configure the voice-over through the ElevenLabs integration — choosing from the team's own professional voice clones with stability, style, similarity and speed controls and saved audio presets — and generate the avatar video through HeyGen, picking the engine (Avatar III/IV/V), character and look. Organise everything into projects and folders, track usage with credits, and also handle translations and brand assets. The single tool that takes a no-shoot ad from script to finished avatar video.", video: "Gg9HilZL3IU", url: "draftdeck.houseofedtech.in" },
   ],
   "Motion graphics": [
+    { name: "AutoAE", desc: "Online After Effects alternative for motion graphics — generate text animations, 3D transforms, engagement mockups and video flowcharts in a few clicks, then download and drop the snippet into your edit. Fast motion design without keyframing from scratch.", video: "KrJiAUgTiXw", url: "autoae.online" },
     { name: "Jitter", desc: "Browser-based motion graphics tool for animated text, lower-thirds and elements — fast templates with clean export.", video: "4QJfDMl3YS8", url: "jitter.video" },
+    { name: "Descript", desc: "Transcript-based audio and video editor — edit by editing the text, remove filler words and silences automatically, and clean up voice-over with Overdub and Studio Sound. Handy for fast rough cuts and talking-head edits.", video: "D5MQbP4b_sQ", url: "descript.com" },
+    { name: "ATOM", desc: "AI assistant for After Effects — write expressions, automate scripts and build complex rigs using plain natural language instead of code. Speeds up the technical side of motion graphics.", url: "tryatom.ai" },
     { name: "Claude + Remotion", desc: "Generate and refine Remotion (React) code with Claude (claude.ai), then render templated, code-driven motion graphics straight to MP4 with Remotion — ideal for data-driven, programmatic graphics.", video: "IkKYuygHzn4", url: "remotion.dev" },
   ],
 };

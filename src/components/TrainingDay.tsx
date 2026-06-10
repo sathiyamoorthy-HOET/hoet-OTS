@@ -586,7 +586,7 @@ function Day3Section({ section }: { section: string }) {
     <div className="mt-3 space-y-5">
       <ul className="space-y-5">
         {tools.map((t) => (
-          <li key={t.name} className="grid gap-4 rounded-lg border border-white/10 bg-card p-4 lg:grid-cols-[1fr_280px] lg:items-start">
+          <li key={t.name} className={`grid gap-4 rounded-lg border border-white/10 bg-card p-4 lg:items-start ${t.video ? "lg:grid-cols-[1fr_280px]" : ""}`}>
             <div>
               <div className="font-medium text-foreground">{t.name}</div>
               <div className="mt-1 flex flex-wrap items-center gap-2">
@@ -613,7 +613,7 @@ function Day3Section({ section }: { section: string }) {
               </div>
               <p className="mt-1 text-sm text-muted-foreground">{t.desc}</p>
             </div>
-            <RefVideo id={t.video} title={`${t.name} — tutorial`} />
+            {t.video && <RefVideo id={t.video} title={`${t.name} — tutorial`} />}
           </li>
         ))}
       </ul>
