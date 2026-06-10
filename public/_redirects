@@ -1,0 +1,5 @@
+# SPA fallback for Netlify — serve the client shell for any route the
+# TanStack router handles. Static files in /assets/* are served first.
+# This file is copied into the publish dir (dist/client) so it ships with
+# every deploy, including manual drag-and-drop of that folder.
+/*    /_shell.html    200

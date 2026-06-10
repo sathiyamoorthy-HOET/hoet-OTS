@@ -1,0 +1,127 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --radius: 0.5rem;
+  --background: oklch(0.04 0 0);
+  --foreground: oklch(0.97 0 0);
+  --card: oklch(0.08 0 0);
+  --card-foreground: oklch(0.97 0 0);
+  --popover: oklch(0.08 0 0);
+  --popover-foreground: oklch(0.97 0 0);
+  --primary: oklch(0.97 0 0);
+  --primary-foreground: oklch(0.04 0 0);
+  --secondary: oklch(0.18 0 0);
+  --secondary-foreground: oklch(0.97 0 0);
+  --muted: oklch(0.14 0 0);
+  --muted-foreground: oklch(0.65 0 0);
+  --accent: oklch(0.18 0 0);
+  --accent-foreground: oklch(0.97 0 0);
+  --destructive: oklch(0.62 0.21 25);
+  --destructive-foreground: oklch(0.97 0 0);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.55 0 0);
+}
+
+.light {
+  --background: oklch(0.99 0 0);
+  --foreground: oklch(0.15 0 0);
+  --card: oklch(0.97 0 0);
+  --card-foreground: oklch(0.15 0 0);
+  --popover: oklch(0.99 0 0);
+  --popover-foreground: oklch(0.15 0 0);
+  --primary: oklch(0.15 0 0);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.94 0 0);
+  --secondary-foreground: oklch(0.15 0 0);
+  --muted: oklch(0.95 0 0);
+  --muted-foreground: oklch(0.40 0 0);
+  --accent: oklch(0.94 0 0);
+  --accent-foreground: oklch(0.15 0 0);
+  --border: oklch(0 0 0 / 12%);
+  --input: oklch(0 0 0 / 14%);
+  --ring: oklch(0.55 0 0);
+}
+
+.light .hairline,
+.light .border-white\/10,
+.light .border-white\/15,
+.light .border-white\/35 { border-color: rgba(0,0,0,0.12) !important; }
+.light .bg-white\/5 { background-color: rgba(0,0,0,0.04) !important; }
+.light .bg-white\/10 { background-color: rgba(0,0,0,0.07) !important; }
+.light .prose-doc p,
+.light .prose-doc li { color: oklch(0.30 0 0); }
+.light .prose-doc th { background: rgba(0,0,0,0.04); }
+.light .prose-doc th, .light .prose-doc td { border-color: rgba(0,0,0,0.1); }
+
+/* Founders image backing — white in dark mode, black in light mode */
+.founders-matte { background-color: #ffffff; }
+.light .founders-matte { background-color: #000000; }
+
+/* Amber chips/badges (Trainer-led, tool links) — darken text in light mode for contrast */
+.light .text-amber-300 { color: #b45309; }
+.light .bg-amber-400\/10 { background-color: rgba(245,158,11,0.14); }
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: "Fedra Sans Pro", "FedraSansPro", "Manrope", "Inter", system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    font-weight: 400;
+  }
+  h1, h2, h3, h4 { letter-spacing: -0.01em; font-weight: 600; }
+}
+
+.font-label {
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+
+.hairline { border-color: rgba(255,255,255,0.10); }
+
+.prose-doc h2 { font-size: 1.5rem; margin: 1.5rem 0 0.75rem; font-weight: 600; }
+.prose-doc h3 { font-size: 1.125rem; margin: 1.25rem 0 0.5rem; font-weight: 600; }
+.prose-doc p { margin: 0.5rem 0; color: oklch(0.85 0 0); line-height: 1.65; }
+.prose-doc ul { margin: 0.5rem 0 0.75rem 1.25rem; list-style: disc; }
+.prose-doc li { margin: 0.25rem 0; color: oklch(0.85 0 0); line-height: 1.6; }
+.prose-doc table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+.prose-doc th, .prose-doc td { border: 1px solid rgba(255,255,255,0.1); padding: 0.55rem 0.75rem; text-align: left; vertical-align: top; }
+.prose-doc th { background: rgba(255,255,255,0.04); font-weight: 600; }

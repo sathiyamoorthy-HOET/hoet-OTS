@@ -1,0 +1,17 @@
+# Netlify deploy config — client-rendered SPA (TanStack Start SPA mode).
+# `npm run build` emits the static client to dist/client with a _shell.html
+# shell; every route is served that shell and rendered client-side.
+
+[build]
+  command = "npm run build"
+  publish = "dist/client"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# SPA fallback: serve the shell for any route the client router handles.
+# Static files in dist/client (e.g. /assets/*) are served before this rule.
+[[redirects]]
+  from = "/*"
+  to = "/_shell.html"
+  status = 200
