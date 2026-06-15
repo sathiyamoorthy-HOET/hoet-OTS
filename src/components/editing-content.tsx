@@ -38,15 +38,16 @@ export const SECTION_META: Record<string, { icon: LucideIcon; color: string }> =
 };
 
 // Order drives the sidebar, the overview grid, and the Rules-of-Thumb order.
+// "rules-of-thumb" is intentionally NOT listed here — it's merged into the
+// Overview (index) page rather than being a standalone section.
 export const SECTIONS: [string, string][] = [
-  ["rules-of-thumb", "Rules of Thumb"],
   ["file-naming", "File Naming"],
   ["project-backup", "Project Backup"],
   ["dos", "Do's & Don'ts"],
   ["non-neg", "Non-Negotiables"],
+  ["framing", "Framing"],
   ["organic-safe-zone", "Organic Safe Zone"],
   ["safe-zone", "Ads Safe Zone"],
-  ["framing", "Framing"],
   ["caption-rules", "Caption Rules"],
   ["caption-placement", "Caption Placement"],
   ["supers-placement", "Supers Placement"],
@@ -291,115 +292,34 @@ const AI_REGEN: [string, string][] = [
   ["Word pronunciation", "If any word is mispronounced, regenerate it (or fix the script / voice) until every word is correct."],
 ];
 
-type AntiItem = { title: string; desc: string; fix?: string; clip?: boolean };
-const ANTI_PATTERNS: { group: string; slug?: string; items: AntiItem[] }[] = [
-  {
-    group: "Safe zone & framing",
-    slug: "safe-zone",
-    items: [
-      { title: "Text under the bottom UI", desc: "Captions, supers or the logo sit below the safe zone and get cut off by the platform's bottom bar.", fix: "Keep every element inside the safe zone for the ratio." },
-      { title: "Low or mis-framed head", desc: "The head sits low in the frame, or there's a large gap of headroom — eyes off the upper-third line.", fix: "Frame head-high with the eyes on the upper-third line." },
-    ],
-  },
-  {
-    group: "Captions",
-    slug: "caption-rules",
-    items: [
-      { title: "Two-line caption", desc: "A caption wraps onto two lines instead of staying short and glanceable.", fix: "One line, around 16 characters." },
-      { title: "Captions out of sync", desc: "On-screen text lags or leads the voice-over instead of changing with the words spoken.", fix: "Sync every caption to the VO.", clip: true },
-      { title: "Split name or unit", desc: "“Aditya / Kachave” or “999 / rupees” broken across two slides.", fix: "Keep names, word-pairs and measured values whole." },
-    ],
-  },
-  {
-    group: "Supers",
-    slug: "supers-placement",
-    items: [
-      { title: "Super overlapping the caption", desc: "A super and the caption sit on top of each other.", fix: "Super top or bottom; never overlap the caption." },
-      { title: "Whole sentence bolded", desc: "The entire super is bold instead of just the key words.", fix: "Bold only the keywords in a contrasting colour." },
-    ],
-  },
-  {
-    group: "Symbols & units",
-    slug: "symbols",
-    items: [
-      { title: "Wrong rupee format", desc: "“999 rupees”, “Rs. 999” or “999/-” instead of the symbol.", fix: "Use ₹999 — symbol before the number, no space." },
-      { title: "Unitless number", desc: "A measurement shown with no unit.", fix: "Pair every number with its unit (25 fps, 3 hrs)." },
-    ],
-  },
-  {
-    group: "Visuals & B-roll",
-    slug: "visuals",
-    items: [
-      { title: "Filler B-roll / stock faces", desc: "Random clips or foreign faces with no link to what's being said.", fix: "Use real, relevant dashboards, reports and footage." },
-      { title: "Key visual buried", desc: "The dashboard or report is hidden in the background.", fix: "Bring it to the forefront in a contrasting colour." },
-    ],
-  },
-  {
-    group: "Icons",
-    slug: "icons",
-    items: [
-      { title: "Mixed icon styles", desc: "Outline and filled — or different icon families — in the same video.", fix: "One consistent style throughout." },
-      { title: "Banned icon styles", desc: "Lineal-colour, hand-drawn or flat icons.", fix: "Use Black outline, Black filled or Gradient from Flaticon." },
-    ],
-  },
-  {
-    group: "Transitions",
-    slug: "transitions",
-    items: [
-      { title: "Gimmicky transitions", desc: "A clean cut ruined by a glitch, wipe or 3D spin.", fix: "Clean cut on the beat; motivated transitions only.", clip: true },
-      { title: "Transition soup", desc: "A different transition on every cut.", fix: "Pick a small, consistent set per video." },
-    ],
-  },
-  {
-    group: "Audio",
-    slug: "audio-mixing",
-    items: [
-      { title: "Music overpowering the VO", desc: "Music or SFX buries the voice-over instead of ducking under it.", fix: "Duck music 6–12 dB under the VO.", clip: true },
-      { title: "Clipping master", desc: "The master peaks at 0 dB and distorts.", fix: "Peak -5 to -2 dB, loudness -14 LUFS." },
-    ],
-  },
-  {
-    group: "AI & animations",
-    slug: "ai-usage",
-    items: [
-      { title: "Uncanny avatar / broken lip-sync", desc: "An AI avatar that looks off or whose mouth is out of sync with the audio.", fix: "Regenerate until the look and sync are right.", clip: true },
-      { title: "Garbled AI text", desc: "AI-generated on-screen text is misspelled or gibberish.", fix: "Replace with real, proofread text." },
-      { title: "Half-baked animation", desc: "An incomplete, awkwardly timed or unrelatable animation left in the cut.", fix: "If it doesn't earn its place, cut it." },
-    ],
-  },
+// Visual before/after examples only — the written mistakes live in Do's & Don'ts.
+// Each entry is a video slot to be filmed/edited and added manually.
+type RejectionClip = { title: string; bad: string; good: string; slug: string };
+const REJECTION_CLIPS: RejectionClip[] = [
+  { title: "Captions out of sync", bad: "On-screen text lags or leads the voice-over.", good: "Every caption changes exactly with the words spoken.", slug: "caption-rules" },
+  { title: "Gimmicky transitions", bad: "A cut ruined by a glitch, wipe or 3D spin.", good: "A clean, motivated cut on the beat.", slug: "transitions" },
+  { title: "Music overpowering the voice-over", bad: "Music or SFX buries the VO.", good: "Music ducked 6–12 dB under the voice.", slug: "audio-mixing" },
+  { title: "Uncanny avatar / broken lip-sync", bad: "An AI avatar that looks off or whose mouth is out of sync.", good: "A regenerated take with the look and sync right.", slug: "ai-usage" },
 ];
 
 function RejectionGallery() {
   return (
     <>
-      <p>The most common reasons a cut gets sent back. Use this as a “what not to do” reference — if your edit matches any of these, fix it before review. Items marked with a video slot will get a real before/after example added.</p>
-      <div className="mt-4 space-y-7">
-        {ANTI_PATTERNS.map((g) => (
-          <div key={g.group}>
-            <div className="flex items-center justify-between gap-3">
-              <h3 className="text-base font-semibold text-foreground">{g.group}</h3>
-              {g.slug && <SLink slug={g.slug}>See section →</SLink>}
+      <p>Side-by-side <strong className="text-foreground">before / after examples</strong> of the rejections that are hard to judge from text alone — pacing, sync, motion and audio. For the written rules, see <SLink slug="dos">Do's &amp; Don'ts</SLink>; for the absolutes, see <SLink slug="non-neg">Non-Negotiables</SLink>.</p>
+      <p className="text-xs text-muted-foreground">Each clip below is a placeholder — the real before/after video will be filmed and added manually.</p>
+      <div className="mt-4 grid gap-4 sm:grid-cols-2">
+        {REJECTION_CLIPS.map((c) => (
+          <div key={c.title} className="overflow-hidden rounded-lg border border-white/10 bg-card">
+            <div className="flex flex-col items-center justify-center gap-1.5 border-b border-white/10 bg-black/40 text-center" style={{ aspectRatio: "16 / 9" }}>
+              <VideoOff className="h-7 w-7 text-muted-foreground" />
+              <span className="font-label">Before / after video · to be added</span>
+              <span className="px-3 text-[11px] text-muted-foreground">“{c.title}”</span>
             </div>
-            <div className="mt-2.5 grid gap-3 sm:grid-cols-2">
-              {g.items.map((it) => (
-                <div key={it.title} className="overflow-hidden rounded-lg border border-rose-400/25 bg-rose-400/5">
-                  {it.clip && (
-                    <div className="flex flex-col items-center justify-center gap-1.5 border-b border-white/10 bg-black/40 text-center" style={{ aspectRatio: "16 / 9" }}>
-                      <VideoOff className="h-7 w-7 text-muted-foreground" />
-                      <span className="font-label">Example video · to be added</span>
-                      <span className="px-3 text-[11px] text-muted-foreground">“{it.title}”</span>
-                    </div>
-                  )}
-                  <div className="flex items-start gap-2.5 p-4">
-                    <ThumbsDown className="mt-0.5 h-4 w-4 shrink-0 text-rose-400" />
-                    <div>
-                      <div className="font-medium text-foreground">{it.title}</div>
-                      <p className="mt-1 text-sm text-muted-foreground">{it.desc}</p>
-                      {it.fix && <p className="mt-1.5 text-sm text-emerald-300">Fix — {it.fix}</p>}
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div className="p-4">
+              <div className="font-medium text-foreground">{c.title}</div>
+              <p className="mt-1.5 flex items-start gap-2 text-sm"><ThumbsDown className="mt-0.5 h-4 w-4 shrink-0 text-rose-400" /><span className="text-muted-foreground"><strong className="text-rose-300">Rejected:</strong> {c.bad}</span></p>
+              <p className="mt-1.5 flex items-start gap-2 text-sm"><CheckSquare className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" /><span className="text-muted-foreground"><strong className="text-emerald-300">Approved:</strong> {c.good}</span></p>
+              <div className="mt-2.5"><SLink slug={c.slug}>See section →</SLink></div>
             </div>
           </div>
         ))}
@@ -418,9 +338,9 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
         <li><strong className="text-foreground">Project backup</strong> — for every non-ad deliverable, hand over the complete project backup with all project files (<SLink slug="project-backup">Project Backup</SLink>).</li>
         <li><strong className="text-foreground">Do's &amp; Don'ts</strong> — follow the universal do's and don'ts (<SLink slug="dos">Do's &amp; Don'ts</SLink>).</li>
         <li><strong className="text-foreground">Non-negotiables</strong> — front angle first then cross angles; finished animations; every visual relevant (<SLink slug="non-neg">Non-Negotiables</SLink>).</li>
+        <li><strong className="text-foreground">Framing</strong> — head high, eyes on the upper-third line (<SLink slug="framing">Framing</SLink>).</li>
         <li><strong className="text-foreground">Organic safe zone</strong> — keep key elements inside the 16 × 9 title-safe block, clear of YouTube UI (<SLink slug="organic-safe-zone">Organic Safe Zone</SLink>).</li>
         <li><strong className="text-foreground">Ads safe zone</strong> — keep all text, logos and faces inside the 9 × 16 safe zone (<SLink slug="safe-zone">Ads Safe Zone</SLink>).</li>
-        <li><strong className="text-foreground">Framing</strong> — head high, eyes on the upper-third line (<SLink slug="framing">Framing</SLink>).</li>
         <li><strong className="text-foreground">Caption rules</strong> — single line, ~16 characters, synced to the VO; never split names, word-pairs or measured values (<SLink slug="caption-rules">Caption Rules</SLink>).</li>
         <li><strong className="text-foreground">Caption placement</strong> — one line, low in the safe zone; just above the seam on split screens (<SLink slug="caption-placement">Caption Placement</SLink>).</li>
         <li><strong className="text-foreground">Supers placement</strong> — top or bottom, never overlapping captions; bold only the key keywords in a contrasting colour (<SLink slug="supers-placement">Supers Placement</SLink>).</li>
@@ -484,8 +404,10 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
   ),
 
   "dos": (
-    <div className="overflow-x-auto">
-      <table className="w-full border-collapse text-sm">
+    <>
+      <p>The everyday craft reference — apply these on every edit. They're the working rules; the three <SLink slug="non-neg">Non-Negotiables</SLink> sit above this list and override everything here (break one and the cut is rejected outright).</p>
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse text-sm">
         <thead><tr className="border-b border-white/15"><th className="px-3 py-2 text-left font-medium text-emerald-300">✓ Do's</th><th className="px-3 py-2 text-left font-medium text-rose-300">✕ Don'ts</th></tr></thead>
         <tbody>
           {[
@@ -512,14 +434,19 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
           ))}
         </tbody>
       </table>
-    </div>
+      </div>
+    </>
   ),
 
   "non-neg": (
-    <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
-      <div className="space-y-4">
-        <div>
-          <h3 className="text-base font-semibold text-foreground">1 · Camera angles</h3>
+    <>
+      <p className="rounded-lg border border-rose-400/30 bg-rose-400/10 p-3.5 text-rose-200">
+        <strong className="text-rose-300">Break any one of these and the cut is rejected outright</strong> — however good the rest of the edit is. These three sit above the <SLink slug="dos">Do's &amp; Don'ts</SLink> and override everything in them.
+      </p>
+      <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
+        <div className="space-y-4">
+          <div>
+            <h3 className="text-base font-semibold text-foreground">1 · Camera angles</h3>
           <ul className="mt-1.5 list-disc pl-5 space-y-1">
             <li>Open the ad on the <strong className="text-foreground">front camera angle</strong>.</li>
             <li>Bring in <strong className="text-foreground">cross angles in between</strong>.</li>
@@ -548,7 +475,8 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
       <div className="overflow-hidden rounded-lg border border-white/10 bg-black lg:sticky lg:top-8" style={{ aspectRatio: "16 / 9" }}>
         <LiteVideo embedSrc="https://www.youtube.com/embed/KBR_nWRTMBI?list=PLORAS1W4pivTPg_PuFl1abg_Cpo_0Ifok&index=3" title="Editing Guidelines walkthrough" />
       </div>
-    </div>
+      </div>
+    </>
   ),
 
   "organic-safe-zone": (
@@ -626,6 +554,9 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
           <li>Keep the face inside the safe zone in both shots, well clear of the right-side action buttons.</li>
           <li>Don't centre the head low in the frame or leave a large empty gap of headroom above it.</li>
         </ul>
+        <div className="overflow-hidden rounded-lg border border-white/10 bg-black" style={{ aspectRatio: "16 / 9" }}>
+          <LiteVideo embedSrc="https://www.youtube.com/embed/qwVPogPBP7E" title="Talking-head framing walkthrough" />
+        </div>
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:sticky lg:top-8">
         <FramingDiagram variant="close" />
@@ -692,7 +623,7 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
         <li>This applies to captions and supers alike.</li>
       </ul>
       <h3 className="text-base font-semibold text-foreground pt-2">Visual Examples</h3>
-      <div className="grid gap-4 sm:grid-cols-2 mt-2">
+      <div className="mt-2 grid grid-cols-4 gap-2 sm:gap-3">
         <SymbolFrame ok label="₹999" sub="Symbol + number together" />
         <SymbolFrame label="999 rupees" sub="Never spell out — use ₹" />
         <SymbolFrame ok label="25 fps" sub="Number + unit together" />

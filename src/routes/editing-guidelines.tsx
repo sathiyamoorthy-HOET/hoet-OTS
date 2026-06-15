@@ -25,7 +25,7 @@ function EditingLayout() {
         activeOptions={{ exact: true }}
         className={"block rounded-md px-2 py-1.5 transition-colors " + (isOverview ? "bg-white/10 text-foreground" : "text-muted-foreground hover:bg-white/5 hover:text-foreground")}
       >
-        Overview
+        Overview &amp; Rules of Thumb
       </Link>
       {SECTIONS.map(([slug, label]) => {
         const meta = SECTION_META[slug];
