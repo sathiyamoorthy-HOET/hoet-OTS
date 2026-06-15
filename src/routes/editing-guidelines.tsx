@@ -4,7 +4,7 @@ import {
   Star, Heart, Bell, Settings, Eye,
   ListChecks, FileText, Archive, Ban, MonitorPlay, Smartphone, Camera, Captions,
   Type, Award, MousePointerClick, IndianRupee, Image as ImageIcon, Shapes, Gauge,
-  Shuffle, AudioLines, ClipboardCheck, CheckSquare, Sparkles, type LucideIcon,
+  Shuffle, AudioLines, ClipboardCheck, CheckSquare, Sparkles, RotateCcw, type LucideIcon,
 } from "lucide-react";
 import playlistThumb from "@/assets/editing-guidelines-thumb.png";
 import { LiteVideo } from "@/components/TrainingDay";
@@ -62,9 +62,9 @@ const SECTIONS: [string, string][] = [
   ["caption-rules", "Caption Rules"],
   ["caption-placement", "Caption Placement"],
   ["supers-placement", "Supers Placement"],
+  ["symbols", "Symbols & Units"],
   ["logo", "Logo & Watermark"],
   ["cta", "CTA & Endscreen"],
-  ["symbols", "Symbols & Units"],
   ["visuals", "Visuals & B-Roll"],
   ["ai-usage", "AI Usage Policy"],
   ["icons", "Icons"],
@@ -252,6 +252,13 @@ const AI_AVOID = [
   "Don't use unlicensed AI voices or clone a real person's voice without approval.",
   "Don't trust AI numbers, claims or spellings without checking against the source and landing page.",
   "Don't use AI output you can't licence or prove the rights to.",
+];
+
+const AI_REGEN: [string, string][] = [
+  ["Avatar look", "If the generated avatar looks off, uncanny or low-quality, check it and regenerate it."],
+  ["Lip-sync & timing", "If the voice and the avatar's mouth or movements are out of sync, regenerate it."],
+  ["Actions & expressions", "If the actions, gestures or expressions look wrong or unrelatable to the moment, regenerate it."],
+  ["Word pronunciation", "If any word is mispronounced, regenerate it (or fix the script / voice) until every word is correct."],
 ];
 
 function Page() {
@@ -591,37 +598,33 @@ function Page() {
       </Section>
 
       <Section id="supers-placement" title="Supers Placement">
-        <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
-          <ul className="list-disc pl-5 space-y-1">
-            <li>A super sits in one of two positions — top or bottom of the safe zone.</li>
-            <li>A super runs up to 2 lines.</li>
-            <li>When a super needs more room, it may sit in the centre at 3 to 4 lines.</li>
-            <li>Supers and captions must never overlap.</li>
-            <li>Add a headline wherever it helps orient the viewer.</li>
-            <li>Emphasise only the important keywords — set them bold and in a contrasting colour (e.g. Salary Hike, 17 LPA, Prompt Engineer). Never bold a full sentence; put the rest in subtitles.</li>
-            <li>Use ALL CAPS only for 1–3 words (a CTA or key emphasis), with +2–4% letter-spacing — never for full lines. Keep on-screen type consistent; clarity over decoration.</li>
-          </ul>
-          <div className="flex justify-center"><PlacementDiagram variant="super" /></div>
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,440px)] lg:items-start">
+          <div>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>A super sits in one of two positions — top or bottom of the safe zone.</li>
+              <li>A super runs up to 2 lines.</li>
+              <li>When a super needs more room, it may sit in the centre at 3 to 4 lines.</li>
+              <li>Supers and captions must never overlap.</li>
+              <li>Add a headline wherever it helps orient the viewer.</li>
+              <li>Emphasise only the important keywords — set them bold and in a contrasting colour (e.g. Salary Hike, 17 LPA, Prompt Engineer). Never bold a full sentence; put the rest in subtitles.</li>
+              <li>Use ALL CAPS only for 1–3 words (a CTA or key emphasis), with +2–4% letter-spacing — never for full lines. Keep on-screen type consistent; clarity over decoration.</li>
+            </ul>
+            <div className="mt-5 flex justify-center sm:justify-start"><PlacementDiagram variant="super" /></div>
+          </div>
+
+          <figure className="overflow-hidden rounded-lg border border-white/10 bg-black lg:sticky lg:top-8">
+            <video
+              src="/supers-placement.mp4"
+              poster="/supers-poster.jpg"
+              controls
+              playsInline
+              preload="metadata"
+              className="block w-full"
+              style={{ aspectRatio: "16 / 9" }}
+            />
+            <figcaption className="px-3 py-2 text-xs text-muted-foreground">Watch: super at the top or bottom of the safe zone, never overlapping the caption, with only the keywords bold.</figcaption>
+          </figure>
         </div>
-      </Section>
-
-      <Section id="logo" title="Logo & Watermark">
-        <ul className="list-disc pl-5 space-y-1">
-          <li>Use the supplied logo / watermark asset only — never redraw, restretch, recolour, or rebuild it.</li>
-          <li>Use the provided logo watermark — place it in a corner of the safe zone, clear of captions, supers and the subject's face.</li>
-          <li>Keep size and opacity constant for the full duration of the ad — don't fade it in and out.</li>
-        </ul>
-        <p>Each brand supplies its own logo and watermark in its <a href="/brand-guidelines" className="underline text-foreground">Brand &amp; Style Guideline</a>.</p>
-      </Section>
-
-      <Section id="cta" title="CTA & Endscreen">
-        <p>Every ad closes with the mandatory <strong className="text-foreground">5-second outro CTA</strong> — the endscreen. It is the last thing the viewer sees, so it must be on-brand and consistent across every ad.</p>
-        <ul className="list-disc pl-5 space-y-1">
-          <li>Use the approved endscreen template for the brand — don't rebuild or restyle it.</li>
-          <li>One clear call to action, stated verbally and shown on screen.</li>
-          <li>Keep the CTA and logo fully inside the safe zone, clear of the bottom UI band and the right-side action buttons.</li>
-          <li>Hold the endscreen for the full 5 seconds at the end of the ad.</li>
-        </ul>
       </Section>
 
       <Section id="symbols" title="Symbols & Units">
@@ -659,6 +662,25 @@ function Page() {
         </div>
       </Section>
 
+      <Section id="logo" title="Logo & Watermark">
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Use the supplied logo / watermark asset only — never redraw, restretch, recolour, or rebuild it.</li>
+          <li>Use the provided logo watermark — place it in a corner of the safe zone, clear of captions, supers and the subject's face.</li>
+          <li>Keep size and opacity constant for the full duration of the ad — don't fade it in and out.</li>
+        </ul>
+        <p>Each brand supplies its own logo and watermark in its <a href="/brand-guidelines" className="underline text-foreground">Brand &amp; Style Guideline</a>.</p>
+      </Section>
+
+      <Section id="cta" title="CTA & Endscreen">
+        <p>Every ad closes with the mandatory <strong className="text-foreground">5-second outro CTA</strong> — the endscreen. It is the last thing the viewer sees, so it must be on-brand and consistent across every ad.</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Use the approved endscreen template for the brand — don't rebuild or restyle it.</li>
+          <li>One clear call to action, stated verbally and shown on screen.</li>
+          <li>Keep the CTA and logo fully inside the safe zone, clear of the bottom UI band and the right-side action buttons.</li>
+          <li>Hold the endscreen for the full 5 seconds at the end of the ad.</li>
+        </ul>
+      </Section>
+
       <Section id="visuals" title="Visuals & B-Roll">
         <p>Every visual must reinforce the script and keep the viewer hooked. Use real, relevant material — never filler.</p>
         <ul className="list-disc pl-5 space-y-1">
@@ -685,6 +707,20 @@ function Page() {
               {AI_AVOID.map((t) => <li key={t}>{t}</li>)}
             </ul>
           </div>
+        </div>
+
+        <div className="mt-3 rounded-lg border border-sky-400/30 bg-sky-400/5 p-4">
+          <div className="font-label flex items-center gap-1.5 text-sky-300"><RotateCcw className="h-3.5 w-3.5" /> Review &amp; regenerate every AI video</div>
+          <p className="mt-2">After generating any AI video, <strong className="text-foreground">review it in full before it goes in the cut</strong> — never trust the first render. The actions, sync and word pronunciation must all be correct; if anything is off, <strong className="text-foreground">regenerate it</strong>.</p>
+          <ul className="mt-2.5 space-y-1.5">
+            {AI_REGEN.map(([title, desc]) => (
+              <li key={title} className="flex items-start gap-2.5">
+                <RotateCcw className="mt-0.5 h-4 w-4 shrink-0 text-sky-300" />
+                <span><strong className="text-foreground">{title}</strong> — {desc}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-2.5 text-sm">Only keep an AI video once the <strong className="text-foreground">avatar look, sync, actions and pronunciation are all correct</strong> — otherwise generate it again.</p>
         </div>
       </Section>
 
