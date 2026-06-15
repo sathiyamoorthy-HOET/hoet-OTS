@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Target, CircleCheck, CalendarDays } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 import { TRAINING_DAYS } from "@/lib/training-data";
 
@@ -35,16 +35,26 @@ function Page() {
       />
 
       <section className="mb-12">
-        <div className="rounded-lg border border-white/15 bg-card p-5">
-          <p className="font-label text-emerald-300">The Goal</p>
-          <p className="mt-1 text-foreground">Make a new editor production-ready on House of EdTech standards, placed in their pod by Day 4 and working on real assignments from Day 5.</p>
+        <div className="flex items-start gap-3 rounded-lg border border-white/15 bg-card p-5">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-emerald-400/10 text-emerald-300">
+            <Target className="h-5 w-5" />
+          </span>
+          <div>
+            <p className="font-label text-emerald-300">The Goal</p>
+            <p className="mt-1 text-foreground">Make a new editor production-ready on House of EdTech standards, placed in their pod by Day 4 and working on real assignments from Day 5.</p>
+          </div>
         </div>
       </section>
 
       <section className="mb-12">
         <h2 className="text-xl font-semibold">By the end of the program, the editor can</h2>
-        <ul className="mt-3 list-disc pl-5 space-y-1 text-muted-foreground leading-relaxed">
-          {OUTCOMES.map((o) => <li key={o}>{o}</li>)}
+        <ul className="mt-3 grid gap-2 text-muted-foreground leading-relaxed sm:grid-cols-2">
+          {OUTCOMES.map((o) => (
+            <li key={o} className="flex items-start gap-2.5">
+              <CircleCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
+              <span>{o}</span>
+            </li>
+          ))}
         </ul>
       </section>
 
@@ -53,8 +63,8 @@ function Page() {
         <p className="mt-2 text-muted-foreground leading-relaxed">Each day is split into a first and second half, and builds on the last — from a baseline read of current skill to working real deliverables inside a pod. Open any day for the full breakdown.</p>
         <div className="mt-5 grid gap-3 sm:grid-cols-2">
           {TRAINING_DAYS.map((d) => (
-            <Link key={d.slug} to="/training/$day" params={{ day: d.slug }} className="group rounded-lg border border-white/10 bg-card p-5 hover:border-white/30">
-              <div className="font-label">{d.day}</div>
+            <Link key={d.slug} to="/training/$day" params={{ day: d.slug }} className="group rounded-lg border border-white/10 bg-card p-5 transition hover:border-white/30 hover:bg-white/[0.03]">
+              <div className="flex items-center gap-1.5 font-label"><CalendarDays className="h-3.5 w-3.5" /> {d.day}</div>
               <div className="mt-1 text-lg font-semibold">{d.title}</div>
               <p className="mt-1 text-sm text-muted-foreground">{d.summary}</p>
               <div className="mt-4 inline-flex items-center gap-1 text-sm">Open <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" /></div>

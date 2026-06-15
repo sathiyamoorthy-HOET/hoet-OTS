@@ -1,7 +1,14 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Star, Heart, Bell, Settings } from "lucide-react";
+import {
+  Star, Heart, Bell, Settings, Eye,
+  ListChecks, FileText, Archive, Ban, MonitorPlay, Smartphone, Camera, Captions,
+  Type, Award, MousePointerClick, IndianRupee, Image as ImageIcon, Shapes, Gauge,
+  Shuffle, AudioLines, ClipboardCheck, CheckSquare, Sparkles, type LucideIcon,
+} from "lucide-react";
 import playlistThumb from "@/assets/editing-guidelines-thumb.png";
 import { LiteVideo } from "@/components/TrainingDay";
+import { SectionLayout } from "@/components/SectionLayout";
 
 const SF_PRO = "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', system-ui, sans-serif";
 
@@ -17,26 +24,251 @@ export const Route = createFileRoute("/editing-guidelines")({
   component: Page,
 });
 
+const SECTION_META: Record<string, { icon: LucideIcon; color: string }> = {
+  "rules-of-thumb": { icon: ListChecks, color: "text-sky-400" },
+  "file-naming": { icon: FileText, color: "text-amber-400" },
+  "project-backup": { icon: Archive, color: "text-orange-400" },
+  "dos": { icon: CheckSquare, color: "text-emerald-400" },
+  "non-neg": { icon: Ban, color: "text-rose-400" },
+  "organic-safe-zone": { icon: MonitorPlay, color: "text-green-400" },
+  "safe-zone": { icon: Smartphone, color: "text-cyan-400" },
+  "framing": { icon: Camera, color: "text-violet-400" },
+  "caption-rules": { icon: Captions, color: "text-blue-400" },
+  "caption-placement": { icon: Captions, color: "text-indigo-400" },
+  "supers-placement": { icon: Type, color: "text-fuchsia-400" },
+  "logo": { icon: Award, color: "text-yellow-400" },
+  "cta": { icon: MousePointerClick, color: "text-pink-400" },
+  "symbols": { icon: IndianRupee, color: "text-emerald-400" },
+  "visuals": { icon: ImageIcon, color: "text-teal-400" },
+  "ai-usage": { icon: Sparkles, color: "text-sky-300" },
+  "icons": { icon: Shapes, color: "text-purple-400" },
+  "pacing": { icon: Gauge, color: "text-lime-400" },
+  "transitions": { icon: Shuffle, color: "text-cyan-400" },
+  "audio-mixing": { icon: AudioLines, color: "text-amber-400" },
+  "pre-export-qa": { icon: CheckSquare, color: "text-emerald-400" },
+  "accountability": { icon: ClipboardCheck, color: "text-rose-300" },
+};
+
+// Drives both the section headings and the sidebar sub-nav, in order.
+const SECTIONS: [string, string][] = [
+  ["rules-of-thumb", "Rules of Thumb"],
+  ["file-naming", "File Naming"],
+  ["project-backup", "Project Backup"],
+  ["dos", "Do's & Don'ts"],
+  ["non-neg", "Non-Negotiables"],
+  ["organic-safe-zone", "Organic Safe Zone"],
+  ["safe-zone", "Ads Safe Zone"],
+  ["framing", "Framing"],
+  ["caption-rules", "Caption Rules"],
+  ["caption-placement", "Caption Placement"],
+  ["supers-placement", "Supers Placement"],
+  ["logo", "Logo & Watermark"],
+  ["cta", "CTA & Endscreen"],
+  ["symbols", "Symbols & Units"],
+  ["visuals", "Visuals & B-Roll"],
+  ["ai-usage", "AI Usage Policy"],
+  ["icons", "Icons"],
+  ["pacing", "Pacing & Engagement"],
+  ["transitions", "Transitions"],
+  ["audio-mixing", "Audio Mixing"],
+  ["pre-export-qa", "Pre-Export QA Checklist"],
+  ["accountability", "Accountability"],
+];
+
 function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
+  const meta = SECTION_META[id];
+  const Icon = meta?.icon;
   return (
     <section id={id} className="mb-10 scroll-mt-28">
-      <h2 className="text-xl font-semibold">{title}</h2>
+      <h2 className="flex items-center gap-2.5 text-xl font-semibold">
+        {Icon && <Icon className={`h-5 w-5 shrink-0 ${meta.color}`} />}
+        {title}
+      </h2>
       <div className="mt-3 space-y-3 text-sm text-muted-foreground leading-relaxed">{children}</div>
     </section>
   );
 }
 
+type QaItem = { text: string; image?: string };
+const QA_GROUPS: { group: string; links: [string, string][]; items: QaItem[] }[] = [
+  {
+    group: "Safe zone & framing",
+    links: [["Ads Safe Zone", "#safe-zone"], ["Organic", "#organic-safe-zone"], ["Framing", "#framing"]],
+    items: [
+      { text: "All text, logos and faces sit inside the safe zone for the format's ratio." },
+      { text: "Subject framed head-high, with the eyes on the upper-third line.", image: "/framing-eye-line.svg" },
+    ],
+  },
+  {
+    group: "Captions & supers",
+    links: [["Caption Rules", "#caption-rules"], ["Placement", "#caption-placement"], ["Supers", "#supers-placement"]],
+    items: [
+      { text: "Captions are single-line, around 16 characters, and synced to the voice-over." },
+      { text: "Names, word-pairs and measured values kept whole — never split across captions." },
+      { text: "Supers placed top or bottom with no overlap; only key keywords bold in a contrasting colour." },
+    ],
+  },
+  {
+    group: "Symbols & units",
+    links: [["Symbols & Units", "#symbols"]],
+    items: [
+      { text: "₹ used for rupees, and every number kept together with its unit (₹999, 25 fps)." },
+    ],
+  },
+  {
+    group: "Visuals & icons",
+    links: [["Visuals & B-Roll", "#visuals"], ["Icons", "#icons"]],
+    items: [
+      { text: "Real dashboards and reports sit in the forefront in a contrasting colour — no filler clips." },
+      { text: "One consistent icon style across the whole video." },
+    ],
+  },
+  {
+    group: "Pacing & transitions",
+    links: [["Pacing", "#pacing"], ["Transitions", "#transitions"]],
+    items: [
+      { text: "Clean, intentional cuts with deliberate pacing — nothing sloppy, mistimed or abrupt." },
+      { text: "Transitions are motivated, not decorative." },
+    ],
+  },
+  {
+    group: "Audio",
+    links: [["Audio Mixing", "#audio-mixing"]],
+    items: [
+      { text: "Voice-over clear and leading; peak -5 to -2 dB, loudness -14 LUFS." },
+      { text: "Master never clips at 0 dB, with short fades at the start and end." },
+    ],
+  },
+  {
+    group: "Brand & accuracy",
+    links: [["Logo", "#logo"], ["CTA", "#cta"], ["Accountability", "#accountability"]],
+    items: [
+      { text: "On-brand and on-spec — ratio, typography and colour all correct." },
+      { text: "Logo revealed only at the brand mention and the CTA; the mandatory 5-second outro CTA is present." },
+      { text: "Spelling checked across the video and subtitles; prices match the current landing page." },
+    ],
+  },
+  {
+    group: "Delivery",
+    links: [["File Naming", "#file-naming"], ["Project Backup", "#project-backup"]],
+    items: [
+      { text: "File named per the convention (ads)." },
+      { text: "Complete project backup with all project files handed over for non-ad deliverables." },
+    ],
+  },
+];
+
+function ImageZoom({ src, label }: { src: string; label: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="inline-flex items-center gap-1.5 rounded-md border border-white/15 bg-white/5 px-3 py-1.5 text-xs font-medium text-foreground transition hover:border-white/35 hover:text-sky-300"
+      >
+        <Eye className="h-4 w-4 text-sky-300" /> {label}
+      </button>
+      {open && (
+        <div
+          onClick={() => setOpen(false)}
+          className="fixed inset-0 z-50 flex cursor-zoom-out items-center justify-center bg-black/85 p-6"
+          role="dialog"
+          aria-modal="true"
+          aria-label={label}
+        >
+          <img src={src} alt={label} className="max-h-[88vh] max-w-[92vw] rounded-lg object-contain shadow-2xl" />
+        </div>
+      )}
+    </>
+  );
+}
+
+function PreExportQA() {
+  const [zoom, setZoom] = useState<string | null>(null);
+  return (
+    <>
+      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+        {QA_GROUPS.map((g) => (
+          <div key={g.group} className="rounded-lg border border-white/10 bg-card p-4">
+            <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+              <span className="font-label text-foreground">{g.group}</span>
+              {g.links.map(([label, href]) => (
+                <a key={href} href={href} className="text-[11px] font-medium text-sky-300 underline underline-offset-2 hover:text-sky-200">{label} →</a>
+              ))}
+            </div>
+            <ul className="mt-2.5 space-y-2">
+              {g.items.map((item) => (
+                <li key={item.text} className="flex items-start gap-2.5">
+                  <CheckSquare className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
+                  <span>{item.text}</span>
+                  {item.image && (
+                    <button
+                      type="button"
+                      onClick={() => setZoom(item.image!)}
+                      aria-label="View reference image"
+                      title="View reference image"
+                      className="ml-0.5 mt-0.5 shrink-0 rounded p-0.5 text-sky-300 transition hover:bg-white/10 hover:text-sky-200"
+                    >
+                      <Eye className="h-4 w-4" />
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      {zoom && (
+        <div
+          onClick={() => setZoom(null)}
+          className="fixed inset-0 z-50 flex cursor-zoom-out items-center justify-center bg-black/85 p-6"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Framing reference image"
+        >
+          <img src={zoom} alt="Talking-head framing reference — eyes on the upper-third line" className="max-h-[88vh] max-w-[92vw] rounded-lg object-contain shadow-2xl" />
+        </div>
+      )}
+    </>
+  );
+}
+
+const AI_DO = [
+  "Prioritise real footage and assets; use AI-generated visuals only when no real asset exists and it directly supports the script.",
+  "Every AI element must be relevant to what is being said or shown — never decorative AI filler.",
+  "Regenerate any avatar, image or clip that looks off, uncanny or incomplete before it reaches the cut.",
+  "Match AI visuals to the brand — colour grade, palette, typography and one consistent icon / visual style.",
+  "Use only licensed / approved AI voices; the voice-over must stay clear and natural.",
+  "Proofread AI output for wrong facts, prices, names and logos — accuracy is on the editor.",
+  "Save the prompt, source and licence for every AI-generated asset in the project's licenses folder.",
+];
+
+const AI_AVOID = [
+  "Don't lean on AI-generated B-roll or stock / foreign faces in place of real, relevant footage.",
+  "Don't ship uncanny, half-baked or unrelatable AI avatars or animations.",
+  "Don't let AI visuals drift off-brand — mismatched grade, palette or mixed icon styles.",
+  "Don't use unlicensed AI voices or clone a real person's voice without approval.",
+  "Don't trust AI numbers, claims or spellings without checking against the source and landing page.",
+  "Don't use AI output you can't licence or prove the rights to.",
+];
+
 function Page() {
   return (
     <div>
-      <div className="mb-10 grid gap-8 lg:grid-cols-2 lg:items-center">
+      <div className="mb-10 grid gap-10 lg:grid-cols-[1fr_minmax(0,460px)] lg:items-center">
         <div>
-          <p className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+          <p className="mb-2 flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+            <span className="inline-block h-3 w-1 rounded-full bg-gradient-to-b from-sky-400 to-emerald-400" />
             Universal Video Rules · v1.0
           </p>
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Editing Guidelines</h1>
-          <p className="mt-3 text-base text-muted-foreground leading-relaxed max-w-xl">
+          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">Editing Guidelines</h1>
+          <p className="mt-4 max-w-xl text-base text-muted-foreground leading-relaxed">
             The on-screen text rules, symbol conventions, and non-negotiables every House of EdTech video edit follows — regardless of brand, format, or platform.
+          </p>
+          <p className="mt-5 text-sm text-muted-foreground">
+            Reference for the <Link to="/training/$day/$session" params={{ day: "day-2", session: "editing-sop-ads-organic-course" }} className="underline text-foreground">Day 2 · Editing SOP</Link> training session.
           </p>
         </div>
         <a
@@ -69,36 +301,19 @@ function Page() {
         </a>
       </div>
 
-      <p className="mb-6 text-sm text-muted-foreground">
-        Reference for the <Link to="/training/$day/$session" params={{ day: "day-2", session: "editing-sop-ads-organic-course" }} className="underline text-foreground">Day 2 · Editing SOP</Link> training session.
-      </p>
-
-      <nav className="mb-10 flex flex-wrap gap-2 text-sm">
-        {[
-          ["#rules-of-thumb","Rules of Thumb"],
-          ["#file-naming","File Naming"],
-          ["#project-backup","Project Backup"],
-          ["#dos","Do's & Don'ts"],
-          ["#non-neg","Non-Negotiables"],
-          ["#organic-safe-zone","Organic Safe Zone"],
-          ["#safe-zone","Ads Safe Zone"],
-          ["#framing","Framing"],
-          ["#caption-rules","Caption Rules"],
-          ["#caption-placement","Caption Placement"],
-          ["#supers-placement","Supers Placement"],
-          ["#logo","Logo & Watermark"],
-          ["#cta","CTA & Endscreen"],
-          ["#symbols","Symbols & Units"],
-          ["#visuals","Visuals & B-Roll"],
-          ["#icons","Icons"],
-          ["#pacing","Pacing & Engagement"],
-          ["#transitions","Transitions"],
-          ["#audio-mixing","Audio Mixing"],
-          ["#accountability","Accountability"],
-        ].map(([h,l]) => (
-          <a key={h} href={h} className="rounded-full border border-white/15 px-3 py-1 hover:border-white/35">{l}</a>
-        ))}
-      </nav>
+      <SectionLayout
+        title="Editing Guidelines"
+        nav={SECTIONS.map(([id, label]) => {
+          const meta = SECTION_META[id];
+          const Icon = meta?.icon;
+          return (
+            <a key={id} href={`#${id}`} className="flex items-center gap-2.5 rounded-md px-2 py-1.5 text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground">
+              {Icon && <Icon className={`h-4 w-4 shrink-0 ${meta.color}`} />}
+              {label}
+            </a>
+          );
+        })}
+      >
 
       <Section id="rules-of-thumb" title="Rules of Thumb">
         <p>A fast self-check across the whole guideline — run through these before sending any cut for review. Each links to the section with the detail.</p>
@@ -121,32 +336,49 @@ function Page() {
       </Section>
 
       <Section id="file-naming" title="File Naming Convention">
-        <p>This naming convention is for <strong className="text-foreground">ads only</strong>. Every exported ad file follows this pattern so each asset stays traceable from brief to delivery:</p>
-        <pre className="mt-3 overflow-x-auto rounded-md border border-white/15 bg-white/5 p-3 text-sm">Product_Copywriter_AssetType+Number_Ratio_POC_Creator</pre>
-        <p className="mt-3 text-sm">Example: <code className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-foreground">AI_AK_VS101_9016_KV_SM</code></p>
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,440px)] lg:items-start">
+          <div>
+            <p>This naming convention is for <strong className="text-foreground">ads only</strong>. Every exported ad file follows this pattern so each asset stays traceable from brief to delivery:</p>
+            <pre className="mt-3 overflow-x-auto rounded-md border border-white/15 bg-white/5 p-3 text-sm">Product_Copywriter_AssetType+Number_Ratio_POC_Creator</pre>
+            <p className="mt-3 text-sm">Example: <code className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-foreground">AI_AK_VS101_9016_KV_SM</code></p>
 
-        <div className="overflow-x-auto mt-4">
-          <table className="w-full border-collapse text-sm">
-            <thead><tr className="border-b border-white/15">{["Field","Example","Meaning"].map(h => <th key={h} className="px-3 py-2 text-left font-medium text-foreground">{h}</th>)}</tr></thead>
-            <tbody>
-              {[
-                ["Product","AI","The product or brand."],
-                ["Copywriter","AK","Copywriter's initials (e.g. AK = Aditya Kachave)."],
-                ["Asset Type + Number","VS101","Asset type code + sequence number (e.g. VS = Video Script)."],
-                ["Ratio","9016","Aspect ratio — 9016 = 9×16, 0101 = 1×1, 1609 = 16×9."],
-                ["POC","KV","Point of contact's initials (e.g. KV = Kushagra Varma)."],
-                ["Creator","SM","The creator / editor's initials (e.g. SM = Sathiya Moorthy)."],
-              ].map((r) => (
-                <tr key={r[0]} className="border-b border-white/10">
-                  <td className="px-3 py-2 font-medium text-foreground whitespace-nowrap">{r[0]}</td>
-                  <td className="px-3 py-2 font-mono whitespace-nowrap">{r[1]}</td>
-                  <td className="px-3 py-2">{r[2]}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+            <div className="overflow-x-auto mt-4">
+              <table className="w-full border-collapse text-sm">
+                <thead><tr className="border-b border-white/15">{["Field","Example","Meaning"].map(h => <th key={h} className="px-3 py-2 text-left font-medium text-foreground">{h}</th>)}</tr></thead>
+                <tbody>
+                  {[
+                    ["Product","AI","The product or brand."],
+                    ["Copywriter","AK","Copywriter's initials (e.g. AK = Aditya Kachave)."],
+                    ["Asset Type + Number","VS101","Asset type code + sequence number (e.g. VS = Video Script)."],
+                    ["Ratio","9016","Aspect ratio — 9016 = 9×16, 0101 = 1×1, 1609 = 16×9."],
+                    ["POC","KV","Point of contact's initials (e.g. KV = Kushagra Varma)."],
+                    ["Creator","SM","The creator / editor's initials (e.g. SM = Sathiya Moorthy)."],
+                  ].map((r) => (
+                    <tr key={r[0]} className="border-b border-white/10">
+                      <td className="px-3 py-2 font-medium text-foreground whitespace-nowrap">{r[0]}</td>
+                      <td className="px-3 py-2 font-mono whitespace-nowrap">{r[1]}</td>
+                      <td className="px-3 py-2">{r[2]}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="mt-3 text-xs italic">Separate every field with an underscore (_) and keep the order exactly as shown.</p>
+          </div>
+
+          <figure className="overflow-hidden rounded-lg border border-white/10 bg-black lg:sticky lg:top-8">
+            <video
+              src="/file-naming-convention.mp4"
+              poster="/file-naming-poster.jpg"
+              controls
+              playsInline
+              preload="metadata"
+              className="block w-full"
+              style={{ aspectRatio: "16 / 9" }}
+            />
+            <figcaption className="px-3 py-2 text-xs text-muted-foreground">Watch: how each field of the file name is built — Product · Copywriter · Asset · Ratio · POC · Creator.</figcaption>
+          </figure>
         </div>
-        <p className="mt-3 text-xs italic">Separate every field with an underscore (_) and keep the order exactly as shown.</p>
       </Section>
 
       <Section id="project-backup" title="Project Backup & Handoff">
@@ -188,11 +420,34 @@ function Page() {
 
       <Section id="non-neg" title="Non-Negotiables">
         <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
-          <ul className="list-disc pl-5 space-y-2">
-            <li>Start the ad with the front camera angle, then bring in cross angles in between, and use a clean mix of both throughout. This creates rhythm, holds attention, and stops the edit from feeling flat or one-note.</li>
-            <li>Every animation must feel finished and intentional. Anything that looks incomplete, awkwardly timed, half-baked, or even slightly unrelatable to the moment on screen must not make it into the final cut. If an animation does not earn its place, cut it.</li>
-            <li>All visuals — B-roll, motion graphics, text overlays, supers — must be directly related to what is being said or shown in that moment. No filler shots, no decorative visuals that don't support the message. If a visual doesn't reinforce the script, it doesn't belong.</li>
-          </ul>
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-base font-semibold text-foreground">1 · Camera angles</h3>
+              <ul className="mt-1.5 list-disc pl-5 space-y-1">
+                <li>Open the ad on the <strong className="text-foreground">front camera angle</strong>.</li>
+                <li>Bring in <strong className="text-foreground">cross angles in between</strong>.</li>
+                <li>Keep a <strong className="text-foreground">clean mix of both</strong> throughout.</li>
+                <li>This creates rhythm, holds attention, and stops the edit feeling flat or one-note.</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-base font-semibold text-foreground">2 · Animations</h3>
+              <ul className="mt-1.5 list-disc pl-5 space-y-1">
+                <li>Every animation must feel <strong className="text-foreground">finished and intentional</strong>.</li>
+                <li>Cut anything that looks <strong className="text-foreground">incomplete, awkwardly timed, or half-baked</strong>.</li>
+                <li>Cut anything even slightly <strong className="text-foreground">unrelatable</strong> to the moment on screen.</li>
+                <li>If an animation doesn't earn its place, cut it.</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-base font-semibold text-foreground">3 · Visual relevance</h3>
+              <ul className="mt-1.5 list-disc pl-5 space-y-1">
+                <li>Every visual — <strong className="text-foreground">B-roll, motion graphics, text overlays, supers</strong> — must relate to what's being said or shown in that moment.</li>
+                <li><strong className="text-foreground">No filler shots</strong> and no decorative visuals that don't support the message.</li>
+                <li>If a visual doesn't reinforce the script, it doesn't belong.</li>
+              </ul>
+            </div>
+          </div>
           <div className="overflow-hidden rounded-lg border border-white/10 bg-black lg:sticky lg:top-24" style={{ aspectRatio: "16 / 9" }}>
             <LiteVideo
               embedSrc="https://www.youtube.com/embed/KBR_nWRTMBI?list=PLORAS1W4pivTPg_PuFl1abg_Cpo_0Ifok&index=3"
@@ -415,17 +670,53 @@ function Page() {
         </ul>
       </Section>
 
+      <Section id="ai-usage" title="AI Usage Policy">
+        <p>AI is a tool to speed up and strengthen the edit — never a shortcut that lowers the bar. It applies across every brand and format: real, relevant and on-brand always wins, and the editor stays accountable for everything AI produces.</p>
+        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+          <div className="rounded-lg border border-emerald-400/25 bg-emerald-400/5 p-4">
+            <div className="font-label text-emerald-300">✓ DO</div>
+            <ul className="mt-2 list-disc pl-5 space-y-1">
+              {AI_DO.map((t) => <li key={t}>{t}</li>)}
+            </ul>
+          </div>
+          <div className="rounded-lg border border-rose-400/25 bg-rose-400/5 p-4">
+            <div className="font-label text-rose-300">✕ AVOID</div>
+            <ul className="mt-2 list-disc pl-5 space-y-1">
+              {AI_AVOID.map((t) => <li key={t}>{t}</li>)}
+            </ul>
+          </div>
+        </div>
+      </Section>
+
       <Section id="icons" title="Icons">
         <p>Icons help label points, mark steps, and reinforce a concept at a glance — but only when they're used consistently. Use them wherever they add clarity, never as decoration.</p>
-        <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
-          <ul className="list-disc pl-5 space-y-1">
-            <li><strong className="text-foreground">Use proper icons wherever needed</strong> — to tag points, steps, features, or ideas the script calls out.</li>
-            <li><strong className="text-foreground">One style across the whole video</strong> — pick a single icon style and stick to it. Never mix styles (e.g. outline with filled, or different icon families) in the same video.</li>
-            <li><strong className="text-foreground">Follow the brand-suggested styles</strong> — Black outline, Black filled, or Gradient. Choose one per video and keep it consistent.</li>
-            <li><strong className="text-foreground">Avoid</strong> Lineal colour, Hand drawn, and Flat icon styles.</li>
-            <li><strong className="text-foreground">Source from one library</strong> — pull icons from Flaticon (the approved library) so weight and proportions stay consistent.</li>
-          </ul>
-          <IconStyleDiagram />
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,440px)] lg:items-start">
+          <div>
+            <ul className="list-disc pl-5 space-y-1">
+              <li><strong className="text-foreground">Use proper icons wherever needed</strong> — to tag points, steps, features, or ideas the script calls out.</li>
+              <li><strong className="text-foreground">One style across the whole video</strong> — pick a single icon style and stick to it. Never mix styles (e.g. outline with filled, or different icon families) in the same video.</li>
+              <li><strong className="text-foreground">Follow the brand-suggested styles</strong> — Black outline, Black filled, or Gradient. Choose one per video and keep it consistent.</li>
+              <li><strong className="text-foreground">Avoid</strong> Lineal colour, Hand drawn, and Flat icon styles.</li>
+              <li><strong className="text-foreground">Source from one library</strong> — pull icons from Flaticon (the approved library) so weight and proportions stay consistent.</li>
+            </ul>
+            <div className="mt-4">
+              <ImageZoom src="/icon-styles.svg" label="View icon-style reference" />
+            </div>
+            <div className="mt-5"><IconStyleDiagram /></div>
+          </div>
+
+          <figure className="overflow-hidden rounded-lg border border-white/10 bg-black lg:sticky lg:top-8">
+            <video
+              src="/icons-guide.mp4"
+              poster="/icons-poster.jpg"
+              controls
+              playsInline
+              preload="metadata"
+              className="block w-full"
+              style={{ aspectRatio: "16 / 9" }}
+            />
+            <figcaption className="px-3 py-2 text-xs text-muted-foreground">Watch: icon style do's &amp; don'ts — one consistent style, Black outline / filled / gradient, sourced from Flaticon.</figcaption>
+          </figure>
         </div>
       </Section>
 
@@ -524,22 +815,16 @@ function Page() {
         </div>
       </Section>
 
+      <Section id="pre-export-qa" title="Pre-Export QA Checklist">
+        <p>The final gate before you export and submit. The first cut sent for review should already be good enough to publish — run every video against this checklist, alongside the brand's <a href="/brand-guidelines" className="underline text-foreground">Brand &amp; Style Guideline</a>. If an item doesn't pass, it isn't ready to export.</p>
+        <PreExportQA />
+      </Section>
+
       <Section id="accountability" title="Editor Accountability & Review">
         <p>Editing quality is judged at review. The Editor owns the cut end to end — delivering a complete, correct, review-ready video, not a rough draft for QC to clean up.</p>
-
-        <h3 className="mt-4 font-medium text-foreground">Review Standard</h3>
-        <p className="mt-2">The first cut sent for review should already be good enough to publish. Before submitting, self-check every video against this guideline, the QC checklist, and the brand's Brand &amp; Style Guideline.</p>
-        <ul className="mt-2 space-y-1">
-          <li>· All text, logos and faces sit inside the safe zone for the format's ratio.</li>
-          <li>· Captions single-line and synced, supers placed correctly with no overlaps, symbols and units intact.</li>
-          <li>· Clean, intentional cuts with deliberate pacing — nothing sloppy, mistimed, or abrupt; transitions motivated, not decorative.</li>
-          <li>· Visuals are real and relevant — actual dashboards and reports in the forefront, key elements in a contrasting colour, no filler clips.</li>
-          <li>· Audio balanced and on-spec — voice-over clear and leading, peak -5 to -2 dB.</li>
-          <li>· On-brand and on-spec for the format — ratio, typography and colour all correct.</li>
-          <li>· Spelling checked across the video and subtitles; prices match the current landing page.</li>
-          <li>· File named per the convention, and free of careless mistakes a proper self-check would catch.</li>
-        </ul>
+        <p className="mt-2">The first cut sent for review should already be good enough to publish. Before submitting, self-check every video against this guideline and the <a href="#pre-export-qa" className="underline text-foreground">Pre-Export QA Checklist</a> above, and stay free of careless mistakes a proper self-check would catch.</p>
       </Section>
+      </SectionLayout>
     </div>
   );
 }

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHeader } from "@/components/PageHeader";
-import { ArrowRight } from "lucide-react";
-import { brandLogo } from "@/lib/training-data";
+import { ArrowRight, Building2, Users, Boxes, Clapperboard, Scissors, Linkedin, Youtube, ExternalLink, Check } from "lucide-react";
+import { brandLogo, COMPANY } from "@/lib/training-data";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -48,45 +48,66 @@ function HomePage() {
         intro="Video is the primary medium through which every House of EdTech brand teaches, markets, and builds trust with working professionals. This site is the internal Standard Operating Procedure for how our editors cut, finish, and deliver every video to House of EdTech standards."
       />
 
-      <section className="mb-12 grid gap-8 lg:grid-cols-[1fr_360px] lg:items-start">
-        <div>
-          <h2 className="text-xl font-semibold">About House of EdTech</h2>
-          <p className="mt-2 text-muted-foreground leading-relaxed">
-            House of EdTech is India's fastest-growing multi-brand education company. We build and operate brands that educate working professionals in the skills that matter most — from artificial intelligence and stock-market trading to personal finance and sports analytics. Each brand is purpose-built for a specific domain, with its own expert trainers, dedicated curriculum, and learning community.
-          </p>
-          <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {[
-              ["₹400 Cr+", "ARR"],
-              ["3 Million+", "Paid Learners"],
-              ["8", "Brands"],
-              ["1200+", "Team Members"],
-            ].map(([n, l]) => (
-              <div key={l} className="rounded-lg border border-white/10 bg-card p-4">
-                <div className="text-xl font-semibold">{n}</div>
-                <div className="font-label mt-1">{l}</div>
+      <section className="mb-12">
+        <h2 className="flex items-center gap-2 text-xl font-semibold"><Building2 className="h-5 w-5 text-muted-foreground" /> About House of EdTech</h2>
+        <p className="mt-2 max-w-4xl text-muted-foreground leading-relaxed">
+          House of EdTech is India's fastest-growing multi-brand education company. We build and operate brands that educate working professionals in the skills that matter most — from artificial intelligence and stock-market trading to personal finance and sports analytics. Each brand is purpose-built for a specific domain, with its own expert trainers, dedicated curriculum, and learning community.
+        </p>
+        <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {[
+            ["₹400 Cr+", "ARR"],
+            ["3 Million+", "Paid Learners"],
+            ["8", "Brands"],
+            ["1200+", "Team Members"],
+          ].map(([n, l]) => (
+            <div key={l} className="rounded-lg border border-white/10 bg-card p-4">
+              <div className="text-xl font-semibold">{n}</div>
+              <div className="font-label mt-1">{l}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mb-12">
+        <h2 className="flex items-center gap-2 text-xl font-semibold"><Users className="h-5 w-5 text-muted-foreground" /> Our Founders</h2>
+        <p className="mt-2 max-w-3xl text-muted-foreground leading-relaxed">
+          Co-founded by <strong className="text-foreground">Aditya Goenka</strong> and <strong className="text-foreground">Aditya Kachave</strong> — two operators making practical, career-changing skills accessible to working professionals across India.
+        </p>
+        <div className="mt-5 grid gap-6 lg:grid-cols-[340px_minmax(0,1fr)] lg:items-stretch">
+          <button
+            type="button"
+            onClick={() => setZoom(true)}
+            className="block h-full w-full cursor-zoom-in overflow-hidden rounded-lg border border-white/10 bg-card"
+            aria-label="Enlarge founders photo"
+          >
+            <img src={FOUNDERS_IMG} alt="House of EdTech founders Aditya Goenka and Aditya Kachave" className="block h-full w-full object-cover transition hover:scale-[1.02]" loading="lazy" />
+          </button>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {COMPANY.founderBios.map((f) => (
+              <div key={f.name} className="flex flex-col rounded-lg border border-white/10 bg-card p-5">
+                <div className="text-lg font-medium">{f.name}</div>
+                <p className="mt-1 text-sm italic text-muted-foreground">"{f.tagline}"</p>
+                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{f.bio}</p>
+                <div className="mt-auto flex flex-wrap gap-2 pt-4">
+                  {f.linkedin && (
+                    <a href={f.linkedin} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-md border border-white/15 bg-white/5 px-2.5 py-1 text-xs font-medium text-foreground transition hover:border-white/35 hover:text-sky-300">
+                      <Linkedin className="h-3.5 w-3.5" /> LinkedIn
+                    </a>
+                  )}
+                  {f.youtube && (
+                    <a href={f.youtube} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-md border border-white/15 bg-white/5 px-2.5 py-1 text-xs font-medium text-foreground transition hover:border-white/35 hover:text-red-400">
+                      <Youtube className="h-3.5 w-3.5" /> YouTube
+                    </a>
+                  )}
+                </div>
               </div>
             ))}
           </div>
         </div>
-
-        <aside className="lg:sticky lg:top-24">
-          <h2 className="text-xl font-semibold">Our Founders</h2>
-          <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-            Co-founded by <strong className="text-foreground">Aditya Goenka</strong> and <strong className="text-foreground">Aditya Kachave</strong> — two operators making practical, career-changing skills accessible to working professionals across India.
-          </p>
-          <button
-            type="button"
-            onClick={() => setZoom(true)}
-            className="mt-4 block w-full cursor-zoom-in overflow-hidden rounded-lg border border-white/10 bg-card"
-            aria-label="Enlarge founders photo"
-          >
-            <img src={FOUNDERS_IMG} alt="House of EdTech founders Aditya Goenka and Aditya Kachave" className="block h-auto w-full transition hover:scale-[1.02]" loading="lazy" />
-          </button>
-        </aside>
       </section>
 
       <section className="mb-12">
-        <h2 className="text-xl font-semibold">Our Brands</h2>
+        <h2 className="flex items-center gap-2 text-xl font-semibold"><Boxes className="h-5 w-5 text-muted-foreground" /> Our Brands</h2>
         <p className="mt-2 text-muted-foreground leading-relaxed">
           Eight purpose-built brands, each owning a single domain with its own trainers, curriculum and learner community.
         </p>
@@ -97,11 +118,12 @@ function HomePage() {
               href={`https://${domain}`}
               target="_blank"
               rel="noreferrer"
-              className="group rounded-lg border border-white/10 bg-card p-4 hover:border-white/30"
+              className="group rounded-lg border border-white/10 bg-card p-4 transition hover:border-white/30 hover:bg-white/[0.03]"
             >
               <div className="flex items-center gap-2">
                 <img src={brandLogo(domain)} alt={`${name} logo`} loading="lazy" className={`h-12 w-12 shrink-0 rounded-md object-contain p-1.5 ${name === "Divinelane" ? "bg-neutral-900" : "bg-white"}`} />
                 <div className="font-medium">{name}</div>
+                <ExternalLink className="ml-auto h-3.5 w-3.5 text-muted-foreground opacity-0 transition group-hover:opacity-100" />
               </div>
               <div className="font-label mt-1">{domain}</div>
               <p className="mt-2 text-sm text-muted-foreground">{tagline}</p>
@@ -111,7 +133,7 @@ function HomePage() {
       </section>
 
       <section className="mb-12">
-        <h2 className="text-xl font-semibold">Editing Standards</h2>
+        <h2 className="flex items-center gap-2 text-xl font-semibold"><Clapperboard className="h-5 w-5 text-muted-foreground" /> Editing Standards</h2>
         <p className="mt-2 text-muted-foreground leading-relaxed">
           Everything an editor needs to take a video from raw cut to a clean, on-brand final delivery.
         </p>
@@ -134,7 +156,7 @@ function HomePage() {
       </section>
 
       <section className="mb-12">
-        <h2 className="text-xl font-semibold">The Editing Team</h2>
+        <h2 className="flex items-center gap-2 text-xl font-semibold"><Scissors className="h-5 w-5 text-muted-foreground" /> The Editing Team</h2>
         <p className="mt-2 text-muted-foreground leading-relaxed">
           What the Video Editing team owns across every deliverable.
         </p>
@@ -142,8 +164,12 @@ function HomePage() {
           {TEAMS.map((t) => (
             <div key={t.name} className="rounded-lg border border-white/10 bg-card p-4">
               <div className="font-medium">{t.name}</div>
-              <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
-                {t.items.map((i) => <li key={i}>· {i}</li>)}
+              <ul className="mt-2 space-y-1.5 text-sm text-muted-foreground">
+                {t.items.map((i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-400" /> {i}
+                  </li>
+                ))}
               </ul>
             </div>
           ))}

@@ -260,6 +260,8 @@ export const COMPANY = {
       name: "Aditya Goenka",
       tagline: "Turns ambitious visions into scalable realities — powered by AI.",
       bio: "IIT Kharagpur alumnus (Class of 2019) with research stints at Stanford and UIUC. He has built two 8-figure companies using AI tools and a five-person team, and helps others scale without burning out or bloating the team.",
+      linkedin: "https://www.linkedin.com/in/aditya-goenka/",
+      youtube: "https://www.youtube.com/channel/UCGY6_3YcvdDsMOEIsp5QeGw",
       stats: [
         ["2M+", "Professionals impacted"],
         ["8-figure", "Companies built with a 5-person team"],
@@ -271,6 +273,8 @@ export const COMPANY = {
       name: "Aditya Kachave",
       tagline: "Simplifies complex AI tools to build smart, lean businesses that scale.",
       bio: "IIT Kharagpur alumnus who landed India's highest fresher package (₹1.2 Cr), then built two 8-figure companies with five-member teams. He now mentors others to use AI as their growth partner — multiplying outcomes with half the effort.",
+      linkedin: "https://www.linkedin.com/in/kachave/",
+      youtube: "https://www.youtube.com/channel/UCkZyATqruBa-0XFO3tksGgw",
       stats: [
         ["2M+", "Professionals impacted"],
         ["₹1.2 Cr", "India's highest fresher package (IIT-KGP)"],

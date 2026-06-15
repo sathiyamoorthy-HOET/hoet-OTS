@@ -17,9 +17,13 @@ import { Route as TrainingIndexRouteImport } from './routes/training.index'
 import { Route as BrandGuidelinesIndexRouteImport } from './routes/brand-guidelines.index'
 import { Route as BrandGuidelinesProfitUniRouteImport } from './routes/brand-guidelines.profit-uni'
 import { Route as BrandGuidelinesOrganicVideoRouteImport } from './routes/brand-guidelines.organic-video'
+import { Route as BrandGuidelinesOfficeMasterRouteImport } from './routes/brand-guidelines.office-master'
 import { Route as BrandGuidelinesBe10xRouteImport } from './routes/brand-guidelines.be10x'
 import { Route as BrandGuidelinesAiTvCourseRouteImport } from './routes/brand-guidelines.ai-tv-course'
 import { Route as BrandGuidelinesAiTvRouteImport } from './routes/brand-guidelines.ai-tv'
+import { Route as BrandGuidelinesAiForTechiesRouteImport } from './routes/brand-guidelines.ai-for-techies'
+import { Route as BrandGuidelinesAdityaKachaveRouteImport } from './routes/brand-guidelines.aditya-kachave'
+import { Route as BrandGuidelinesAdityaGoenkaRouteImport } from './routes/brand-guidelines.aditya-goenka'
 import { Route as TrainingDayIndexRouteImport } from './routes/training.$day.index'
 import { Route as TrainingDaySessionRouteImport } from './routes/training.$day.$session'
 
@@ -65,6 +69,12 @@ const BrandGuidelinesOrganicVideoRoute =
     path: '/organic-video',
     getParentRoute: () => BrandGuidelinesRoute,
   } as any)
+const BrandGuidelinesOfficeMasterRoute =
+  BrandGuidelinesOfficeMasterRouteImport.update({
+    id: '/office-master',
+    path: '/office-master',
+    getParentRoute: () => BrandGuidelinesRoute,
+  } as any)
 const BrandGuidelinesBe10xRoute = BrandGuidelinesBe10xRouteImport.update({
   id: '/be10x',
   path: '/be10x',
@@ -81,6 +91,24 @@ const BrandGuidelinesAiTvRoute = BrandGuidelinesAiTvRouteImport.update({
   path: '/ai-tv',
   getParentRoute: () => BrandGuidelinesRoute,
 } as any)
+const BrandGuidelinesAiForTechiesRoute =
+  BrandGuidelinesAiForTechiesRouteImport.update({
+    id: '/ai-for-techies',
+    path: '/ai-for-techies',
+    getParentRoute: () => BrandGuidelinesRoute,
+  } as any)
+const BrandGuidelinesAdityaKachaveRoute =
+  BrandGuidelinesAdityaKachaveRouteImport.update({
+    id: '/aditya-kachave',
+    path: '/aditya-kachave',
+    getParentRoute: () => BrandGuidelinesRoute,
+  } as any)
+const BrandGuidelinesAdityaGoenkaRoute =
+  BrandGuidelinesAdityaGoenkaRouteImport.update({
+    id: '/aditya-goenka',
+    path: '/aditya-goenka',
+    getParentRoute: () => BrandGuidelinesRoute,
+  } as any)
 const TrainingDayIndexRoute = TrainingDayIndexRouteImport.update({
   id: '/$day/',
   path: '/$day/',
@@ -97,9 +125,13 @@ export interface FileRoutesByFullPath {
   '/brand-guidelines': typeof BrandGuidelinesRouteWithChildren
   '/editing-guidelines': typeof EditingGuidelinesRoute
   '/training': typeof TrainingRouteWithChildren
+  '/brand-guidelines/aditya-goenka': typeof BrandGuidelinesAdityaGoenkaRoute
+  '/brand-guidelines/aditya-kachave': typeof BrandGuidelinesAdityaKachaveRoute
+  '/brand-guidelines/ai-for-techies': typeof BrandGuidelinesAiForTechiesRoute
   '/brand-guidelines/ai-tv': typeof BrandGuidelinesAiTvRoute
   '/brand-guidelines/ai-tv-course': typeof BrandGuidelinesAiTvCourseRoute
   '/brand-guidelines/be10x': typeof BrandGuidelinesBe10xRoute
+  '/brand-guidelines/office-master': typeof BrandGuidelinesOfficeMasterRoute
   '/brand-guidelines/organic-video': typeof BrandGuidelinesOrganicVideoRoute
   '/brand-guidelines/profit-uni': typeof BrandGuidelinesProfitUniRoute
   '/brand-guidelines/': typeof BrandGuidelinesIndexRoute
@@ -110,9 +142,13 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/editing-guidelines': typeof EditingGuidelinesRoute
+  '/brand-guidelines/aditya-goenka': typeof BrandGuidelinesAdityaGoenkaRoute
+  '/brand-guidelines/aditya-kachave': typeof BrandGuidelinesAdityaKachaveRoute
+  '/brand-guidelines/ai-for-techies': typeof BrandGuidelinesAiForTechiesRoute
   '/brand-guidelines/ai-tv': typeof BrandGuidelinesAiTvRoute
   '/brand-guidelines/ai-tv-course': typeof BrandGuidelinesAiTvCourseRoute
   '/brand-guidelines/be10x': typeof BrandGuidelinesBe10xRoute
+  '/brand-guidelines/office-master': typeof BrandGuidelinesOfficeMasterRoute
   '/brand-guidelines/organic-video': typeof BrandGuidelinesOrganicVideoRoute
   '/brand-guidelines/profit-uni': typeof BrandGuidelinesProfitUniRoute
   '/brand-guidelines': typeof BrandGuidelinesIndexRoute
@@ -126,9 +162,13 @@ export interface FileRoutesById {
   '/brand-guidelines': typeof BrandGuidelinesRouteWithChildren
   '/editing-guidelines': typeof EditingGuidelinesRoute
   '/training': typeof TrainingRouteWithChildren
+  '/brand-guidelines/aditya-goenka': typeof BrandGuidelinesAdityaGoenkaRoute
+  '/brand-guidelines/aditya-kachave': typeof BrandGuidelinesAdityaKachaveRoute
+  '/brand-guidelines/ai-for-techies': typeof BrandGuidelinesAiForTechiesRoute
   '/brand-guidelines/ai-tv': typeof BrandGuidelinesAiTvRoute
   '/brand-guidelines/ai-tv-course': typeof BrandGuidelinesAiTvCourseRoute
   '/brand-guidelines/be10x': typeof BrandGuidelinesBe10xRoute
+  '/brand-guidelines/office-master': typeof BrandGuidelinesOfficeMasterRoute
   '/brand-guidelines/organic-video': typeof BrandGuidelinesOrganicVideoRoute
   '/brand-guidelines/profit-uni': typeof BrandGuidelinesProfitUniRoute
   '/brand-guidelines/': typeof BrandGuidelinesIndexRoute
@@ -143,9 +183,13 @@ export interface FileRouteTypes {
     | '/brand-guidelines'
     | '/editing-guidelines'
     | '/training'
+    | '/brand-guidelines/aditya-goenka'
+    | '/brand-guidelines/aditya-kachave'
+    | '/brand-guidelines/ai-for-techies'
     | '/brand-guidelines/ai-tv'
     | '/brand-guidelines/ai-tv-course'
     | '/brand-guidelines/be10x'
+    | '/brand-guidelines/office-master'
     | '/brand-guidelines/organic-video'
     | '/brand-guidelines/profit-uni'
     | '/brand-guidelines/'
@@ -156,9 +200,13 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/editing-guidelines'
+    | '/brand-guidelines/aditya-goenka'
+    | '/brand-guidelines/aditya-kachave'
+    | '/brand-guidelines/ai-for-techies'
     | '/brand-guidelines/ai-tv'
     | '/brand-guidelines/ai-tv-course'
     | '/brand-guidelines/be10x'
+    | '/brand-guidelines/office-master'
     | '/brand-guidelines/organic-video'
     | '/brand-guidelines/profit-uni'
     | '/brand-guidelines'
@@ -171,9 +219,13 @@ export interface FileRouteTypes {
     | '/brand-guidelines'
     | '/editing-guidelines'
     | '/training'
+    | '/brand-guidelines/aditya-goenka'
+    | '/brand-guidelines/aditya-kachave'
+    | '/brand-guidelines/ai-for-techies'
     | '/brand-guidelines/ai-tv'
     | '/brand-guidelines/ai-tv-course'
     | '/brand-guidelines/be10x'
+    | '/brand-guidelines/office-master'
     | '/brand-guidelines/organic-video'
     | '/brand-guidelines/profit-uni'
     | '/brand-guidelines/'
@@ -247,6 +299,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BrandGuidelinesOrganicVideoRouteImport
       parentRoute: typeof BrandGuidelinesRoute
     }
+    '/brand-guidelines/office-master': {
+      id: '/brand-guidelines/office-master'
+      path: '/office-master'
+      fullPath: '/brand-guidelines/office-master'
+      preLoaderRoute: typeof BrandGuidelinesOfficeMasterRouteImport
+      parentRoute: typeof BrandGuidelinesRoute
+    }
     '/brand-guidelines/be10x': {
       id: '/brand-guidelines/be10x'
       path: '/be10x'
@@ -268,6 +327,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BrandGuidelinesAiTvRouteImport
       parentRoute: typeof BrandGuidelinesRoute
     }
+    '/brand-guidelines/ai-for-techies': {
+      id: '/brand-guidelines/ai-for-techies'
+      path: '/ai-for-techies'
+      fullPath: '/brand-guidelines/ai-for-techies'
+      preLoaderRoute: typeof BrandGuidelinesAiForTechiesRouteImport
+      parentRoute: typeof BrandGuidelinesRoute
+    }
+    '/brand-guidelines/aditya-kachave': {
+      id: '/brand-guidelines/aditya-kachave'
+      path: '/aditya-kachave'
+      fullPath: '/brand-guidelines/aditya-kachave'
+      preLoaderRoute: typeof BrandGuidelinesAdityaKachaveRouteImport
+      parentRoute: typeof BrandGuidelinesRoute
+    }
+    '/brand-guidelines/aditya-goenka': {
+      id: '/brand-guidelines/aditya-goenka'
+      path: '/aditya-goenka'
+      fullPath: '/brand-guidelines/aditya-goenka'
+      preLoaderRoute: typeof BrandGuidelinesAdityaGoenkaRouteImport
+      parentRoute: typeof BrandGuidelinesRoute
+    }
     '/training/$day/': {
       id: '/training/$day/'
       path: '/$day'
@@ -286,18 +366,26 @@ declare module '@tanstack/react-router' {
 }
 
 interface BrandGuidelinesRouteChildren {
+  BrandGuidelinesAdityaGoenkaRoute: typeof BrandGuidelinesAdityaGoenkaRoute
+  BrandGuidelinesAdityaKachaveRoute: typeof BrandGuidelinesAdityaKachaveRoute
+  BrandGuidelinesAiForTechiesRoute: typeof BrandGuidelinesAiForTechiesRoute
   BrandGuidelinesAiTvRoute: typeof BrandGuidelinesAiTvRoute
   BrandGuidelinesAiTvCourseRoute: typeof BrandGuidelinesAiTvCourseRoute
   BrandGuidelinesBe10xRoute: typeof BrandGuidelinesBe10xRoute
+  BrandGuidelinesOfficeMasterRoute: typeof BrandGuidelinesOfficeMasterRoute
   BrandGuidelinesOrganicVideoRoute: typeof BrandGuidelinesOrganicVideoRoute
   BrandGuidelinesProfitUniRoute: typeof BrandGuidelinesProfitUniRoute
   BrandGuidelinesIndexRoute: typeof BrandGuidelinesIndexRoute
 }
 
 const BrandGuidelinesRouteChildren: BrandGuidelinesRouteChildren = {
+  BrandGuidelinesAdityaGoenkaRoute: BrandGuidelinesAdityaGoenkaRoute,
+  BrandGuidelinesAdityaKachaveRoute: BrandGuidelinesAdityaKachaveRoute,
+  BrandGuidelinesAiForTechiesRoute: BrandGuidelinesAiForTechiesRoute,
   BrandGuidelinesAiTvRoute: BrandGuidelinesAiTvRoute,
   BrandGuidelinesAiTvCourseRoute: BrandGuidelinesAiTvCourseRoute,
   BrandGuidelinesBe10xRoute: BrandGuidelinesBe10xRoute,
+  BrandGuidelinesOfficeMasterRoute: BrandGuidelinesOfficeMasterRoute,
   BrandGuidelinesOrganicVideoRoute: BrandGuidelinesOrganicVideoRoute,
   BrandGuidelinesProfitUniRoute: BrandGuidelinesProfitUniRoute,
   BrandGuidelinesIndexRoute: BrandGuidelinesIndexRoute,

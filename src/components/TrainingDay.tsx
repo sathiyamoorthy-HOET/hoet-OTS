@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Linkedin, Youtube } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 import sampleWorkReportUrl from "@/assets/sample-work-report-ads.csv?url";
 import adityaGoenka from "@/assets/aditya-goenka.webp";
@@ -247,6 +247,28 @@ function CompanyOverview() {
                   <div className="font-medium text-foreground">{f.name}</div>
                   <p className="mt-0.5 text-sm italic">"{f.tagline}"</p>
                   <p className="mt-2">{f.bio}</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {f.linkedin && (
+                      <a
+                        href={f.linkedin}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 rounded-md border border-white/15 bg-white/5 px-2.5 py-1 text-xs font-medium text-foreground transition hover:border-white/35 hover:text-sky-300"
+                      >
+                        <Linkedin className="h-3.5 w-3.5" /> LinkedIn
+                      </a>
+                    )}
+                    {f.youtube && (
+                      <a
+                        href={f.youtube}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 rounded-md border border-white/15 bg-white/5 px-2.5 py-1 text-xs font-medium text-foreground transition hover:border-white/35 hover:text-red-400"
+                      >
+                        <Youtube className="h-3.5 w-3.5" /> YouTube
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
               <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">

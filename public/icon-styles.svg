@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" width="1200" height="780" font-family="'Manrope','Inter',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#34d399"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="780" fill="#0b0b14"/>
+  <text x="60" y="70" fill="#f5f6f7" font-size="40" font-weight="800">Icon styles — pick one per video</text>
+
+  <!-- USE row -->
+  <text x="60" y="130" fill="#34d399" font-size="24" font-weight="800" letter-spacing="2">✓ USE</text>
+  <g>
+    <!-- card 1: outline -->
+    <rect x="60" y="150" width="320" height="220" rx="16" fill="#0b0b14" stroke="#34d399" stroke-opacity="0.45"/>
+    <text x="220" y="194" text-anchor="middle" fill="#cbd5e1" font-size="24" font-weight="700">Black outline</text>
+    <g transform="translate(172,222) scale(4)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="none" stroke="#f5f6f7" stroke-width="1.6" stroke-linejoin="round"/></g>
+    <!-- card 2: filled -->
+    <rect x="440" y="150" width="320" height="220" rx="16" fill="#0b0b14" stroke="#34d399" stroke-opacity="0.45"/>
+    <text x="600" y="194" text-anchor="middle" fill="#cbd5e1" font-size="24" font-weight="700">Black filled</text>
+    <g transform="translate(552,222) scale(4)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#f5f6f7"/></g>
+    <!-- card 3: gradient -->
+    <rect x="820" y="150" width="320" height="220" rx="16" fill="#0b0b14" stroke="#34d399" stroke-opacity="0.45"/>
+    <text x="980" y="194" text-anchor="middle" fill="#cbd5e1" font-size="24" font-weight="700">Gradient</text>
+    <g transform="translate(932,222) scale(4)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#g)"/></g>
+  </g>
+
+  <!-- AVOID row -->
+  <text x="60" y="460" fill="#f472b6" font-size="24" font-weight="800" letter-spacing="2">✕ AVOID</text>
+  <g>
+    <!-- card 1: lineal colour -->
+    <rect x="60" y="480" width="320" height="220" rx="16" fill="#0b0b14" stroke="#f472b6" stroke-opacity="0.45"/>
+    <text x="220" y="524" text-anchor="middle" fill="#cbd5e1" font-size="24" font-weight="700">Lineal colour</text>
+    <g transform="translate(172,552) scale(4)">
+      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#f472b6" fill-opacity="0.45"/>
+      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="none" stroke="#38bdf8" stroke-width="1.6" stroke-linejoin="round"/>
+    </g>
+    <!-- card 2: hand drawn -->
+    <rect x="440" y="480" width="320" height="220" rx="16" fill="#0b0b14" stroke="#f472b6" stroke-opacity="0.45"/>
+    <text x="600" y="524" text-anchor="middle" fill="#cbd5e1" font-size="24" font-weight="700">Hand drawn</text>
+    <g transform="translate(552,552) scale(4)"><g transform="rotate(-4 12 12)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="none" stroke="#f5f6f7" stroke-width="2" stroke-dasharray="3 2.4" stroke-linejoin="round"/></g></g>
+    <!-- card 3: flat -->
+    <rect x="820" y="480" width="320" height="220" rx="16" fill="#0b0b14" stroke="#f472b6" stroke-opacity="0.45"/>
+    <text x="980" y="524" text-anchor="middle" fill="#cbd5e1" font-size="24" font-weight="700">Flat</text>
+    <g transform="translate(932,552) scale(4)"><rect x="1" y="1" width="22" height="22" rx="5" fill="#22d3ee"/><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#072b33"/></g>
+  </g>
+
+  <text x="60" y="752" fill="#94a3b8" font-size="20">One style across the whole video · source from one library (Flaticon).</text>
+</svg>
