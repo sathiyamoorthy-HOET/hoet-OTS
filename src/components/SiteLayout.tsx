@@ -1,8 +1,8 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Search, Menu, X, Sun, Moon, Home, GraduationCap, Clapperboard, Palette, type LucideIcon } from "lucide-react";
+import { Search, Sun, Moon, Home, GraduationCap, Clapperboard, Palette, type LucideIcon } from "lucide-react";
 
-function ThemeToggle() {
+function ThemeToggle({ compact }: { compact?: boolean }) {
   const [light, setLight] = useState(false);
   useEffect(() => {
     const stored = typeof window !== "undefined" ? localStorage.getItem("theme") : null;
@@ -20,21 +20,25 @@ function ThemeToggle() {
     <button
       onClick={toggle}
       aria-label="Toggle theme"
-      className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1.5 text-xs text-muted-foreground hover:bg-white/5 hover:text-foreground"
+      className={
+        compact
+          ? "inline-flex shrink-0 items-center justify-center rounded-full border border-white/15 p-2 text-muted-foreground hover:bg-white/5 hover:text-foreground"
+          : "inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1.5 text-xs text-muted-foreground hover:bg-white/5 hover:text-foreground"
+      }
     >
       {light ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
-      <span>{light ? "Dark mode" : "Light mode"}</span>
+      {!compact && <span>{light ? "Dark mode" : "Light mode"}</span>}
     </button>
   );
 }
 import logo from "@/assets/hoet-logo.png";
 import { searchIndex, type SearchEntry } from "@/lib/search-index";
 
-const NAV: { to: string; label: string; icon: LucideIcon; exact?: boolean }[] = [
-  { to: "/", label: "Home", icon: Home, exact: true },
-  { to: "/training", label: "Onboarding & Training", icon: GraduationCap },
-  { to: "/editing-guidelines", label: "Editing Guidelines", icon: Clapperboard },
-  { to: "/brand-guidelines", label: "Brand Guidelines", icon: Palette },
+const NAV: { to: string; label: string; short: string; icon: LucideIcon; exact?: boolean }[] = [
+  { to: "/", label: "Home", short: "Home", icon: Home, exact: true },
+  { to: "/training", label: "Onboarding & Training", short: "Training", icon: GraduationCap },
+  { to: "/editing-guidelines", label: "Editing Guidelines", short: "Editing", icon: Clapperboard },
+  { to: "/brand-guidelines", label: "Brand Guidelines", short: "Brand", icon: Palette },
 ];
 
 function SearchBar() {
@@ -140,10 +144,6 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
 }
 
 export function SiteLayout({ children }: { children: React.ReactNode }) {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const path = useRouterState({ select: (s) => s.location.pathname });
-  useEffect(() => { setMenuOpen(false); }, [path]);
-
   return (
     <div className="min-h-screen">
       {/* Desktop sticky left sidebar */}
@@ -151,38 +151,43 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
         <SidebarContent />
       </aside>
 
-      {/* Mobile top bar */}
+      {/* Mobile top bar — logo + search + theme (Slack-style) */}
       <header className="sticky top-0 z-40 border-b border-white/10 bg-background/85 backdrop-blur lg:hidden">
-        <div className="flex items-center gap-3 px-5 py-3">
-          <Link to="/" className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-3 px-4 py-2.5">
+          <Link to="/" className="shrink-0" aria-label="House of EdTech home">
             <img src={logo} alt="House of EdTech" className="h-7 w-auto" />
-            <span className="font-label hidden sm:inline">House of EdTech</span>
           </Link>
-          <div className="ml-auto"><ThemeToggle /></div>
-          <button
-            onClick={() => setMenuOpen((v) => !v)}
-            className="rounded-md p-1.5"
-            aria-label="Menu"
-          >
-            {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+          <div className="min-w-0 flex-1"><SearchBar /></div>
+          <ThemeToggle compact />
         </div>
       </header>
 
-      {/* Mobile drawer */}
-      {menuOpen && (
-        <>
-          <div className="fixed inset-0 z-40 bg-black/50 lg:hidden" onClick={() => setMenuOpen(false)} aria-hidden="true" />
-          <aside className="fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85vw] flex-col overflow-y-auto border-r border-white/10 bg-background px-4 py-5 lg:hidden">
-            <SidebarContent onNavigate={() => setMenuOpen(false)} />
-          </aside>
-        </>
-      )}
+      {/* Mobile bottom tab bar — Slack-style primary navigation */}
+      <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-white/10 bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden">
+        {NAV.map((n) => {
+          const Icon = n.icon;
+          return (
+            <Link
+              key={n.to}
+              to={n.to}
+              activeOptions={n.exact ? { exact: true } : undefined}
+              activeProps={{ className: "text-foreground [&>span:first-child]:bg-white/10" }}
+              inactiveProps={{ className: "text-muted-foreground" }}
+              className="flex flex-col items-center gap-1 py-2 text-[11px] font-medium transition-colors"
+            >
+              <span className="flex h-7 w-12 items-center justify-center rounded-full transition-colors">
+                <Icon className="h-5 w-5" />
+              </span>
+              {n.short}
+            </Link>
+          );
+        })}
+      </nav>
 
       {/* Content */}
       <div className="flex min-h-screen flex-col lg:pl-64">
-        <main className="w-full flex-1 px-5 py-10 lg:px-10">{children}</main>
-        <footer className="border-t border-white/10">
+        <main className="w-full flex-1 px-5 py-8 lg:px-10 lg:py-10">{children}</main>
+        <footer className="border-t border-white/10 pb-20 lg:pb-0">
           <div className="flex w-full flex-wrap items-center justify-between gap-3 px-5 py-6 text-xs text-muted-foreground lg:px-10">
             <span>HOET · GK House of EdTech Pvt. Ltd. · Internal Use Only</span>
             <span>Video Editor Onboarding & Training</span>

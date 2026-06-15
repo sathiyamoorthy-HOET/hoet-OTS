@@ -14,7 +14,9 @@ import { Route as EditingGuidelinesRouteImport } from './routes/editing-guidelin
 import { Route as BrandGuidelinesRouteImport } from './routes/brand-guidelines'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TrainingIndexRouteImport } from './routes/training.index'
+import { Route as EditingGuidelinesIndexRouteImport } from './routes/editing-guidelines.index'
 import { Route as BrandGuidelinesIndexRouteImport } from './routes/brand-guidelines.index'
+import { Route as EditingGuidelinesSlugRouteImport } from './routes/editing-guidelines.$slug'
 import { Route as BrandGuidelinesProfitUniRouteImport } from './routes/brand-guidelines.profit-uni'
 import { Route as BrandGuidelinesOrganicVideoRouteImport } from './routes/brand-guidelines.organic-video'
 import { Route as BrandGuidelinesOfficeMasterRouteImport } from './routes/brand-guidelines.office-master'
@@ -52,10 +54,20 @@ const TrainingIndexRoute = TrainingIndexRouteImport.update({
   path: '/',
   getParentRoute: () => TrainingRoute,
 } as any)
+const EditingGuidelinesIndexRoute = EditingGuidelinesIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => EditingGuidelinesRoute,
+} as any)
 const BrandGuidelinesIndexRoute = BrandGuidelinesIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => BrandGuidelinesRoute,
+} as any)
+const EditingGuidelinesSlugRoute = EditingGuidelinesSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => EditingGuidelinesRoute,
 } as any)
 const BrandGuidelinesProfitUniRoute =
   BrandGuidelinesProfitUniRouteImport.update({
@@ -123,7 +135,7 @@ const TrainingDaySessionRoute = TrainingDaySessionRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/brand-guidelines': typeof BrandGuidelinesRouteWithChildren
-  '/editing-guidelines': typeof EditingGuidelinesRoute
+  '/editing-guidelines': typeof EditingGuidelinesRouteWithChildren
   '/training': typeof TrainingRouteWithChildren
   '/brand-guidelines/aditya-goenka': typeof BrandGuidelinesAdityaGoenkaRoute
   '/brand-guidelines/aditya-kachave': typeof BrandGuidelinesAdityaKachaveRoute
@@ -134,14 +146,15 @@ export interface FileRoutesByFullPath {
   '/brand-guidelines/office-master': typeof BrandGuidelinesOfficeMasterRoute
   '/brand-guidelines/organic-video': typeof BrandGuidelinesOrganicVideoRoute
   '/brand-guidelines/profit-uni': typeof BrandGuidelinesProfitUniRoute
+  '/editing-guidelines/$slug': typeof EditingGuidelinesSlugRoute
   '/brand-guidelines/': typeof BrandGuidelinesIndexRoute
+  '/editing-guidelines/': typeof EditingGuidelinesIndexRoute
   '/training/': typeof TrainingIndexRoute
   '/training/$day/$session': typeof TrainingDaySessionRoute
   '/training/$day/': typeof TrainingDayIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/editing-guidelines': typeof EditingGuidelinesRoute
   '/brand-guidelines/aditya-goenka': typeof BrandGuidelinesAdityaGoenkaRoute
   '/brand-guidelines/aditya-kachave': typeof BrandGuidelinesAdityaKachaveRoute
   '/brand-guidelines/ai-for-techies': typeof BrandGuidelinesAiForTechiesRoute
@@ -151,7 +164,9 @@ export interface FileRoutesByTo {
   '/brand-guidelines/office-master': typeof BrandGuidelinesOfficeMasterRoute
   '/brand-guidelines/organic-video': typeof BrandGuidelinesOrganicVideoRoute
   '/brand-guidelines/profit-uni': typeof BrandGuidelinesProfitUniRoute
+  '/editing-guidelines/$slug': typeof EditingGuidelinesSlugRoute
   '/brand-guidelines': typeof BrandGuidelinesIndexRoute
+  '/editing-guidelines': typeof EditingGuidelinesIndexRoute
   '/training': typeof TrainingIndexRoute
   '/training/$day/$session': typeof TrainingDaySessionRoute
   '/training/$day': typeof TrainingDayIndexRoute
@@ -160,7 +175,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/brand-guidelines': typeof BrandGuidelinesRouteWithChildren
-  '/editing-guidelines': typeof EditingGuidelinesRoute
+  '/editing-guidelines': typeof EditingGuidelinesRouteWithChildren
   '/training': typeof TrainingRouteWithChildren
   '/brand-guidelines/aditya-goenka': typeof BrandGuidelinesAdityaGoenkaRoute
   '/brand-guidelines/aditya-kachave': typeof BrandGuidelinesAdityaKachaveRoute
@@ -171,7 +186,9 @@ export interface FileRoutesById {
   '/brand-guidelines/office-master': typeof BrandGuidelinesOfficeMasterRoute
   '/brand-guidelines/organic-video': typeof BrandGuidelinesOrganicVideoRoute
   '/brand-guidelines/profit-uni': typeof BrandGuidelinesProfitUniRoute
+  '/editing-guidelines/$slug': typeof EditingGuidelinesSlugRoute
   '/brand-guidelines/': typeof BrandGuidelinesIndexRoute
+  '/editing-guidelines/': typeof EditingGuidelinesIndexRoute
   '/training/': typeof TrainingIndexRoute
   '/training/$day/$session': typeof TrainingDaySessionRoute
   '/training/$day/': typeof TrainingDayIndexRoute
@@ -192,14 +209,15 @@ export interface FileRouteTypes {
     | '/brand-guidelines/office-master'
     | '/brand-guidelines/organic-video'
     | '/brand-guidelines/profit-uni'
+    | '/editing-guidelines/$slug'
     | '/brand-guidelines/'
+    | '/editing-guidelines/'
     | '/training/'
     | '/training/$day/$session'
     | '/training/$day/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/editing-guidelines'
     | '/brand-guidelines/aditya-goenka'
     | '/brand-guidelines/aditya-kachave'
     | '/brand-guidelines/ai-for-techies'
@@ -209,7 +227,9 @@ export interface FileRouteTypes {
     | '/brand-guidelines/office-master'
     | '/brand-guidelines/organic-video'
     | '/brand-guidelines/profit-uni'
+    | '/editing-guidelines/$slug'
     | '/brand-guidelines'
+    | '/editing-guidelines'
     | '/training'
     | '/training/$day/$session'
     | '/training/$day'
@@ -228,7 +248,9 @@ export interface FileRouteTypes {
     | '/brand-guidelines/office-master'
     | '/brand-guidelines/organic-video'
     | '/brand-guidelines/profit-uni'
+    | '/editing-guidelines/$slug'
     | '/brand-guidelines/'
+    | '/editing-guidelines/'
     | '/training/'
     | '/training/$day/$session'
     | '/training/$day/'
@@ -237,7 +259,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BrandGuidelinesRoute: typeof BrandGuidelinesRouteWithChildren
-  EditingGuidelinesRoute: typeof EditingGuidelinesRoute
+  EditingGuidelinesRoute: typeof EditingGuidelinesRouteWithChildren
   TrainingRoute: typeof TrainingRouteWithChildren
 }
 
@@ -278,12 +300,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrainingIndexRouteImport
       parentRoute: typeof TrainingRoute
     }
+    '/editing-guidelines/': {
+      id: '/editing-guidelines/'
+      path: '/'
+      fullPath: '/editing-guidelines/'
+      preLoaderRoute: typeof EditingGuidelinesIndexRouteImport
+      parentRoute: typeof EditingGuidelinesRoute
+    }
     '/brand-guidelines/': {
       id: '/brand-guidelines/'
       path: '/'
       fullPath: '/brand-guidelines/'
       preLoaderRoute: typeof BrandGuidelinesIndexRouteImport
       parentRoute: typeof BrandGuidelinesRoute
+    }
+    '/editing-guidelines/$slug': {
+      id: '/editing-guidelines/$slug'
+      path: '/$slug'
+      fullPath: '/editing-guidelines/$slug'
+      preLoaderRoute: typeof EditingGuidelinesSlugRouteImport
+      parentRoute: typeof EditingGuidelinesRoute
     }
     '/brand-guidelines/profit-uni': {
       id: '/brand-guidelines/profit-uni'
@@ -395,6 +431,19 @@ const BrandGuidelinesRouteWithChildren = BrandGuidelinesRoute._addFileChildren(
   BrandGuidelinesRouteChildren,
 )
 
+interface EditingGuidelinesRouteChildren {
+  EditingGuidelinesSlugRoute: typeof EditingGuidelinesSlugRoute
+  EditingGuidelinesIndexRoute: typeof EditingGuidelinesIndexRoute
+}
+
+const EditingGuidelinesRouteChildren: EditingGuidelinesRouteChildren = {
+  EditingGuidelinesSlugRoute: EditingGuidelinesSlugRoute,
+  EditingGuidelinesIndexRoute: EditingGuidelinesIndexRoute,
+}
+
+const EditingGuidelinesRouteWithChildren =
+  EditingGuidelinesRoute._addFileChildren(EditingGuidelinesRouteChildren)
+
 interface TrainingRouteChildren {
   TrainingIndexRoute: typeof TrainingIndexRoute
   TrainingDaySessionRoute: typeof TrainingDaySessionRoute
@@ -414,7 +463,7 @@ const TrainingRouteWithChildren = TrainingRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BrandGuidelinesRoute: BrandGuidelinesRouteWithChildren,
-  EditingGuidelinesRoute: EditingGuidelinesRoute,
+  EditingGuidelinesRoute: EditingGuidelinesRouteWithChildren,
   TrainingRoute: TrainingRouteWithChildren,
 }
 export const routeTree = rootRouteImport
