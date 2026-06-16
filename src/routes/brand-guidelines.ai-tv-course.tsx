@@ -71,7 +71,7 @@ const FOLDERS = [
 ];
 
 const NAV: [string, string][] = [
-  ["#quick-start", "Index"],
+  ["#quick-start", "Quick Start"],
   ["#foundation", "Foundation"],
   ["#recall", "Brand Recall"],
   ["#logo", "Logo"],
@@ -84,22 +84,6 @@ const NAV: [string, string][] = [
   ["#captions", "Captions"],
   ["#cta", "CTA & Outro"],
   ["#handoff", "File & Handoff"],
-];
-
-// Full index of the guide — every section, with a one-line summary.
-const INDEX: [string, string, string][] = [
-  ["#foundation", "Brand Foundation", "Purpose, personality and tone of voice."],
-  ["#recall", "Brand Recall System", "Repeatable signatures and the 5-second test."],
-  ["#logo", "Logo System", "Variants, locked positioning and contrast rules."],
-  ["#theme", "Theme", "Palette, dominance ratio and locked gradients."],
-  ["#type", "Typography", "Font systems, hierarchy and font discipline."],
-  ["#star", "Star Motif & Icons", "Star usage, sizes and icon style."],
-  ["#safe", "Layout, Templates & Safe Zones", "Grid, safe zones and template discipline."],
-  ["#sop", "Video Structure & Flow", "Locked structure, pacing, transitions, export and templates."],
-  ["#footage", "B-Roll, Footage & Screen Recordings", "Highlighting, full-screen B-roll and screen-recording rules."],
-  ["#captions", "Captions", "Default style, highlight rules and colour combinations."],
-  ["#cta", "CTA & Outro", "The provided outro / CTA clip and the clean-tail rule."],
-  ["#handoff", "File & Handoff", "Folder structure and the naming convention."],
 ];
 
 function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
@@ -137,21 +121,7 @@ function Page() {
       />
 
       <OnThisPage nav={NAV} storageKey="aitvToc">
-      <Section id="quick-start" title="Index">
-        <p>The full AI-TV course video guide at a glance — jump to any section. Every part of this page is the standard operating procedure for course videos.</p>
-        <div className="grid items-start gap-3 sm:grid-cols-2">
-          {INDEX.map(([h, l, d], i) => (
-            <a key={h} href={h} className="group rounded-lg border border-white/10 bg-card p-3.5 transition-colors hover:border-white/25 hover:bg-white/[0.03]">
-              <div className="flex items-baseline gap-2">
-                <span className="font-mono text-xs text-muted-foreground">{String(i + 1).padStart(2, "0")}</span>
-                <span className="font-medium text-foreground group-hover:underline">{l}</span>
-              </div>
-              <p className="mt-1 text-xs text-muted-foreground">{d}</p>
-            </a>
-          ))}
-        </div>
-
-        <h3 className="text-base font-semibold text-foreground pt-2">10 Non-Negotiables</h3>
+      <Section id="quick-start" title="Quick Start — 10 Non-Negotiables">
         <p>Strict rules. If any is missed, QA should reject.</p>
         <ol className="list-decimal pl-5 space-y-1">
           {NON_NEG.map((n) => <li key={n}>{n}</li>)}

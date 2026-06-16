@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import {
   Star, Heart, Bell, Settings, Eye,
-  ListChecks, FileText, Archive, Ban, MonitorPlay, Smartphone, Camera, Captions,
+  ListChecks, FileText, Archive, Ban, Smartphone, Camera, Captions,
   Type, Award, MousePointerClick, IndianRupee, Image as ImageIcon, Shapes, Gauge,
-  Shuffle, AudioLines, ClipboardCheck, CheckSquare, Sparkles, RotateCcw, ThumbsDown, VideoOff, type LucideIcon,
+  Shuffle, AudioLines, ClipboardCheck, CheckSquare, Sparkles, RotateCcw, type LucideIcon,
 } from "lucide-react";
 import playlistThumb from "@/assets/editing-guidelines-thumb.png";
 import { LiteVideo } from "@/components/TrainingDay";
@@ -17,7 +17,6 @@ export const SECTION_META: Record<string, { icon: LucideIcon; color: string }> =
   "project-backup": { icon: Archive, color: "text-orange-400" },
   "dos": { icon: CheckSquare, color: "text-emerald-400" },
   "non-neg": { icon: Ban, color: "text-rose-400" },
-  "organic-safe-zone": { icon: MonitorPlay, color: "text-green-400" },
   "safe-zone": { icon: Smartphone, color: "text-cyan-400" },
   "framing": { icon: Camera, color: "text-violet-400" },
   "caption-rules": { icon: Captions, color: "text-blue-400" },
@@ -32,7 +31,6 @@ export const SECTION_META: Record<string, { icon: LucideIcon; color: string }> =
   "pacing": { icon: Gauge, color: "text-lime-400" },
   "transitions": { icon: Shuffle, color: "text-cyan-400" },
   "audio-mixing": { icon: AudioLines, color: "text-amber-400" },
-  "rejection-gallery": { icon: ThumbsDown, color: "text-rose-400" },
   "pre-export-qa": { icon: CheckSquare, color: "text-emerald-400" },
   "accountability": { icon: ClipboardCheck, color: "text-rose-300" },
 };
@@ -46,8 +44,7 @@ export const SECTIONS: [string, string][] = [
   ["dos", "Do's & Don'ts"],
   ["non-neg", "Non-Negotiables"],
   ["framing", "Framing"],
-  ["organic-safe-zone", "Organic Safe Zone"],
-  ["safe-zone", "Ads Safe Zone"],
+  ["safe-zone", "Safe Zones"],
   ["caption-rules", "Caption Rules"],
   ["caption-placement", "Caption Placement"],
   ["supers-placement", "Supers Placement"],
@@ -60,7 +57,6 @@ export const SECTIONS: [string, string][] = [
   ["pacing", "Pacing & Engagement"],
   ["transitions", "Transitions"],
   ["audio-mixing", "Audio Mixing"],
-  ["rejection-gallery", "Rejection Gallery"],
   ["pre-export-qa", "Pre-Export QA Checklist"],
   ["accountability", "Accountability"],
 ];
@@ -72,8 +68,7 @@ export const SECTION_TITLES: Record<string, string> = {
   "project-backup": "Project Backup & Handoff",
   "dos": "Do's & Don'ts",
   "non-neg": "Non-Negotiables",
-  "organic-safe-zone": "Organic Safe Zone — 16 × 9 (1920 × 1080)",
-  "safe-zone": "Ads Safe Zone — 9 × 16 (1080 × 1920)",
+  "safe-zone": "Safe Zones — Ads (9 × 16) & Organic (16 × 9)",
   "framing": "Talking-Head Framing",
   "caption-rules": "Caption Rules",
   "caption-placement": "Caption Placement",
@@ -87,7 +82,6 @@ export const SECTION_TITLES: Record<string, string> = {
   "pacing": "Pacing & Engagement",
   "transitions": "Transitions",
   "audio-mixing": "Audio Mixing Guidelines",
-  "rejection-gallery": "Rejection Gallery — Common Mistakes",
   "pre-export-qa": "Pre-Export QA Checklist",
   "accountability": "Editor Accountability & Review",
 };
@@ -147,7 +141,7 @@ type QaItem = { text: string; image?: string };
 const QA_GROUPS: { group: string; links: [string, string][]; items: QaItem[] }[] = [
   {
     group: "Safe zone & framing",
-    links: [["Ads Safe Zone", "safe-zone"], ["Organic", "organic-safe-zone"], ["Framing", "framing"]],
+    links: [["Safe Zones", "safe-zone"], ["Framing", "framing"]],
     items: [
       { text: "All text, logos and faces sit inside the safe zone for the format's ratio." },
       { text: "Subject framed head-high, with the eyes on the upper-third line.", image: "/framing-eye-line.svg" },
@@ -292,42 +286,6 @@ const AI_REGEN: [string, string][] = [
   ["Word pronunciation", "If any word is mispronounced, regenerate it (or fix the script / voice) until every word is correct."],
 ];
 
-// Visual before/after examples only — the written mistakes live in Do's & Don'ts.
-// Each entry is a video slot to be filmed/edited and added manually.
-type RejectionClip = { title: string; bad: string; good: string; slug: string };
-const REJECTION_CLIPS: RejectionClip[] = [
-  { title: "Captions out of sync", bad: "On-screen text lags or leads the voice-over.", good: "Every caption changes exactly with the words spoken.", slug: "caption-rules" },
-  { title: "Gimmicky transitions", bad: "A cut ruined by a glitch, wipe or 3D spin.", good: "A clean, motivated cut on the beat.", slug: "transitions" },
-  { title: "Music overpowering the voice-over", bad: "Music or SFX buries the VO.", good: "Music ducked 6–12 dB under the voice.", slug: "audio-mixing" },
-  { title: "Uncanny avatar / broken lip-sync", bad: "An AI avatar that looks off or whose mouth is out of sync.", good: "A regenerated take with the look and sync right.", slug: "ai-usage" },
-];
-
-function RejectionGallery() {
-  return (
-    <>
-      <p>Side-by-side <strong className="text-foreground">before / after examples</strong> of the rejections that are hard to judge from text alone — pacing, sync, motion and audio. For the written rules, see <SLink slug="dos">Do's &amp; Don'ts</SLink>; for the absolutes, see <SLink slug="non-neg">Non-Negotiables</SLink>.</p>
-      <p className="text-xs text-muted-foreground">Each clip below is a placeholder — the real before/after video will be filmed and added manually.</p>
-      <div className="mt-4 grid gap-4 sm:grid-cols-2">
-        {REJECTION_CLIPS.map((c) => (
-          <div key={c.title} className="overflow-hidden rounded-lg border border-white/10 bg-card">
-            <div className="flex flex-col items-center justify-center gap-1.5 border-b border-white/10 bg-black/40 text-center" style={{ aspectRatio: "16 / 9" }}>
-              <VideoOff className="h-7 w-7 text-muted-foreground" />
-              <span className="font-label">Before / after video · to be added</span>
-              <span className="px-3 text-[11px] text-muted-foreground">“{c.title}”</span>
-            </div>
-            <div className="p-4">
-              <div className="font-medium text-foreground">{c.title}</div>
-              <p className="mt-1.5 flex items-start gap-2 text-sm"><ThumbsDown className="mt-0.5 h-4 w-4 shrink-0 text-rose-400" /><span className="text-muted-foreground"><strong className="text-rose-300">Rejected:</strong> {c.bad}</span></p>
-              <p className="mt-1.5 flex items-start gap-2 text-sm"><CheckSquare className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" /><span className="text-muted-foreground"><strong className="text-emerald-300">Approved:</strong> {c.good}</span></p>
-              <div className="mt-2.5"><SLink slug={c.slug}>See section →</SLink></div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </>
-  );
-}
-
 /** Inner content for each section page, keyed by slug. */
 export const SECTION_BODIES: Record<string, React.ReactNode> = {
   "rules-of-thumb": (
@@ -339,8 +297,7 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
         <li><strong className="text-foreground">Do's &amp; Don'ts</strong> — follow the universal do's and don'ts (<SLink slug="dos">Do's &amp; Don'ts</SLink>).</li>
         <li><strong className="text-foreground">Non-negotiables</strong> — front angle first then cross angles; finished animations; every visual relevant (<SLink slug="non-neg">Non-Negotiables</SLink>).</li>
         <li><strong className="text-foreground">Framing</strong> — head high, eyes on the upper-third line (<SLink slug="framing">Framing</SLink>).</li>
-        <li><strong className="text-foreground">Organic safe zone</strong> — keep key elements inside the 16 × 9 title-safe block, clear of YouTube UI (<SLink slug="organic-safe-zone">Organic Safe Zone</SLink>).</li>
-        <li><strong className="text-foreground">Ads safe zone</strong> — keep all text, logos and faces inside the 9 × 16 safe zone (<SLink slug="safe-zone">Ads Safe Zone</SLink>).</li>
+        <li><strong className="text-foreground">Safe zones</strong> — keep all text, logos and faces inside the safe zone for the format: 9 × 16 for ads, the 16 × 9 title-safe block clear of YouTube UI for organic (<SLink slug="safe-zone">Safe Zones</SLink>).</li>
         <li><strong className="text-foreground">Caption rules</strong> — single line, ~16 characters, synced to the VO; never split names, word-pairs or measured values (<SLink slug="caption-rules">Caption Rules</SLink>).</li>
         <li><strong className="text-foreground">Caption placement</strong> — one line, low in the safe zone; just above the seam on split screens (<SLink slug="caption-placement">Caption Placement</SLink>).</li>
         <li><strong className="text-foreground">Supers placement</strong> — top or bottom, never overlapping captions; bold only the key keywords in a contrasting colour (<SLink slug="supers-placement">Supers Placement</SLink>).</li>
@@ -353,7 +310,6 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
         <li><strong className="text-foreground">Pacing &amp; engagement</strong> — remove filler and dead air; a visible change every few seconds, no scenes that drag (<SLink slug="pacing">Pacing &amp; Engagement</SLink>).</li>
         <li><strong className="text-foreground">Transitions</strong> — clean cuts on the beat, a small consistent set; no glitch, wipe or 3D (<SLink slug="transitions">Transitions</SLink>).</li>
         <li><strong className="text-foreground">Audio</strong> — voice-over leads, music and SFX duck under it; peak -5 to -2 dB, -14 LUFS, never clipping (<SLink slug="audio-mixing">Audio Mixing</SLink>).</li>
-        <li><strong className="text-foreground">Rejection gallery</strong> — check your cut against the common rejection reasons (<SLink slug="rejection-gallery">Rejection Gallery</SLink>).</li>
         <li><strong className="text-foreground">Pre-export QA</strong> — run the full Pre-Export QA Checklist before exporting (<SLink slug="pre-export-qa">Pre-Export QA Checklist</SLink>).</li>
         <li><strong className="text-foreground">Accountability</strong> — the first cut should be publish-ready; proofread spelling and check prices match the landing page (<SLink slug="accountability">Accountability</SLink>).</li>
       </ul>
@@ -361,38 +317,79 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
   ),
 
   "file-naming": (
-    <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,440px)] lg:items-start">
-      <div>
-        <p>This naming convention is for <strong className="text-foreground">ads only</strong>. Every exported ad file follows this pattern so each asset stays traceable from brief to delivery:</p>
-        <pre className="mt-3 overflow-x-auto rounded-md border border-white/15 bg-white/5 p-3 text-sm">Product_Copywriter_AssetType+Number_Ratio_POC_Creator</pre>
-        <p className="mt-3 text-sm">Example: <code className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-foreground">AI_AK_VS101_9016_KV_SM</code></p>
-        <div className="overflow-x-auto mt-4">
-          <table className="w-full border-collapse text-sm">
-            <thead><tr className="border-b border-white/15">{["Field", "Example", "Meaning"].map((h) => <th key={h} className="px-3 py-2 text-left font-medium text-foreground">{h}</th>)}</tr></thead>
-            <tbody>
-              {[
-                ["Product", "AI", "The product or brand."],
-                ["Copywriter", "AK", "Copywriter's initials (e.g. AK = Aditya Kachave)."],
-                ["Asset Type + Number", "VS101", "Asset type code + sequence number (e.g. VS = Video Script)."],
-                ["Ratio", "9016", "Aspect ratio — 9016 = 9×16, 0101 = 1×1, 1609 = 16×9."],
-                ["POC", "KV", "Point of contact's initials (e.g. KV = Kushagra Varma)."],
-                ["Creator", "SM", "The creator / editor's initials (e.g. SM = Sathiya Moorthy)."],
-              ].map((r) => (
-                <tr key={r[0]} className="border-b border-white/10">
-                  <td className="px-3 py-2 font-medium text-foreground whitespace-nowrap">{r[0]}</td>
-                  <td className="px-3 py-2 font-mono whitespace-nowrap">{r[1]}</td>
-                  <td className="px-3 py-2">{r[2]}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    <div className="space-y-10">
+      <p>Two naming conventions apply, by deliverable type — <strong className="text-foreground">Ads</strong> and <strong className="text-foreground">Course videos</strong>. Use the one that matches what you're delivering, and keep every field in the exact order shown.</p>
+
+      {/* ---- Ads ---- */}
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,440px)] lg:items-start">
+        <div>
+          <h3 className="text-base font-semibold text-foreground">Ads</h3>
+          <p className="mt-1">Every exported <strong className="text-foreground">ad</strong> file follows this pattern so each asset stays traceable from brief to delivery:</p>
+          <pre className="mt-3 overflow-x-auto rounded-md border border-white/15 bg-white/5 p-3 text-sm">Product_Copywriter_AssetType+Number_Ratio_POC_Creator</pre>
+          <p className="mt-3 text-sm">Example: <code className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-foreground">AI_AK_VS101_9016_KV_SM</code></p>
+          <div className="overflow-x-auto mt-4">
+            <table className="w-full border-collapse text-sm">
+              <thead><tr className="border-b border-white/15">{["Field", "Example", "Meaning"].map((h) => <th key={h} className="px-3 py-2 text-left font-medium text-foreground">{h}</th>)}</tr></thead>
+              <tbody>
+                {[
+                  ["Product", "AI", "The product or brand."],
+                  ["Copywriter", "AK", "Copywriter's initials (e.g. AK = Aditya Kachave)."],
+                  ["Asset Type + Number", "VS101", "Asset type code + sequence number (e.g. VS = Video Script)."],
+                  ["Ratio", "9016", "Aspect ratio — 9016 = 9×16, 0101 = 1×1, 1609 = 16×9."],
+                  ["POC", "KV", "Point of contact's initials (e.g. KV = Kushagra Varma)."],
+                  ["Creator", "SM", "The creator / editor's initials (e.g. SM = Sathiya Moorthy)."],
+                ].map((r) => (
+                  <tr key={r[0]} className="border-b border-white/10">
+                    <td className="px-3 py-2 font-medium text-foreground whitespace-nowrap">{r[0]}</td>
+                    <td className="px-3 py-2 font-mono whitespace-nowrap">{r[1]}</td>
+                    <td className="px-3 py-2">{r[2]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-3 text-xs italic">Separate every field with an underscore (_) and keep the order exactly as shown.</p>
         </div>
-        <p className="mt-3 text-xs italic">Separate every field with an underscore (_) and keep the order exactly as shown.</p>
+        <figure className="overflow-hidden rounded-lg border border-white/10 bg-black lg:sticky lg:top-8">
+          <video src="/file-naming-convention.mp4" poster="/file-naming-poster.jpg" controls playsInline preload="metadata" className="block w-full" style={{ aspectRatio: "16 / 9" }} />
+          <figcaption className="px-3 py-2 text-xs text-muted-foreground">Watch: how each field of the ad file name is built — Product · Copywriter · Asset · Ratio · POC · Creator.</figcaption>
+        </figure>
       </div>
-      <figure className="overflow-hidden rounded-lg border border-white/10 bg-black lg:sticky lg:top-8">
-        <video src="/file-naming-convention.mp4" poster="/file-naming-poster.jpg" controls playsInline preload="metadata" className="block w-full" style={{ aspectRatio: "16 / 9" }} />
-        <figcaption className="px-3 py-2 text-xs text-muted-foreground">Watch: how each field of the file name is built — Product · Copywriter · Asset · Ratio · POC · Creator.</figcaption>
-      </figure>
+
+      {/* ---- Course videos ---- */}
+      <div className="grid gap-8 border-t border-white/10 pt-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,440px)] lg:items-start">
+        <div>
+          <h3 className="text-base font-semibold text-foreground">Course Videos</h3>
+          <p className="mt-1">Every <strong className="text-foreground">AI-TV course video</strong> file follows this pattern, so episodes stay ordered and re-editable across a series:</p>
+          <pre className="mt-3 overflow-x-auto rounded-md border border-white/15 bg-white/5 p-3 text-sm">AI-TV_[SeriesCode]_[EP##]_[ShortTitle]_v#</pre>
+          <p className="mt-3 text-sm">Example: <code className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-foreground">AI-TV_LF_EP12_AI-Agents_v3.mp4</code></p>
+          <div className="overflow-x-auto mt-4">
+            <table className="w-full border-collapse text-sm">
+              <thead><tr className="border-b border-white/15">{["Field", "Example", "Meaning"].map((h) => <th key={h} className="px-3 py-2 text-left font-medium text-foreground">{h}</th>)}</tr></thead>
+              <tbody>
+                {[
+                  ["Product", "AI-TV", "The product or brand — AI-TV App course."],
+                  ["Series Code", "LF", "The course series (e.g. LF = Long-Form)."],
+                  ["Episode", "EP12", "Episode number — EP## (e.g. EP12 = episode 12)."],
+                  ["Short Title", "AI-Agents", "Short title of the video topic (no spaces)."],
+                  ["Version", "v3", "Version number — v3 = third revision."],
+                ].map((r) => (
+                  <tr key={r[0]} className="border-b border-white/10">
+                    <td className="px-3 py-2 font-medium text-foreground whitespace-nowrap">{r[0]}</td>
+                    <td className="px-3 py-2 font-mono whitespace-nowrap">{r[1]}</td>
+                    <td className="px-3 py-2">{r[2]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-3 text-xs italic">Use no spaces, and separate every field with an underscore (_). Append <code className="rounded bg-white/10 px-1 py-0.5 font-mono not-italic text-foreground">_FINAL</code> and freeze changes for the final cut.</p>
+        </div>
+        <figure className="overflow-hidden rounded-lg border border-white/10 bg-black lg:sticky lg:top-8">
+          <video src="/course-naming-convention.mp4" poster="/course-naming-poster.jpg" controls playsInline preload="metadata" className="block w-full" style={{ aspectRatio: "16 / 9" }} />
+          <figcaption className="px-3 py-2 text-xs text-muted-foreground">Watch: how each field of the course file name is built — Product · Series · Episode · Title · Version.</figcaption>
+        </figure>
+      </div>
     </div>
   ),
 
@@ -440,8 +437,8 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
 
   "non-neg": (
     <>
-      <p className="rounded-lg border border-rose-400/30 bg-rose-400/10 p-3.5 text-rose-200">
-        <strong className="text-rose-300">Break any one of these and the cut is rejected outright</strong> — however good the rest of the edit is. These three sit above the <SLink slug="dos">Do's &amp; Don'ts</SLink> and override everything in them.
+      <p className="rounded-lg border border-rose-500/40 bg-rose-500/10 p-4 text-foreground">
+        <strong className="font-semibold text-rose-500">Break any one of these and the cut is rejected outright</strong> — however good the rest of the edit is. These three sit above the <SLink slug="dos">Do's &amp; Don'ts</SLink> and override everything in them.
       </p>
       <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
         <div className="space-y-4">
@@ -479,27 +476,15 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
     </>
   ),
 
-  "organic-safe-zone": (
-    <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
-      <div className="space-y-3">
-        <p>Long-form organic videos for YouTube are built on a 16 × 9 master at 1920 × 1080. YouTube overlays its own UI on top of the frame, so keep every critical element inside a central title-safe block.</p>
-        <h3 className="text-base font-semibold text-foreground pt-1">Basic Safe Zone Rules</h3>
-        <ul className="list-disc pl-5 space-y-1">
-          <li>Keep titles, lower-thirds, logos and key text inside a title-safe block — roughly a <strong className="text-foreground">5% margin</strong> on every edge (about 90 px sides, 50 px top and bottom).</li>
-          <li><strong className="text-foreground">Bottom strip</strong> — the player progress bar and controls cover the bottom of the frame. Keep captions and lower-thirds clear of the bottom ~10% (about 100 px).</li>
-          <li><strong className="text-foreground">End screens</strong> — in the last ~20 seconds YouTube overlays subscribe and video cards, mostly bottom and right. Keep that closing section clear of important visuals.</li>
-          <li><strong className="text-foreground">Corners</strong> — leave the bottom-right clear for the timestamp, and the top-right clear for the info / cards icon.</li>
-          <li>Burned-in captions sit lower-centre, above the player bar — don't clash with YouTube's own CC area.</li>
-        </ul>
-        <p className="italic text-xs">YouTube's UI changes over time — treat these as a safe baseline and re-check against a live placement before shipping.</p>
-      </div>
-      <div className="flex justify-center lg:sticky lg:top-8"><OrganicSafeZoneDiagram /></div>
-    </div>
-  ),
-
   "safe-zone": (
-    <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
-      <div className="space-y-3">
+    <div className="space-y-10">
+      <p>The safe zone is the area of the frame that stays clear of platform UI — all critical elements (headlines, supers, captions, logo, CTA, faces) must sit inside it. It differs by format: short-form <strong className="text-foreground">ads on a 9 × 16 master</strong> and long-form <strong className="text-foreground">organic on a 16 × 9 master</strong>. Both are covered below.</p>
+
+      {/* ---- Ads — 9 × 16 ---- */}
+      <div>
+        <h3 className="text-lg font-semibold text-foreground">Ads — 9 × 16 (1080 × 1920)</h3>
+        <div className="mt-3 grid gap-6 lg:grid-cols-2 lg:items-start">
+          <div className="space-y-3">
         <p>Every short-form ad is built on a 9 × 16 master. The safe zone is the area of the frame that stays clear of platform UI — all critical elements (headlines, supers, captions, logo, CTA, faces) must sit inside it.</p>
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-sm">
@@ -531,16 +516,30 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
           <li>Derived ratios — when reframing to 1 × 1 and 16 × 9 from the 9 × 16 master, re-check that every element still falls inside that ratio's safe area.</li>
         </ul>
         <p className="italic text-xs">App interfaces change over time. These margins are a safe baseline — re-check against a live placement before shipping.</p>
-        <h3 className="text-base font-semibold text-foreground pt-3">Split-Screen Layout</h3>
+          </div>
+          <div className="flex justify-center lg:sticky lg:top-8"><SafeZoneDiagram /></div>
+        </div>
+      </div>{/* /Ads */}
+
+      {/* ---- Organic — 16 × 9 ---- */}
+      <div className="border-t border-white/10 pt-8">
+        <h3 className="text-lg font-semibold text-foreground">Organic — 16 × 9 (1920 × 1080)</h3>
+        <div className="mt-3 grid gap-6 lg:grid-cols-2 lg:items-start">
+          <div className="space-y-3">
+        <p>Long-form organic videos for YouTube are built on a 16 × 9 master at 1920 × 1080. YouTube overlays its own UI on top of the frame, so keep every critical element inside a central title-safe block.</p>
+        <h3 className="text-base font-semibold text-foreground pt-1">Basic Safe Zone Rules</h3>
         <ul className="list-disc pl-5 space-y-1">
-          <li>When an ad uses a split screen, split the 9 × 16 frame horizontally at the exact centre — two stacked panels of <strong className="text-foreground">1080 × 960</strong> (split on the centre line, y = 960, so both panels are equal).</li>
-          <li>Keep each panel's key content — faces, text — inside the safe zone.</li>
-          <li>The bottom panel still respects the bottom UI keep-clear zone; don't place critical content low in it.</li>
-          <li>Don't split off-centre or use uneven panels.</li>
-          <li>Place the caption a little above the centre split line so it sits over the seam — see <SLink slug="caption-placement">Caption Placement</SLink>.</li>
+          <li>Keep titles, lower-thirds, logos and key text inside a title-safe block — roughly a <strong className="text-foreground">5% margin</strong> on every edge (about 90 px sides, 50 px top and bottom).</li>
+          <li><strong className="text-foreground">Bottom strip</strong> — the player progress bar and controls cover the bottom of the frame. Keep captions and lower-thirds clear of the bottom ~10% (about 100 px).</li>
+          <li><strong className="text-foreground">End screens</strong> — in the last ~20 seconds YouTube overlays subscribe and video cards, mostly bottom and right. Keep that closing section clear of important visuals.</li>
+          <li><strong className="text-foreground">Corners</strong> — leave the bottom-right clear for the timestamp, and the top-right clear for the info / cards icon.</li>
+          <li>Burned-in captions sit lower-centre, above the player bar — don't clash with YouTube's own CC area.</li>
         </ul>
-      </div>
-      <div className="flex justify-center lg:sticky lg:top-8"><SafeZoneDiagram /></div>
+        <p className="italic text-xs">YouTube's UI changes over time — treat these as a safe baseline and re-check against a live placement before shipping.</p>
+          </div>
+          <div className="flex justify-center lg:sticky lg:top-8"><OrganicSafeZoneDiagram /></div>
+        </div>
+      </div>{/* /Organic */}
     </div>
   ),
 
@@ -553,6 +552,15 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
           <li><strong>Wide shot</strong> — the subject is smaller with room around them, but the head still sits in the upper part of the frame and the eyes stay near the upper-third line.</li>
           <li>Keep the face inside the safe zone in both shots, well clear of the right-side action buttons.</li>
           <li>Don't centre the head low in the frame or leave a large empty gap of headroom above it.</li>
+        </ul>
+        <h3 className="text-base font-semibold text-foreground pt-1">Split-Screen</h3>
+        <p>When a video uses a split screen, the same framing and safe-zone rules apply inside each panel.</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Split the 9 × 16 frame horizontally at the exact centre — two stacked panels of <strong className="text-foreground">1080 × 960</strong> (split on the centre line, y = 960, so both panels are equal).</li>
+          <li>Keep each panel's key content — faces, text — inside the safe zone.</li>
+          <li>The bottom panel still respects the bottom UI keep-clear zone; don't place critical content low in it.</li>
+          <li>Don't split off-centre or use uneven panels.</li>
+          <li>Place the caption a little above the centre split line so it sits over the seam — see <SLink slug="caption-placement">Caption Placement</SLink>.</li>
         </ul>
         <div className="overflow-hidden rounded-lg border border-white/10 bg-black" style={{ aspectRatio: "16 / 9" }}>
           <LiteVideo embedSrc="https://www.youtube.com/embed/qwVPogPBP7E" title="Talking-head framing walkthrough" />
@@ -587,15 +595,38 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
 
   "caption-placement": (
     <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
-      <ul className="list-disc pl-5 space-y-1">
-        <li>A caption is a single line — never wrap a caption onto two lines.</li>
-        <li>Place it low in the safe zone, centred horizontally, resting above the bottom UI keep-clear zone.</li>
-        <li><strong className="text-foreground">On a split screen</strong> — place the caption a little above the centre split line so it sits over the seam, not resting directly on the line.</li>
-        <li>Captions are synced to the voice-over.</li>
-      </ul>
+      <div className="space-y-3">
+        <p>Captions live in a consistent home — low in the frame, clear of the face and the platform UI — so viewers always know where to look. This section is about <em>where</em> a caption sits; for its length, wording and timing see <SLink slug="caption-rules">Caption Rules</SLink>.</p>
+
+        <h3 className="text-base font-semibold text-foreground pt-1">Position</h3>
+        <ul className="list-disc pl-5 space-y-1">
+          <li><strong className="text-foreground">Single line, centred</strong> — never wrap a caption onto two lines, and keep it centred horizontally.</li>
+          <li><strong className="text-foreground">Low in the safe zone</strong> — sit it in the lower third, resting just above the bottom UI keep-clear band, never below it.</li>
+          <li><strong className="text-foreground">Consistent throughout</strong> — hold the same position for the whole video; don't let captions jump up, down or sideways between shots.</li>
+          <li><strong className="text-foreground">One at a time</strong> — only one caption on screen at any moment.</li>
+        </ul>
+
+        <h3 className="text-base font-semibold text-foreground pt-1">Keep clear of</h3>
+        <ul className="list-disc pl-5 space-y-1">
+          <li><strong className="text-foreground">The face</strong> — clear of the speaker's face, from the hairline down to the jaw; sit the caption below the jaw so it never covers the eyes, nose or mouth.</li>
+          <li><strong className="text-foreground">Supers</strong> — supers sit at the top or bottom of the safe zone; never let a caption and a super overlap (see <SLink slug="supers-placement">Supers Placement</SLink>).</li>
+          <li><strong className="text-foreground">UI &amp; logo</strong> — clear of the bottom progress / controls band, the right-side action buttons, and the logo (see <SLink slug="safe-zone">Safe Zones</SLink>).</li>
+        </ul>
+
+        <h3 className="text-base font-semibold text-foreground pt-1">Split screen</h3>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Place the caption a little above the centre split line so it sits over the seam — not resting directly on the line.</li>
+        </ul>
+
+        <h3 className="text-base font-semibold text-foreground pt-1">Sync</h3>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Captions appear and change exactly with the voice-over (see <SLink slug="caption-rules">Caption Rules</SLink>).</li>
+        </ul>
+      </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:sticky lg:top-8">
         <PlacementDiagram variant="caption" />
         <SplitCaptionDiagram />
+        <FaceCaptionDiagram />
       </div>
     </div>
   ),
@@ -826,7 +857,6 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
     </>
   ),
 
-  "rejection-gallery": <RejectionGallery />,
 
   "pre-export-qa": (
     <>
@@ -863,6 +893,41 @@ function SplitCaptionDiagram() {
         <text x="90" y="174" textAnchor="middle" fill="#a78bfa" fontSize="6">CAPTION touching the split line</text>
       </svg>
       <figcaption className="mt-2 text-center text-[11px] text-muted-foreground">Split-screen caption — just above the centre split line</figcaption>
+    </figure>
+  );
+}
+
+function FaceCaptionDiagram() {
+  return (
+    <figure>
+      <svg viewBox="0 0 180 320" className="w-full max-w-[220px] rounded-md border border-white/15 bg-[#0b0b14]">
+        <rect x="0" y="0" width="180" height="320" fill="#0b0b14" />
+        {/* bottom UI keep-clear strip */}
+        <rect x="0" y="278" width="180" height="42" fill="#3b3b55" opacity="0.5" />
+        {/* safe zone */}
+        <rect x="10" y="10" width="160" height="268" fill="none" stroke="#22d3ee" strokeWidth="1" strokeDasharray="3 2" />
+        {/* shoulders / body */}
+        <rect x="48" y="142" width="84" height="178" rx="12" fill="#475569" opacity="0.55" />
+        {/* head */}
+        <circle cx="90" cy="96" r="38" fill="#475569" opacity="0.7" />
+        {/* face keep-clear band: hairline -> jaw */}
+        <rect x="58" y="72" width="64" height="60" rx="6" fill="#fb7185" opacity="0.16" />
+        <rect x="58" y="72" width="64" height="60" rx="6" fill="none" stroke="#fb7185" strokeWidth="1" strokeDasharray="3 2" />
+        <line x1="40" y1="72" x2="140" y2="72" stroke="#fb7185" strokeWidth="0.8" strokeDasharray="2 2" />
+        <line x1="40" y1="132" x2="140" y2="132" stroke="#fb7185" strokeWidth="0.8" strokeDasharray="2 2" />
+        <text x="142" y="71" fill="#fda4af" fontSize="6">hairline</text>
+        <text x="142" y="138" fill="#fda4af" fontSize="6">jaw</text>
+        <text x="90" y="90" textAnchor="middle" fill="#fda4af" fontSize="6.5" fontWeight="700">FACE</text>
+        <text x="90" y="99" textAnchor="middle" fill="#fda4af" fontSize="5.5">keep clear</text>
+        {/* BAD caption over the face */}
+        <rect x="34" y="114" width="112" height="15" rx="3" fill="#0b0b14" stroke="#fb7185" strokeWidth="1.2" strokeDasharray="3 2" />
+        <text x="90" y="124.5" textAnchor="middle" fill="#fb7185" fontSize="7.5" fontWeight="700" fontFamily={SF_PRO}>✗ over the face</text>
+        {/* GOOD caption — low, clear of the face */}
+        <text x="90" y="246" textAnchor="middle" fill="#a78bfa" fontSize="6">✓ below the jaw, in the safe zone</text>
+        <rect x="34" y="250" width="112" height="16" rx="3" fill="#0b0b14" stroke="#a78bfa" strokeWidth="1.2" />
+        <text x="90" y="261" textAnchor="middle" fill="#ffffff" fontSize="8.5" fontWeight="600" fontFamily={SF_PRO}>10X your skills</text>
+      </svg>
+      <figcaption className="mt-2 text-center text-[11px] text-muted-foreground">Keep captions clear of the face — never over the hairline-to-jaw area</figcaption>
     </figure>
   );
 }

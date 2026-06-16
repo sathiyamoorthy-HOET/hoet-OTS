@@ -2,4 +2,10 @@
 # TanStack router handles. Static files in /assets/* are served first.
 # This file is copied into the publish dir (dist/client) so it ships with
 # every deploy, including manual drag-and-drop of that folder.
+# Merged: the Organic Safe Zone page is now part of the combined Safe Zones page.
+/editing-guidelines/organic-safe-zone    /editing-guidelines/safe-zone    301
+
+# Removed: the Rejection Gallery page (mistakes live in Do's & Don'ts / Non-Negotiables).
+/editing-guidelines/rejection-gallery    /editing-guidelines/dos    301
+
 /*    /_shell.html    200
