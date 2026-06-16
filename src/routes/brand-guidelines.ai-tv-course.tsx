@@ -1,4 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { PanelRightClose, PanelRightOpen } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
 import aitvStar from "@/assets/aitv-star.png";
 
@@ -77,8 +79,9 @@ const NAV: [string, string][] = [
   ["#theme", "Theme"],
   ["#type", "Typography"],
   ["#star", "Star & Icons"],
-  ["#safe", "Safe Zones"],
+  ["#safe", "Layout & Templates"],
   ["#sop", "Editing SOP"],
+  ["#footage", "B-Roll & Screens"],
   ["#captions", "Captions"],
   ["#cta", "CTA & Outro"],
   ["#handoff", "File & Handoff"],
@@ -97,7 +100,21 @@ function Th({ cols }: { cols: string[] }) {
   return <thead><tr className="border-b border-white/15">{cols.map((c) => <th key={c} className="px-3 py-2 text-left font-medium text-foreground">{c}</th>)}</tr></thead>;
 }
 
+/** Before / after reference frame pulled from the course SOP deck (❌ left · ✅ right). */
+function Figure({ src, caption }: { src: string; caption: string }) {
+  return (
+    <figure className="overflow-hidden rounded-lg border border-white/10 bg-card">
+      <img src={src} alt={caption} loading="lazy" className="block w-full" />
+      <figcaption className="px-3 py-2 text-xs leading-relaxed text-muted-foreground">{caption}</figcaption>
+    </figure>
+  );
+}
+
 function Page() {
+  const [toc, setToc] = useState(true);
+  useEffect(() => { setToc(localStorage.getItem("aitvToc") !== "0"); }, []);
+  const toggleToc = (v: boolean) => { setToc(v); localStorage.setItem("aitvToc", v ? "1" : "0"); };
+
   return (
     <div>
       <PageHeader
@@ -106,9 +123,12 @@ function Page() {
         intro="Video Branding & Editing Guide for AI-TV course (informative) videos. Make AI feel understandable and practical for working professionals — premium, calm and confident, with helpful-teacher energy. This guide is specific to course content and does not use the general editing guidelines."
       />
 
-      <nav className="mb-10 flex flex-wrap gap-2 text-sm">
-        {NAV.map(([h, l]) => <a key={h} href={h} className="rounded-full border border-white/15 px-3 py-1 hover:border-white/35">{l}</a>)}
-      </nav>
+      <div className={"xl:grid xl:items-start xl:gap-8 " + (toc ? "xl:grid-cols-[minmax(0,1fr)_184px]" : "xl:grid-cols-[minmax(0,1fr)_2.75rem]")}>
+        <div className="min-w-0">
+          {/* Compact view: horizontal section pills (the sidebar shows on wide screens) */}
+          <nav className="mb-8 flex flex-wrap gap-2 text-sm xl:hidden">
+            {NAV.map(([h, l]) => <a key={h} href={h} className="rounded-full border border-white/15 px-3 py-1 hover:border-white/35">{l}</a>)}
+          </nav>
 
       <Section id="quick-start" title="Quick Start — 10 Non-Negotiables">
         <p>Strict rules. If any is missed, QA should reject.</p>
@@ -217,6 +237,15 @@ function Page() {
           </table>
         </div>
         <p><strong className="text-foreground">ALL CAPS</strong> only for 1–3 words (CTA or emphasis); add +2% to +4% letter-spacing. Keep typography boring and consistent — the viewer should feel clarity, not "design".</p>
+        <h3 className="text-base font-semibold text-foreground pt-1">Font discipline</h3>
+        <ul className="list-disc pl-5 space-y-1">
+          <li><strong className="text-foreground">Brand-approved fonts only.</strong> Use only the fonts in the system above. Random or system fonts are never permitted — every word on screen uses the brand typography.</li>
+          <li><strong className="text-foreground">Use a combination of both brand fonts.</strong> Pair the Heading font (titles, supers) with the Sub font (body, captions) — don't set an entire video in a single font.</li>
+        </ul>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Figure src="/ai-tv-course/fonts-approved.jpg" caption="Brand-approved fonts only — never drop in a random font for a frame." />
+          <Figure src="/ai-tv-course/font-combination.jpg" caption="Combine both brand fonts (Heading + Sub) rather than relying on one." />
+        </div>
       </Section>
 
       <Section id="star" title="Star Motif & Icons">
@@ -238,7 +267,7 @@ function Page() {
         </ul>
       </Section>
 
-      <Section id="safe" title="Layout & Safe Zones">
+      <Section id="safe" title="Layout, Templates & Safe Zones">
         <p>Use a 12-column grid for all formats. Keep faces and key visuals in the centre-safe region. All text, logo and captions must stay inside the safe zones.</p>
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-sm">
@@ -255,6 +284,15 @@ function Page() {
             </tbody>
           </table>
         </div>
+        <h3 className="text-base font-semibold text-foreground pt-1">Template discipline</h3>
+        <ul className="list-disc pl-5 space-y-1">
+          <li><strong className="text-foreground">Stay inside the approved templates.</strong> Follow this guide and the brand templates strictly — no custom or arbitrary styling. Colours, panels, lower-thirds and layouts all come from the approved templates.</li>
+          <li><strong className="text-foreground">Centre and fit the content.</strong> Keep content centred and properly fitted inside the template — scaled to fill the frame, with no cropping, stretching or misalignment.</li>
+        </ul>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Figure src="/ai-tv-course/brand-template.jpg" caption="Use the approved brand templates — no custom or arbitrary styling." />
+          <Figure src="/ai-tv-course/content-centered.jpg" caption="Keep content centred and fitted in the template — no cropping or misalignment." />
+        </div>
       </Section>
 
       <Section id="sop" title="Video Editing SOP — Informative Videos">
@@ -270,6 +308,25 @@ function Page() {
           <li><strong className="text-foreground">B · Screen-record tutorial</strong> — sparing cursor zooms, numbered step pills, a recap frame before the CTA.</li>
           <li><strong className="text-foreground">C · Slides + VO</strong> — one message per slide, star motif as a subtle anchor, cuts on sentence boundaries.</li>
         </ul>
+      </Section>
+
+      <Section id="footage" title="B-Roll, Footage & Screen Recordings">
+        <p>Footage, screen recordings and B-roll carry most informative videos. Keep them clean, full-frame and locked to the point being made — never decorative.</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li><strong className="text-foreground">Highlight what's being talked about.</strong> The moment the voice-over references a button, field, row or result on screen, highlight or zoom to it so the viewer's eye lands on the exact element.</li>
+          <li><strong className="text-foreground">Never show the website URL.</strong> Keep the address bar out of screen recordings — crop or cover it so the focus stays on the content, not the URL.</li>
+          <li><strong className="text-foreground">No empty edges in screen recordings.</strong> Fill any blank space around a recording with a colour matte from the palette (Indigo / Off-White) so the frame never shows dead gaps.</li>
+          <li><strong className="text-foreground">B-roll is always full-screen.</strong> Don't drop B-roll inside templates, frames, boxes or split-screen layouts unless the reference calls for it — footage should fill the frame.</li>
+          <li><strong className="text-foreground">No vector / illustration animations.</strong> Animated vector graphics don't fit the premium, real look — use real footage, screens and the brand motion system instead, in B-roll and throughout.</li>
+        </ul>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Figure src="/ai-tv-course/highlight-1.jpg" caption="Highlight the on-screen content the moment the VO talks about it." />
+          <Figure src="/ai-tv-course/highlight-2.jpg" caption="Keep the highlighted element in focus as it's discussed." />
+          <Figure src="/ai-tv-course/no-url.jpg" caption="Never show the website URL / address bar in screen recordings." />
+          <Figure src="/ai-tv-course/no-empty-edges.jpg" caption="Fill empty edges of a screen recording with a colour matte." />
+          <Figure src="/ai-tv-course/broll-fullscreen.jpg" caption="Display B-roll full-screen — not boxed inside a template or split screen." />
+          <Figure src="/ai-tv-course/no-vector-anim.jpg" caption="Avoid vector / illustration animations — keep footage real and premium." />
+        </div>
       </Section>
 
       <Section id="captions" title="Captions">
@@ -312,6 +369,41 @@ function Page() {
           Open AI-TV Course Video Editing SOP →
         </a>
       </div>
+        </div>{/* /content column */}
+
+        {/* Wide screens: sticky "On this page" sidebar with hide / expand */}
+        <aside className="hidden xl:block xl:sticky xl:top-8 xl:self-start">
+          {toc ? (
+            <>
+              <div className="mb-2 flex items-center justify-between gap-2">
+                <p className="font-label">On this page</p>
+                <button
+                  onClick={() => toggleToc(false)}
+                  aria-label="Hide contents"
+                  title="Hide contents"
+                  className="inline-flex items-center justify-center rounded-md p-1 text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
+                >
+                  <PanelRightClose className="h-4 w-4" />
+                </button>
+              </div>
+              <nav className="space-y-0.5 border-l border-white/10 pl-3 text-sm">
+                {NAV.map(([h, l]) => (
+                  <a key={h} href={h} className="block rounded py-1 text-muted-foreground transition-colors hover:text-foreground">{l}</a>
+                ))}
+              </nav>
+            </>
+          ) : (
+            <button
+              onClick={() => toggleToc(true)}
+              aria-label="Show contents"
+              title="On this page"
+              className="inline-flex items-center justify-center rounded-md border border-white/15 p-2 text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
+            >
+              <PanelRightOpen className="h-4 w-4" />
+            </button>
+          )}
+        </aside>
+      </div>{/* /grid */}
     </div>
   );
 }
