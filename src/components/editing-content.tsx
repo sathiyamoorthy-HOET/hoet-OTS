@@ -613,6 +613,9 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
         <ul className="list-disc pl-5 space-y-1">
           <li>Captions appear and change exactly with the voice-over (see <SLink slug="caption-rules">Caption Rules</SLink>).</li>
         </ul>
+        <div className="overflow-hidden rounded-lg border border-white/10 bg-black" style={{ aspectRatio: "16 / 9" }}>
+          <LiteVideo embedSrc="https://www.youtube.com/embed/-8J6xY70FXo" title="Caption placement walkthrough" />
+        </div>
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:sticky lg:top-8">
         <PlacementDiagram variant="caption" />
@@ -624,6 +627,7 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
 
   "supers-placement": (
     <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
+      <div className="space-y-3">
       <ul className="list-disc pl-5 space-y-1">
         <li>A super sits in one of two positions — top or bottom of the safe zone.</li>
         <li>A super runs up to 2 lines.</li>
@@ -633,6 +637,10 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
         <li>Emphasise only the important keywords — set them bold and in a contrasting colour (e.g. Salary Hike, 17 LPA, Prompt Engineer). Never bold a full sentence; put the rest in subtitles.</li>
         <li>Use ALL CAPS only for 1–3 words (a CTA or key emphasis), with +2–4% letter-spacing — never for full lines. Keep on-screen type consistent; clarity over decoration.</li>
       </ul>
+        <div className="overflow-hidden rounded-lg border border-white/10 bg-black" style={{ aspectRatio: "16 / 9" }}>
+          <LiteVideo embedSrc="https://www.youtube.com/embed/1pNViAvDMmU" title="Supers placement walkthrough" />
+        </div>
+      </div>
       <div className="flex justify-center"><PlacementDiagram variant="super" /></div>
     </div>
   ),
@@ -644,6 +652,9 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
         <li>Always pair a number with its correct unit and keep the two together — %, fps, hrs, min, sec, GB, and so on. Never leave a measurement unitless.</li>
         <li>This applies to captions and supers alike.</li>
       </ul>
+      <div className="mt-4 overflow-hidden rounded-lg border border-white/10 bg-black sm:max-w-2xl" style={{ aspectRatio: "16 / 9" }}>
+        <LiteVideo embedSrc="https://www.youtube.com/embed/kfcD7XLAsH4" title="Symbols & units walkthrough" />
+      </div>
       <h3 className="text-base font-semibold text-foreground pt-2">Visual Examples</h3>
       <div className="mt-2 grid grid-cols-4 gap-2 sm:gap-3">
         <SymbolFrame ok label="₹999" sub="Symbol + number together" />
@@ -869,6 +880,12 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
   "audio-mixing": (
     <>
       <p>Audio carries the message as much as the visuals. Mix every video so the voice-over leads and everything else supports it — clean, balanced, and on-spec for delivery.</p>
+      <figure className="mt-3 overflow-hidden rounded-lg border border-white/10 bg-black sm:max-w-2xl">
+        <div style={{ aspectRatio: "16 / 9" }}>
+          <LiteVideo embedSrc="https://www.youtube.com/embed/Q7AQ_Kx6B9s" title="Audio preparation" />
+        </div>
+        <figcaption className="px-3 py-2 text-xs text-muted-foreground">Watch: audio preparation</figcaption>
+      </figure>
       <div className="grid gap-6 lg:grid-cols-[1fr_240px] lg:items-start">
         <div>
           <h3 className="text-base font-semibold text-foreground pt-3">Levels & Loudness</h3>
