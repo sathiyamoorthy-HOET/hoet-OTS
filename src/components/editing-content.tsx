@@ -262,22 +262,13 @@ function PreExportQA() {
   );
 }
 
-const AI_DO = [
-  "Prioritise real footage and assets; use AI-generated visuals only when no real asset exists and it directly supports the script.",
-  "Every AI element must be relevant to what is being said or shown — never decorative AI filler.",
-  "Regenerate any avatar, image or clip that looks off, uncanny or incomplete before it reaches the cut.",
-  "Match AI visuals to the brand — colour grade, palette, typography and one consistent icon / visual style.",
-  "Use only licensed / approved AI voices; the voice-over must stay clear and natural.",
-  "Proofread AI output for wrong facts, prices, names and logos — accuracy is on the editor.",
-  "Save the prompt, source and licence for every AI-generated asset in the project's licenses folder.",
-];
-const AI_AVOID = [
-  "Don't lean on AI-generated B-roll or stock / foreign faces in place of real, relevant footage.",
-  "Don't ship uncanny, half-baked or unrelatable AI avatars or animations.",
-  "Don't let AI visuals drift off-brand — mismatched grade, palette or mixed icon styles.",
-  "Don't use unlicensed AI voices or clone a real person's voice without approval.",
-  "Don't trust AI numbers, claims or spellings without checking against the source and landing page.",
-  "Don't use AI output you can't licence or prove the rights to.",
+const AI_DO_AVOID: [string, string][] = [
+  ["Prioritise real footage and assets; use AI-generated visuals only when no real asset exists and it directly supports the script. Every AI element must be relevant — never decorative filler.", "Don't lean on AI-generated B-roll or stock / foreign faces in place of real, relevant footage."],
+  ["Regenerate any avatar, image or clip that looks off, uncanny or incomplete before it reaches the cut.", "Don't ship uncanny, half-baked or unrelatable AI avatars or animations."],
+  ["Match AI visuals to the brand — colour grade, palette, typography and one consistent icon / visual style.", "Don't let AI visuals drift off-brand — mismatched grade, palette or mixed icon styles."],
+  ["Use only licensed / approved AI voices; the voice-over must stay clear and natural.", "Don't use unlicensed AI voices or clone a real person's voice without approval."],
+  ["Proofread AI output for wrong facts, prices, names and logos — accuracy is on the editor.", "Don't trust AI numbers, claims or spellings without checking against the source and landing page."],
+  ["Save the prompt, source and licence for every AI-generated asset in the project's licenses folder.", "Don't use AI output you can't licence or prove the rights to."],
 ];
 const AI_REGEN: [string, string][] = [
   ["Avatar look", "If the generated avatar looks off, uncanny or low-quality, check it and regenerate it."],
@@ -714,21 +705,58 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
         <li><strong className="text-foreground">Make key elements stand out</strong> — report and dashboard visuals, prices and numbers must sit in a contrasting colour and never blend into the background, or they lose their hook.</li>
         <li><strong className="text-foreground">Add relevant images and clips</strong> wherever they reinforce the script.</li>
       </ul>
+
+      <h3 className="text-base font-semibold text-foreground pt-3">Proof &amp; credibility</h3>
+      <ul className="list-disc pl-5 space-y-1">
+        <li><strong className="text-foreground">Back up every workshop claim on screen</strong> — when the speaker mentions proof such as a Google or Trustpilot rating, a press / newspaper feature, a certification, or "the workshop for just ₹9", show the matching proof at that exact moment: the actual image, a screen recording of the landing page, or the logo.</li>
+        <li><strong className="text-foreground">Big-number social proof</strong> — when the trainer says a line about reach or scale ("1M+ working professionals", "rated / reviewed by thousands", "attended our workshop"), use the approved social-proof template: <a href="https://drive.google.com/drive/u/0/folders/1CSA4NoED5876PvxiYj8Hx1_r-viz1t-G" target="_blank" rel="noreferrer" className="underline text-foreground">Social-proof template folder →</a>.</li>
+      </ul>
+
+      <h3 className="text-base font-semibold text-foreground pt-3">Do's &amp; Don'ts</h3>
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse text-sm">
+          <thead><tr className="border-b border-white/15"><th className="px-3 py-2 text-left font-medium text-emerald-300">✓ Do's</th><th className="px-3 py-2 text-left font-medium text-rose-300">✕ Don'ts</th></tr></thead>
+          <tbody>
+            {[
+              ["Show the actual dashboards, reports, presentations and Excel sheets named in the script.", "Don't substitute animated images or illustrations for the real assets."],
+              ["Keep dashboards and reports full and legible in the foreground.", "Don't bury key visuals in the background or shrink them out of legibility."],
+              ["Drop in the relevant sheet, dashboard or report at the exact moment it's mentioned.", "Don't use random clips or stock / foreign faces as filler in the background or B-roll."],
+              ["Put prices, numbers and key data in a contrasting colour so they stand out.", "Don't let key elements blend into the background and lose their hook."],
+              ["Add relevant images and clips wherever they reinforce the script.", "Don't add decorative visuals that don't support what's being said."],
+            ].map((r, i) => (
+              <tr key={i} className="border-b border-white/10">
+                <td className="px-3 py-2">{r[0]}</td>
+                <td className="px-3 py-2">{r[1]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   ),
 
   "ai-usage": (
     <>
       <p>AI is a tool to speed up and strengthen the edit — never a shortcut that lowers the bar. It applies across every brand and format: real, relevant and on-brand always wins, and the editor stays accountable for everything AI produces.</p>
-      <div className="mt-3 grid gap-3 sm:grid-cols-2">
-        <div className="rounded-lg border border-emerald-400/25 bg-emerald-400/5 p-4">
-          <div className="font-label text-emerald-300">✓ DO</div>
-          <ul className="mt-2 list-disc pl-5 space-y-1">{AI_DO.map((t) => <li key={t}>{t}</li>)}</ul>
-        </div>
-        <div className="rounded-lg border border-rose-400/25 bg-rose-400/5 p-4">
-          <div className="font-label text-rose-300">✕ AVOID</div>
-          <ul className="mt-2 list-disc pl-5 space-y-1">{AI_AVOID.map((t) => <li key={t}>{t}</li>)}</ul>
-        </div>
+      <div className="mt-3 overflow-x-auto">
+        <table className="w-full border-collapse text-sm">
+          <thead><tr className="border-b border-white/15"><th className="px-3 py-2 text-left font-medium text-emerald-300">✓ DO</th><th className="px-3 py-2 text-left font-medium text-rose-300">✕ AVOID</th></tr></thead>
+          <tbody>
+            {AI_DO_AVOID.map((r, i) => (
+              <tr key={i} className="border-b border-white/10">
+                <td className="px-3 py-2 align-top">{r[0]}</td>
+                <td className="px-3 py-2 align-top">{r[1]}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="mt-3 rounded-lg border border-white/10 bg-card p-4">
+        <div className="font-label text-foreground">Screen time — real vs AI</div>
+        <ul className="mt-2 list-disc pl-5 space-y-1">
+          <li><strong className="text-foreground">Real footage</strong> — when the shot is a real person, keep them on screen longer; let the presenter carry the video.</li>
+          <li><strong className="text-foreground">AI-generated video</strong> — keep the AI person on screen as little as possible. Cover and cut away with strong editing — B-roll, screens, supers and motion — so the AI face shows for the least time needed.</li>
+        </ul>
       </div>
       <div className="mt-3 rounded-lg border border-sky-400/30 bg-sky-400/5 p-4">
         <div className="font-label flex items-center gap-1.5 text-sky-300"><RotateCcw className="h-3.5 w-3.5" /> Review &amp; regenerate every AI video</div>
@@ -770,10 +798,33 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
   ),
 
   "pacing": (
-    <ul className="list-disc pl-5 space-y-1">
-      <li>Remove filler words ("um", "ah"), long pauses, and dead air — while preserving natural delivery.</li>
-      <li>Keep the edit moving with a visible change every few seconds; no scenes that drag, no abrupt jumps.</li>
-    </ul>
+    <>
+      <p>Pacing is what keeps a viewer watching — every second has to earn the next. Cut tight, open strong, and keep something changing on screen so attention never drifts.</p>
+
+      <h3 className="text-base font-semibold text-foreground pt-1">Cut tight</h3>
+      <ul className="list-disc pl-5 space-y-1">
+        <li>Remove filler words ("um", "ah"), long pauses, dead air, false starts and repeated takes — while preserving natural delivery.</li>
+        <li>Trim anything that doesn't move the script forward; if a line doesn't add, cut it.</li>
+      </ul>
+
+      <h3 className="text-base font-semibold text-foreground pt-1">Open strong</h3>
+      <ul className="list-disc pl-5 space-y-1">
+        <li>Hook the viewer in the first few seconds — lead with the outcome, payoff or a pattern interrupt; no slow lead-ins or long intros.</li>
+      </ul>
+
+      <h3 className="text-base font-semibold text-foreground pt-1">Keep it moving</h3>
+      <ul className="list-disc pl-5 space-y-1">
+        <li><strong className="text-foreground">A visible change every few seconds</strong> — a cut, a new visual, a caption, B-roll, a zoom or punch-in, or a super — so the frame never sits still.</li>
+        <li><strong className="text-foreground">Vary the rhythm</strong> — mix shot lengths and alternate front and cross angles (see <SLink slug="framing">Framing</SLink>); cut between the talking head and the relevant screen or B-roll (see <SLink slug="visuals">Visuals &amp; B-Roll</SLink>).</li>
+        <li><strong className="text-foreground">Match energy to the script</strong> — move quickly through setup and lists, then hold a beat on the key point so it lands.</li>
+      </ul>
+
+      <h3 className="text-base font-semibold text-foreground pt-1">Don't overdo it</h3>
+      <ul className="list-disc pl-5 space-y-1">
+        <li>Pacing should feel intentional, not frantic — no abrupt jumps, and never cut so fast that captions can't be read.</li>
+        <li>Keep every cut clean and motivated, on the beat (see <SLink slug="transitions">Transitions</SLink> and <SLink slug="audio-mixing">Audio Mixing</SLink>).</li>
+      </ul>
+    </>
   ),
 
   "transitions": (
@@ -869,6 +920,15 @@ export const SECTION_BODIES: Record<string, React.ReactNode> = {
     <>
       <p>Editing quality is judged at review. The Editor owns the cut end to end — delivering a complete, correct, review-ready video, not a rough draft for QC to clean up.</p>
       <p className="mt-2">The first cut sent for review should already be good enough to publish. Before submitting, self-check every video against this guideline and the <SLink slug="pre-export-qa">Pre-Export QA Checklist</SLink>, and stay free of careless mistakes a proper self-check would catch.</p>
+
+      <h3 className="text-base font-semibold text-foreground pt-3">Reference — winner ads</h3>
+      <p>The quality bar is top-notch. Study these winning ad edits and match that standard:</p>
+      <ul className="list-disc pl-5 space-y-1">
+        <li><a href="https://drive.google.com/file/d/1RFMg-I_xrYOt8zjaXTJKj_9eMgTcxA9C/view" target="_blank" rel="noreferrer" className="underline text-foreground">Winner ad — reference 1 →</a></li>
+        <li><a href="https://drive.google.com/file/d/1S6ceCh4CEXAEqrz4xLczDKxEZDojngEY/view" target="_blank" rel="noreferrer" className="underline text-foreground">Winner ad — reference 2 →</a></li>
+        <li><a href="https://drive.google.com/file/d/1T8CObn422cB2uwoB-WRP8uCDw8Y3L_kx/view" target="_blank" rel="noreferrer" className="underline text-foreground">Winner ad — reference 3 →</a></li>
+        <li><a href="https://drive.google.com/file/d/1gYA44A_B5A_JM4zHyrc4j8-KplZzPsIB/view?usp=drive_link" target="_blank" rel="noreferrer" className="underline text-foreground">Winner ad — reference 4 →</a></li>
+      </ul>
     </>
   ),
 };
