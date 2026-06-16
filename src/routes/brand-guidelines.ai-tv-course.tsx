@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { PanelRightClose, PanelRightOpen } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
+import { OnThisPage } from "@/components/OnThisPage";
 import aitvStar from "@/assets/aitv-star.png";
 
 export const Route = createFileRoute("/brand-guidelines/ai-tv-course")({
@@ -72,7 +71,7 @@ const FOLDERS = [
 ];
 
 const NAV: [string, string][] = [
-  ["#quick-start", "Quick Start"],
+  ["#quick-start", "Index"],
   ["#foundation", "Foundation"],
   ["#recall", "Brand Recall"],
   ["#logo", "Logo"],
@@ -80,11 +79,27 @@ const NAV: [string, string][] = [
   ["#type", "Typography"],
   ["#star", "Star & Icons"],
   ["#safe", "Layout & Templates"],
-  ["#sop", "Editing SOP"],
+  ["#sop", "Structure & Flow"],
   ["#footage", "B-Roll & Screens"],
   ["#captions", "Captions"],
   ["#cta", "CTA & Outro"],
   ["#handoff", "File & Handoff"],
+];
+
+// Full index of the guide — every section, with a one-line summary.
+const INDEX: [string, string, string][] = [
+  ["#foundation", "Brand Foundation", "Purpose, personality and tone of voice."],
+  ["#recall", "Brand Recall System", "Repeatable signatures and the 5-second test."],
+  ["#logo", "Logo System", "Variants, locked positioning and contrast rules."],
+  ["#theme", "Theme", "Palette, dominance ratio and locked gradients."],
+  ["#type", "Typography", "Font systems, hierarchy and font discipline."],
+  ["#star", "Star Motif & Icons", "Star usage, sizes and icon style."],
+  ["#safe", "Layout, Templates & Safe Zones", "Grid, safe zones and template discipline."],
+  ["#sop", "Video Structure & Flow", "Locked structure, pacing, transitions, export and templates."],
+  ["#footage", "B-Roll, Footage & Screen Recordings", "Highlighting, full-screen B-roll and screen-recording rules."],
+  ["#captions", "Captions", "Default style, highlight rules and colour combinations."],
+  ["#cta", "CTA & Outro", "The provided outro / CTA clip and the clean-tail rule."],
+  ["#handoff", "File & Handoff", "Folder structure and the naming convention."],
 ];
 
 function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
@@ -104,17 +119,15 @@ function Th({ cols }: { cols: string[] }) {
 function Figure({ src, caption }: { src: string; caption: string }) {
   return (
     <figure className="overflow-hidden rounded-lg border border-white/10 bg-card">
-      <img src={src} alt={caption} loading="lazy" className="block w-full" />
-      <figcaption className="px-3 py-2 text-xs leading-relaxed text-muted-foreground">{caption}</figcaption>
+      <div className="flex aspect-[5/4] items-center justify-center bg-black/25">
+        <img src={src} alt={caption} loading="lazy" className="max-h-full max-w-full object-contain" />
+      </div>
+      <figcaption className="border-t border-white/10 px-3 py-2.5 text-sm font-medium leading-snug text-foreground">{caption}</figcaption>
     </figure>
   );
 }
 
 function Page() {
-  const [toc, setToc] = useState(true);
-  useEffect(() => { setToc(localStorage.getItem("aitvToc") !== "0"); }, []);
-  const toggleToc = (v: boolean) => { setToc(v); localStorage.setItem("aitvToc", v ? "1" : "0"); };
-
   return (
     <div>
       <PageHeader
@@ -123,14 +136,22 @@ function Page() {
         intro="Video Branding & Editing Guide for AI-TV course (informative) videos. Make AI feel understandable and practical for working professionals — premium, calm and confident, with helpful-teacher energy. This guide is specific to course content and does not use the general editing guidelines."
       />
 
-      <div className={"xl:grid xl:items-start xl:gap-8 " + (toc ? "xl:grid-cols-[minmax(0,1fr)_184px]" : "xl:grid-cols-[minmax(0,1fr)_2.75rem]")}>
-        <div className="min-w-0">
-          {/* Compact view: horizontal section pills (the sidebar shows on wide screens) */}
-          <nav className="mb-8 flex flex-wrap gap-2 text-sm xl:hidden">
-            {NAV.map(([h, l]) => <a key={h} href={h} className="rounded-full border border-white/15 px-3 py-1 hover:border-white/35">{l}</a>)}
-          </nav>
+      <OnThisPage nav={NAV} storageKey="aitvToc">
+      <Section id="quick-start" title="Index">
+        <p>The full AI-TV course video guide at a glance — jump to any section. Every part of this page is the standard operating procedure for course videos.</p>
+        <div className="grid items-start gap-3 sm:grid-cols-2">
+          {INDEX.map(([h, l, d], i) => (
+            <a key={h} href={h} className="group rounded-lg border border-white/10 bg-card p-3.5 transition-colors hover:border-white/25 hover:bg-white/[0.03]">
+              <div className="flex items-baseline gap-2">
+                <span className="font-mono text-xs text-muted-foreground">{String(i + 1).padStart(2, "0")}</span>
+                <span className="font-medium text-foreground group-hover:underline">{l}</span>
+              </div>
+              <p className="mt-1 text-xs text-muted-foreground">{d}</p>
+            </a>
+          ))}
+        </div>
 
-      <Section id="quick-start" title="Quick Start — 10 Non-Negotiables">
+        <h3 className="text-base font-semibold text-foreground pt-2">10 Non-Negotiables</h3>
         <p>Strict rules. If any is missed, QA should reject.</p>
         <ol className="list-decimal pl-5 space-y-1">
           {NON_NEG.map((n) => <li key={n}>{n}</li>)}
@@ -242,7 +263,7 @@ function Page() {
           <li><strong className="text-foreground">Brand-approved fonts only.</strong> Use only the fonts in the system above. Random or system fonts are never permitted — every word on screen uses the brand typography.</li>
           <li><strong className="text-foreground">Use a combination of both brand fonts.</strong> Pair the Heading font (titles, supers) with the Sub font (body, captions) — don't set an entire video in a single font.</li>
         </ul>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid items-start gap-4 sm:grid-cols-2">
           <Figure src="/ai-tv-course/fonts-approved.jpg" caption="Brand-approved fonts only — never drop in a random font for a frame." />
           <Figure src="/ai-tv-course/font-combination.jpg" caption="Combine both brand fonts (Heading + Sub) rather than relying on one." />
         </div>
@@ -289,13 +310,13 @@ function Page() {
           <li><strong className="text-foreground">Stay inside the approved templates.</strong> Follow this guide and the brand templates strictly — no custom or arbitrary styling. Colours, panels, lower-thirds and layouts all come from the approved templates.</li>
           <li><strong className="text-foreground">Centre and fit the content.</strong> Keep content centred and properly fitted inside the template — scaled to fill the frame, with no cropping, stretching or misalignment.</li>
         </ul>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid items-start gap-4 sm:grid-cols-2">
           <Figure src="/ai-tv-course/brand-template.jpg" caption="Use the approved brand templates — no custom or arbitrary styling." />
           <Figure src="/ai-tv-course/content-centered.jpg" caption="Keep content centred and fitted in the template — no cropping or misalignment." />
         </div>
       </Section>
 
-      <Section id="sop" title="Video Editing SOP — Informative Videos">
+      <Section id="sop" title="Video Structure & Flow">
         <p><strong className="text-foreground">Standard structure (locked).</strong> Hook (0–3s short / 0–10s long): outcome + pattern interrupt → Context (1 sentence) → Body (steps, rules or examples, on-screen structure mandatory) → Micro-proof (screenshot/result/before-after) → CTA (1 clear next action + consistent end card).</p>
         <ul className="list-disc pl-5 space-y-1">
           <li><strong className="text-foreground">Pacing</strong> — a visible change every 2–4 seconds (cut, caption line, b-roll, screen highlight). Use step labels ("Step 1/2/3"). Avoid dead air.</li>
@@ -319,7 +340,7 @@ function Page() {
           <li><strong className="text-foreground">B-roll is always full-screen.</strong> Don't drop B-roll inside templates, frames, boxes or split-screen layouts unless the reference calls for it — footage should fill the frame.</li>
           <li><strong className="text-foreground">No vector / illustration animations.</strong> Animated vector graphics don't fit the premium, real look — use real footage, screens and the brand motion system instead, in B-roll and throughout.</li>
         </ul>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid items-start gap-4 sm:grid-cols-2">
           <Figure src="/ai-tv-course/highlight-1.jpg" caption="Highlight the on-screen content the moment the VO talks about it." />
           <Figure src="/ai-tv-course/highlight-2.jpg" caption="Keep the highlighted element in focus as it's discussed." />
           <Figure src="/ai-tv-course/no-url.jpg" caption="Never show the website URL / address bar in screen recordings." />
@@ -369,41 +390,7 @@ function Page() {
           Open AI-TV Course Video Editing SOP →
         </a>
       </div>
-        </div>{/* /content column */}
-
-        {/* Wide screens: sticky "On this page" sidebar with hide / expand */}
-        <aside className="hidden xl:block xl:sticky xl:top-8 xl:self-start">
-          {toc ? (
-            <>
-              <div className="mb-2 flex items-center justify-between gap-2">
-                <p className="font-label">On this page</p>
-                <button
-                  onClick={() => toggleToc(false)}
-                  aria-label="Hide contents"
-                  title="Hide contents"
-                  className="inline-flex items-center justify-center rounded-md p-1 text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
-                >
-                  <PanelRightClose className="h-4 w-4" />
-                </button>
-              </div>
-              <nav className="space-y-0.5 border-l border-white/10 pl-3 text-sm">
-                {NAV.map(([h, l]) => (
-                  <a key={h} href={h} className="block rounded py-1 text-muted-foreground transition-colors hover:text-foreground">{l}</a>
-                ))}
-              </nav>
-            </>
-          ) : (
-            <button
-              onClick={() => toggleToc(true)}
-              aria-label="Show contents"
-              title="On this page"
-              className="inline-flex items-center justify-center rounded-md border border-white/15 p-2 text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
-            >
-              <PanelRightOpen className="h-4 w-4" />
-            </button>
-          )}
-        </aside>
-      </div>{/* /grid */}
+      </OnThisPage>
     </div>
   );
 }

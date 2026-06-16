@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHeader } from "@/components/PageHeader";
+import { OnThisPage } from "@/components/OnThisPage";
 
 const SF_PRO = "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', system-ui, sans-serif";
 
@@ -26,12 +27,10 @@ function Page() {
         intro='"AI won&apos;t replace you, but a person using AI will." — Be10X is House of EdTech&apos;s flagship AI education brand. This guideline defines how Be10X looks and sounds on screen so every ad, course video, and short we ship is unmistakably Be10X.'
       />
 
-      <nav className="mb-10 flex flex-wrap gap-2 text-sm">
-        {[["#about","About"],["#positioning","Positioning"],["#logo","Logo"],["#cta","CTA & Endscreen"],["#type","Typography"],["#themes","Colour Themes"]].map(([h,l]) => (
-          <a key={h} href={h} className="rounded-full border border-white/15 px-3 py-1 hover:border-white/35">{l}</a>
-        ))}
-      </nav>
-
+      <OnThisPage
+        nav={[["#about","About"],["#positioning","Positioning"],["#logo","Logo"],["#cta","CTA & Endscreen"],["#type","Typography"],["#captions-link","Captions & Supers"],["#themes","Colour Themes"]]}
+        storageKey="be10xToc"
+      >
       <Section id="about" title="About This Guideline">
         <p>This is the Brand & Style Guideline for Be10X — House of EdTech's flagship AI education brand. It is a companion to the House of EdTech Video Production & Editing Guideline. That document covers the production process — workflow, on-set standards, editing pipeline, and QC. This document covers the Be10X video layer: the logo, the safe zone, on-screen placement, typography, captions and supers, the colour themes used in editing, and the editing standards every Be10X video is held to.</p>
         <p className="mt-2">Reference channel: <a href="https://www.youtube.com/@be10x/shorts" target="_blank" rel="noreferrer" className="underline text-foreground">Be10X — shorts on YouTube →</a></p>
@@ -123,6 +122,7 @@ function Page() {
         <p className="mt-1 italic">"AI won't replace you, but a person using AI will."</p>
         <p className="mt-1 text-xs">be10x.in · © Be10X. All rights reserved.</p>
       </div>
+      </OnThisPage>
     </div>
   );
 }
