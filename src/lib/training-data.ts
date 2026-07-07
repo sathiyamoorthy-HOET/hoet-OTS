@@ -437,6 +437,7 @@ export const DAY3_SECTIONS: Record<string, ToolWithVideo[]> = {
   ],
   "AI generation": [
     { name: "HeyGen", desc: "AI video and talking-head avatar generation from a script — used when there's no shoot footage. Pick an avatar and voice, paste the script, and generate.", video: "bcXeQAguN7s", url: "heygen.com" },
+    { name: "InVideo", desc: "AI video generation from a text prompt — turn a script or idea into a fully edited video with AI-generated scenes, stock footage, voice-over and captions, then refine and export straight into the edit.", video: "9rpOO0Bh7i0", url: "invideo.io" },
     { name: "Higgsfield", desc: "AI image and video generation for hooks, scenes and VFX, with control over motion and a cinematic look.", video: "R7GZjRMsrzM", url: "higgsfield.ai" },
     { name: "Higgsfield in Premiere Pro", desc: "Generate Higgsfield AI image and video without leaving Adobe Premiere Pro. Use the Higgsfield panel to prompt, generate and preview hooks, scenes and VFX, then place the result straight onto your timeline — a faster generate-to-edit workflow.", video: "r7HD-SEMQ7E", url: "higgsfield.ai" },
     { name: "Envato", desc: "Beyond stock, Envato's AI generation tools turn a text prompt into usable images and video — generate AI visuals, hooks and scenes, then drop them straight into the edit alongside its huge template and asset library.", video: "0BHzNjCjROE", url: "elements.envato.com" },
@@ -449,9 +450,9 @@ export const DAY3_SECTIONS: Record<string, ToolWithVideo[]> = {
   ],
   "Motion graphics": [
     { name: "AutoAE", desc: "Online After Effects alternative for motion graphics — generate text animations, 3D transforms, engagement mockups and video flowcharts in a few clicks, then download and drop the snippet into your edit. Fast motion design without keyframing from scratch.", video: "KrJiAUgTiXw", url: "autoae.online" },
+    { name: "SceneYard", desc: "A library of lightweight, ready-to-customise After Effects scenes — 300+ lean, 4K-ready motion templates with no plugins required. Drop a scene into your project, swap the text and colours, and skip rebuilding the same motion graphics from scratch.", url: "sceneyard.com" },
     { name: "Jitter", desc: "Browser-based motion graphics tool for animated text, lower-thirds and elements — fast templates with clean export.", video: "4QJfDMl3YS8", url: "jitter.video" },
     { name: "Descript", desc: "Transcript-based audio and video editor — edit by editing the text, remove filler words and silences automatically, and clean up voice-over with Overdub and Studio Sound. Handy for fast rough cuts and talking-head edits.", video: "D5MQbP4b_sQ", url: "descript.com" },
-    { name: "ATOM", desc: "AI assistant for After Effects — write expressions, automate scripts and build complex rigs using plain natural language instead of code. Speeds up the technical side of motion graphics.", url: "tryatom.ai" },
     { name: "Claude + Remotion", desc: "Generate and refine Remotion (React) code with Claude (claude.ai), then render templated, code-driven motion graphics straight to MP4 with Remotion — ideal for data-driven, programmatic graphics.", video: "IkKYuygHzn4", url: "remotion.dev" },
   ],
 };
