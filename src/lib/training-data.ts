@@ -1,3 +1,7 @@
+// Bundled locally because Google's favicon service has no icon for orbitova.in
+// and falls back to a generic globe.
+import orbitovaLogo from "@/assets/orbitova-logo.png";
+
 // To add a training video, set `video` to a YouTube link, e.g.
 //   video: "https://www.youtube.com/watch?v=XXXXXXXXXXX"
 // Leave it out and no video is shown for that session.
@@ -48,7 +52,7 @@ export const TRAINING_DAYS: TrainingDayData[] = [
       { session: "Audience, marketing & brand targets", what: "Who each brand speaks to, the marketing approach and the target for each" },
       { session: "Creative department structure", what: "Teams, pods, roles and where the editor fits in.", trainerLed: true },
       { session: "Software requirements & setup", what: "Confirm tools and licenses; provision anything missing.", trainerLed: true },
-      { session: "Communication flow", what: "Attendance and HR on Keka, communication on Slack, and reviews on Frame.io.", trainerLed: true },
+      { session: "Communication flow", what: "Attendance and HR on Keka, communication on Slack, reviews on Frame.io, and projects and deliverables on Orbitova.", trainerLed: true },
     ],
     second: [
       { session: "Assignment brief", what: "Give the assignment and explain the delivery requirements — format, aspect ratios, duration and the 7 PM deadline. The assignment provided by the trainer must be raw footage. Share references and expectations.", trainerLed: true },
@@ -83,6 +87,7 @@ export const TRAINING_DAYS: TrainingDayData[] = [
       { session: "Stock & assets", what: "Where to source footage, music, graphics and icons." },
       { session: "AI assistants", what: "Use AI assistants to draft scripts, hooks and copy — and learn to prompt for clean, usable output." },
       { session: "AI generation", what: "Generate avatars, video and visuals with AI when there's no shoot footage." },
+      { session: "AI editing & captions", what: "Speed up the cut itself — AI captions, auto-zooms and silence removal on short-form, then proof the output against the caption rules." },
       { session: "Audio & sound", what: "Create voice-overs and build a clean, balanced sound mix." },
       { session: "Draftdeck", what: "House of EdTech's own script-to-video app — draft the script with AI, then generate the voice-over and avatar video in one place." },
       { session: "Motion graphics", what: "Build animated text and elements fast." },
@@ -96,8 +101,8 @@ export const TRAINING_DAYS: TrainingDayData[] = [
     slug: "day-4",
     day: "Day 4",
     title: "Pod, Supervised Work & Close",
-    summary: "Pod and supervised work, then review, reporting & incentives — program closes.",
-    note: "Program close — with the review done and reporting and incentives understood, structured onboarding is complete. From Day 5 the editor runs as a full member of their pod.",
+    summary: "Pod and supervised work, then review & incentives — program closes.",
+    note: "Program close — with the review done and incentives understood, structured onboarding is complete. From Day 5 the editor runs as a full member of their pod.",
     first: [
       { session: "Pod allocation", what: "Meet the pod and roles, and get introduced to the team. From here you receive your tasks from the pod and work on them with the trainer's guidance — discuss the approach with the trainer before and during the task.", trainerLed: true },
       { session: "Supervised work", what: "Work on real deliverables with the trainer's guidance and support — the trainer is there to guide the new joiner and help them through each task.", trainerLed: true },
@@ -105,7 +110,6 @@ export const TRAINING_DAYS: TrainingDayData[] = [
     second: [
       { session: "Review of supervised work", what: "Review the task output and, if needed, deliver it to the real pod manager — with any revisions applied first." },
       { session: "Understanding check", what: "Share feedback on the new joiner's work — the positives, the negatives, and concrete suggestions to improve their skills." },
-      { session: "Work report", what: "How to maintain and follow the work report — the format, the fields, and the daily discipline of keeping it updated. The trainer walks through it with the sample below.", trainerLed: true },
       { session: "Incentive structure", what: "Eligibility and how incentives are earned.", trainerLed: true },
       { session: "You're Pod-Ready", what: "Wrap-up and a send-off — structured onboarding is complete. From Day 5 you run as a full member of your pod. The trainer recaps the journey and what Day 5 onward looks like.", trainerLed: true },
     ],
@@ -234,22 +238,6 @@ export const SHORT_PHASES: [string, string, string][] = [
   ["SOFT CTA", "last 5 sec", "A light call to action — follow for more, or a loop back to the start. No hard sell."],
 ];
 
-export const WORK_REPORT: [string, string][] = [
-  ["Date", "Date the video was completed"],
-  ["Video ID", "Original video identifier"],
-  ["New Video ID", "Renamed file per the naming convention (e.g. AI_P5_AITV001_MP)"],
-  ["Video Type", "Talking Head, Motion Graphic, and so on"],
-  ["Angle", "The hook or angle of the ad"],
-  ["Status", "Todo, In progress, Approved"],
-  ["Review Link", "Frame.io review link"],
-  ["Final Link", "Google Drive final delivery folder"],
-  ["Ratio", "Aspect ratios delivered (16:9, 9:16, 1:1)"],
-  ["Editor", "Editor initials"],
-  ["Script Doc", "Source script or document"],
-  ["Duration", "Finished length (hh:mm:ss)"],
-  ["Comments", "Notes, revisions or blockers"],
-];
-
 export const COMPANY = {
   about:
     "House of EdTech is India's fastest-growing multi-brand education company. We build and operate brands that educate working professionals in the skills that matter most — from artificial intelligence and stock-market trading to personal finance and sports analytics. Each brand is purpose-built for a specific domain, with its own expert trainers, dedicated curriculum, and learning community.",
@@ -284,10 +272,10 @@ export const COMPANY = {
     },
   ],
   stats: [
-    ["₹400 Cr+", "ARR"],
+    ["₹1000 Cr+", "ARR"],
     ["3 Million+", "Paid Learners"],
-    ["8", "Brands"],
-    ["1200+", "Team Members"],
+    ["7", "Brands"],
+    ["2000+", "Team Members"],
   ] as [string, string][],
   brands: [
     ["Be10X", "be10x.com", "AI tools workshop"],
@@ -318,7 +306,7 @@ const WIKI = "https://commons.wikimedia.org/wiki/Special:FilePath/";
 const wikiIcon = (file: string) => `${WIKI}${file}?width=64`;
 const favicon = (d: string) => `https://www.google.com/s2/favicons?domain=${d}&sz=64`;
 
-export type Tool = { name: string; desc: string; icon: string; url?: string };
+export type Tool = { name: string; desc: string; icon: string; url?: string; video?: string };
 
 export const ADOBE_APPS: Tool[] = [
   { name: "Premiere Pro", desc: "Primary editor — cutting, assembly, captions and final export.", icon: wikiIcon("Adobe%20Premiere%20Pro%20CC%20icon.svg") },
@@ -337,7 +325,8 @@ export const PROVIDED_TOOLS: Tool[] = [
 export const COMM_TOOLS: Tool[] = [
   { name: "Keka", desc: "Attendance and HR — clock in and out, apply for leave, raise HR requests and track your shift. Mark attendance every working day.", icon: favicon("keka.com"), url: "https://app.keka.com" },
   { name: "Slack", desc: "Day-to-day communication and workflow — pod channels, DMs, task hand-offs and announcements. Keep notifications on during work hours and reply in-thread to keep context.", icon: favicon("slack.com"), url: "slack://open" },
-  { name: "Frame.io", desc: "Review platform — upload every cut here, read and resolve each timestamped comment, and manage versions. Paste the review link into your work report.", icon: favicon("frame.io"), url: "https://app.frame.io" },
+  { name: "Frame.io", desc: "Review platform — upload every cut here, read and resolve each timestamped comment, and manage versions. Paste the review link onto the project in Orbitova.", icon: favicon("frame.io"), url: "https://app.frame.io" },
+  { name: "Orbitova", desc: "Project management for the pod — every project, deliverable and hand-off lives here. Pick up your assigned tasks, move each one through its stages as you work, pin frame-accurate comments on cuts under review, and log the review and final links against the deliverable. Keep your tasks updated daily so the pod manager can see status without asking.", icon: orbitovaLogo, url: "https://orbitova.in", video: "zid1qIlm9Q0" },
 ];
 
 // An ad task type. Optional fields render extra content under the description:
@@ -437,10 +426,14 @@ export const DAY3_SECTIONS: Record<string, ToolWithVideo[]> = {
   ],
   "AI generation": [
     { name: "HeyGen", desc: "AI video and talking-head avatar generation from a script — used when there's no shoot footage. Pick an avatar and voice, paste the script, and generate.", video: "bcXeQAguN7s", url: "heygen.com" },
-    { name: "InVideo", desc: "AI video generation from a text prompt — turn a script or idea into a fully edited video with AI-generated scenes, stock footage, voice-over and captions, then refine and export straight into the edit.", video: "9rpOO0Bh7i0", url: "invideo.io" },
     { name: "Higgsfield", desc: "AI image and video generation for hooks, scenes and VFX, with control over motion and a cinematic look.", video: "R7GZjRMsrzM", url: "higgsfield.ai" },
     { name: "Higgsfield in Premiere Pro", desc: "Generate Higgsfield AI image and video without leaving Adobe Premiere Pro. Use the Higgsfield panel to prompt, generate and preview hooks, scenes and VFX, then place the result straight onto your timeline — a faster generate-to-edit workflow.", video: "r7HD-SEMQ7E", url: "higgsfield.ai" },
     { name: "Envato", desc: "Beyond stock, Envato's AI generation tools turn a text prompt into usable images and video — generate AI visuals, hooks and scenes, then drop them straight into the edit alongside its huge template and asset library.", video: "0BHzNjCjROE", url: "elements.envato.com" },
+  ],
+  "AI editing & captions": [
+    { name: "Submagic", desc: "AI short-form editor — upload a rough cut or raw talking-head clip and it generates styled, word-by-word captions, auto-zooms on emphasis, adds B-roll, SFX and emojis, and cuts silences. Use it to speed up caption and punch-in work on Shorts and Reels, then bring the result back into Premiere for the final pass. Always proof the captions against the caption rules before export.", video: "nZ9w0S-RE70", url: "submagic.co" },
+    { name: "AutoCut", desc: "Premiere Pro plugin that automates the repetitive parts of the cut — removes silences and filler words from the timeline, generates and styles captions from a transcript, builds podcast multicam cuts, adds zooms and beat-matched cuts, and swears/profanity-bleeps where needed. Runs inside your sequence, so nothing leaves Premiere.", video: "o20LOeoYASw", url: "autocut.com" },
+    { name: "Claude + Remotion", desc: "Generate and refine Remotion (React) code with Claude (claude.ai), then render templated, code-driven motion graphics straight to MP4 with Remotion — ideal for data-driven, programmatic graphics.", video: "IkKYuygHzn4", url: "remotion.dev" },
   ],
   "Audio & sound": [
     { name: "ElevenLabs", desc: "AI voice-over and text-to-speech with natural, multilingual voices and voice cloning. Generate clean VO straight from a script.", video: "BRJdL3QJpxQ", url: "elevenlabs.io", sop: "https://docs.google.com/document/d/1wZaZFUm7-IGsKz1015sRlqrGez9D9Ji1ZB3KeRdcsDY/edit?tab=t.0" },
@@ -453,7 +446,6 @@ export const DAY3_SECTIONS: Record<string, ToolWithVideo[]> = {
     { name: "SceneYard", desc: "A library of lightweight, ready-to-customise After Effects scenes — 300+ lean, 4K-ready motion templates with no plugins required. Drop a scene into your project, swap the text and colours, and skip rebuilding the same motion graphics from scratch.", url: "sceneyard.com" },
     { name: "Jitter", desc: "Browser-based motion graphics tool for animated text, lower-thirds and elements — fast templates with clean export.", video: "4QJfDMl3YS8", url: "jitter.video" },
     { name: "Descript", desc: "Transcript-based audio and video editor — edit by editing the text, remove filler words and silences automatically, and clean up voice-over with Overdub and Studio Sound. Handy for fast rough cuts and talking-head edits.", video: "D5MQbP4b_sQ", url: "descript.com" },
-    { name: "Claude + Remotion", desc: "Generate and refine Remotion (React) code with Claude (claude.ai), then render templated, code-driven motion graphics straight to MP4 with Remotion — ideal for data-driven, programmatic graphics.", video: "IkKYuygHzn4", url: "remotion.dev" },
   ],
 };
 

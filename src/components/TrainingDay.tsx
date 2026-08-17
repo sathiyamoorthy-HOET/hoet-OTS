@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Linkedin, Youtube } from "lucide-react";
 import { PageHeader } from "@/components/PageHeader";
-import sampleWorkReportUrl from "@/assets/sample-work-report-ads.csv?url";
 import adityaGoenka from "@/assets/aditya-goenka.webp";
 import adityaKachave from "@/assets/aditya-kachave.webp";
 
@@ -11,7 +10,7 @@ const FOUNDER_PHOTOS: Record<string, string> = {
   "Aditya Kachave": adityaKachave,
 };
 import {
-  TRAINING_DAYS, DELIVERY_REFERENCE, WORK_REPORT, INCENTIVE_FACTORS, COMPANY, ADOBE_APPS, PROVIDED_TOOLS, COMM_TOOLS, CREATIVE_TEAMS, AD_TASK_TYPES, ORGANIC_TASK_TYPES, BRAND_TARGETS,
+  TRAINING_DAYS, DELIVERY_REFERENCE, INCENTIVE_FACTORS, COMPANY, ADOBE_APPS, PROVIDED_TOOLS, COMM_TOOLS, CREATIVE_TEAMS, AD_TASK_TYPES, ORGANIC_TASK_TYPES, BRAND_TARGETS,
   EDITING_WORKFLOWS, EXPORT_SPECS, FORMATS, ADS_PHASES, ORG_PHASES, SHORT_PHASES, DAY3_SECTIONS,
   brandLogo, findDay, daySessions, slugify, type Session, type Tool,
 } from "@/lib/training-data";
@@ -61,6 +60,9 @@ function ytIdFromEmbed(embedSrc: string): string | null {
 // Avoids YouTube's oversized in-player title/play overlay on small cards.
 export function LiteVideo({ embedSrc, title, vertical }: { embedSrc: string; title: string; vertical?: boolean }) {
   const [open, setOpen] = useState(false);
+  // YouTube serves no still for some videos (e.g. freshly uploaded ones), which
+  // would leave a broken-image tile. Fall back to a plain dark poster instead.
+  const [thumbFailed, setThumbFailed] = useState(false);
   const id = ytIdFromEmbed(embedSrc);
   const thumb = id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : null;
   const playSrc = `${embedSrc}${embedSrc.includes("?") ? "&" : "?"}autoplay=1`;
@@ -76,7 +78,9 @@ export function LiteVideo({ embedSrc, title, vertical }: { embedSrc: string; tit
     <>
       {thumb ? (
         <button type="button" onClick={() => setOpen(true)} aria-label={`Play ${title}`} className="group relative block h-full w-full">
-          <img src={thumb} alt={title} loading="lazy" className="h-full w-full object-cover" />
+          {thumbFailed
+            ? <span className="block h-full w-full bg-neutral-900" />
+            : <img src={thumb} alt={title} loading="lazy" onError={() => setThumbFailed(true)} className="h-full w-full object-cover" />}
           <span className="absolute inset-0 flex items-center justify-center bg-black/10 transition group-hover:bg-black/25">
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-black/65 shadow-md transition group-hover:scale-105 group-hover:bg-red-600">
               <svg viewBox="0 0 24 24" className="ml-0.5 h-4 w-4 fill-white" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
@@ -157,39 +161,6 @@ function ExportSpecsTable() {
           </tbody>
         </table>
       </div>
-    </div>
-  );
-}
-
-function WorkReportTable() {
-  return (
-    <div className="mt-3">
-    <a
-      href={sampleWorkReportUrl}
-      download="Sample Work Report - Ads.csv"
-      className="mb-3 inline-flex items-center gap-1.5 rounded-md border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-foreground hover:border-white/35"
-    >
-      ↓ Download sample work report (CSV)
-    </a>
-    <div className="overflow-x-auto">
-      <table className="w-full border-collapse text-sm">
-        <thead>
-          <tr className="border-b border-white/15">
-            {["Column", "What to record"].map((h) => (
-              <th key={h} className="px-3 py-2 text-left font-medium text-foreground">{h}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {WORK_REPORT.map((r) => (
-            <tr key={r[0]} className="border-b border-white/10">
-              <td className="px-3 py-2 whitespace-nowrap font-medium text-foreground">{r[0]}</td>
-              <td className="px-3 py-2 text-muted-foreground">{r[1]}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
     </div>
   );
 }
@@ -365,15 +336,20 @@ function WorkflowTools() {
               </div>
             </>
           );
-          return t.url ? (
+          // The video sits outside the link — a click-to-play player nested in an
+          // anchor would navigate away instead of starting the video.
+          return (
             <li key={t.name}>
-              <a href={t.url} target={t.url.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="flex gap-3 rounded-lg border border-white/10 bg-card p-4 transition hover:border-white/25 hover:bg-card/80">
-                {inner}
-              </a>
-            </li>
-          ) : (
-            <li key={t.name} className="flex gap-3 rounded-lg border border-white/10 bg-card p-4">
-              {inner}
+              {t.url ? (
+                <a href={t.url} target={t.url.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="flex gap-3 rounded-lg border border-white/10 bg-card p-4 transition hover:border-white/25 hover:bg-card/80">
+                  {inner}
+                </a>
+              ) : (
+                <div className="flex gap-3 rounded-lg border border-white/10 bg-card p-4">
+                  {inner}
+                </div>
+              )}
+              {t.video && <RefVideo id={t.video} title={`${t.name} — tutorial`} />}
             </li>
           );
         })}
@@ -786,7 +762,6 @@ function SessionExtra({ daySlug, session }: { daySlug: string; session: string }
   if (daySlug === "day-1" && session === "Software requirements & setup") return <SoftwareSetup />;
   if (daySlug === "day-1" && session === "Communication flow") return <WorkflowTools />;
   if (daySlug === "day-2" && session === "Delivery formats") return <><DeliveryTable /><ExportSpecsTable /></>;
-  if (daySlug === "day-4" && session === "Work report") return <WorkReportTable />;
   if (daySlug === "day-4" && session === "Incentive structure") return <IncentiveCards />;
   return null;
 }

@@ -21,7 +21,7 @@ const OUTCOMES = [
   "Follow brand guidelines across Be10x, AI-TV, Profit Uni and organic",
   "Use the full tool stack — AI generation, motion, stock and sound — and prompt engineering",
   "Deliver every output in the correct format and aspect ratios",
-  "Work inside their pod and maintain a proper work report",
+  "Work inside their pod and keep every project and deliverable updated on Orbitova",
   "Understand how incentives are earned",
 ];
 

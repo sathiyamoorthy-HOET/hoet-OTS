@@ -55,10 +55,10 @@ function HomePage() {
         </p>
         <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
           {[
-            ["₹400 Cr+", "ARR"],
+            ["₹1000 Cr+", "ARR"],
             ["3 Million+", "Paid Learners"],
-            ["8", "Brands"],
-            ["1200+", "Team Members"],
+            ["7", "Brands"],
+            ["2000+", "Team Members"],
           ].map(([n, l]) => (
             <div key={l} className="rounded-lg border border-white/10 bg-card p-4">
               <div className="text-xl font-semibold">{n}</div>
