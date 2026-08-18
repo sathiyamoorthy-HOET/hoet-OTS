@@ -10,8 +10,10 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TrainingRouteImport } from './routes/training'
+import { Route as StorageOptimizationRouteImport } from './routes/storage-optimization'
 import { Route as EditingGuidelinesRouteImport } from './routes/editing-guidelines'
 import { Route as BrandGuidelinesRouteImport } from './routes/brand-guidelines'
+import { Route as AiCreditsRouteImport } from './routes/ai-credits'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TrainingIndexRouteImport } from './routes/training.index'
 import { Route as EditingGuidelinesIndexRouteImport } from './routes/editing-guidelines.index'
@@ -34,6 +36,11 @@ const TrainingRoute = TrainingRouteImport.update({
   path: '/training',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StorageOptimizationRoute = StorageOptimizationRouteImport.update({
+  id: '/storage-optimization',
+  path: '/storage-optimization',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EditingGuidelinesRoute = EditingGuidelinesRouteImport.update({
   id: '/editing-guidelines',
   path: '/editing-guidelines',
@@ -42,6 +49,11 @@ const EditingGuidelinesRoute = EditingGuidelinesRouteImport.update({
 const BrandGuidelinesRoute = BrandGuidelinesRouteImport.update({
   id: '/brand-guidelines',
   path: '/brand-guidelines',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiCreditsRoute = AiCreditsRouteImport.update({
+  id: '/ai-credits',
+  path: '/ai-credits',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -134,8 +146,10 @@ const TrainingDaySessionRoute = TrainingDaySessionRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-credits': typeof AiCreditsRoute
   '/brand-guidelines': typeof BrandGuidelinesRouteWithChildren
   '/editing-guidelines': typeof EditingGuidelinesRouteWithChildren
+  '/storage-optimization': typeof StorageOptimizationRoute
   '/training': typeof TrainingRouteWithChildren
   '/brand-guidelines/aditya-goenka': typeof BrandGuidelinesAdityaGoenkaRoute
   '/brand-guidelines/aditya-kachave': typeof BrandGuidelinesAdityaKachaveRoute
@@ -155,6 +169,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-credits': typeof AiCreditsRoute
+  '/storage-optimization': typeof StorageOptimizationRoute
   '/brand-guidelines/aditya-goenka': typeof BrandGuidelinesAdityaGoenkaRoute
   '/brand-guidelines/aditya-kachave': typeof BrandGuidelinesAdityaKachaveRoute
   '/brand-guidelines/ai-for-techies': typeof BrandGuidelinesAiForTechiesRoute
@@ -174,8 +190,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai-credits': typeof AiCreditsRoute
   '/brand-guidelines': typeof BrandGuidelinesRouteWithChildren
   '/editing-guidelines': typeof EditingGuidelinesRouteWithChildren
+  '/storage-optimization': typeof StorageOptimizationRoute
   '/training': typeof TrainingRouteWithChildren
   '/brand-guidelines/aditya-goenka': typeof BrandGuidelinesAdityaGoenkaRoute
   '/brand-guidelines/aditya-kachave': typeof BrandGuidelinesAdityaKachaveRoute
@@ -197,8 +215,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ai-credits'
     | '/brand-guidelines'
     | '/editing-guidelines'
+    | '/storage-optimization'
     | '/training'
     | '/brand-guidelines/aditya-goenka'
     | '/brand-guidelines/aditya-kachave'
@@ -218,6 +238,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ai-credits'
+    | '/storage-optimization'
     | '/brand-guidelines/aditya-goenka'
     | '/brand-guidelines/aditya-kachave'
     | '/brand-guidelines/ai-for-techies'
@@ -236,8 +258,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/ai-credits'
     | '/brand-guidelines'
     | '/editing-guidelines'
+    | '/storage-optimization'
     | '/training'
     | '/brand-guidelines/aditya-goenka'
     | '/brand-guidelines/aditya-kachave'
@@ -258,8 +282,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiCreditsRoute: typeof AiCreditsRoute
   BrandGuidelinesRoute: typeof BrandGuidelinesRouteWithChildren
   EditingGuidelinesRoute: typeof EditingGuidelinesRouteWithChildren
+  StorageOptimizationRoute: typeof StorageOptimizationRoute
   TrainingRoute: typeof TrainingRouteWithChildren
 }
 
@@ -270,6 +296,13 @@ declare module '@tanstack/react-router' {
       path: '/training'
       fullPath: '/training'
       preLoaderRoute: typeof TrainingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/storage-optimization': {
+      id: '/storage-optimization'
+      path: '/storage-optimization'
+      fullPath: '/storage-optimization'
+      preLoaderRoute: typeof StorageOptimizationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/editing-guidelines': {
@@ -284,6 +317,13 @@ declare module '@tanstack/react-router' {
       path: '/brand-guidelines'
       fullPath: '/brand-guidelines'
       preLoaderRoute: typeof BrandGuidelinesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-credits': {
+      id: '/ai-credits'
+      path: '/ai-credits'
+      fullPath: '/ai-credits'
+      preLoaderRoute: typeof AiCreditsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -462,8 +502,10 @@ const TrainingRouteWithChildren = TrainingRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiCreditsRoute: AiCreditsRoute,
   BrandGuidelinesRoute: BrandGuidelinesRouteWithChildren,
   EditingGuidelinesRoute: EditingGuidelinesRouteWithChildren,
+  StorageOptimizationRoute: StorageOptimizationRoute,
   TrainingRoute: TrainingRouteWithChildren,
 }
 export const routeTree = rootRouteImport

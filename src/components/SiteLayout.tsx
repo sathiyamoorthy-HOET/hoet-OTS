@@ -1,6 +1,6 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Search, Sun, Moon, Home, GraduationCap, Clapperboard, Palette, type LucideIcon } from "lucide-react";
+import { Search, Sun, Moon, Home, GraduationCap, Clapperboard, Palette, Coins, HardDrive, type LucideIcon } from "lucide-react";
 
 function ThemeToggle({ compact }: { compact?: boolean }) {
   const [light, setLight] = useState(false);
@@ -38,6 +38,8 @@ const NAV: { to: string; label: string; short: string; icon: LucideIcon; exact?:
   { to: "/", label: "Home", short: "Home", icon: Home, exact: true },
   { to: "/training", label: "Onboarding & Training", short: "Training", icon: GraduationCap },
   { to: "/editing-guidelines", label: "Editing Guidelines", short: "Editing", icon: Clapperboard },
+  { to: "/ai-credits", label: "AI Credits", short: "Credits", icon: Coins },
+  { to: "/storage-optimization", label: "Storage SOP", short: "Storage", icon: HardDrive },
   { to: "/brand-guidelines", label: "Brand Guidelines", short: "Brand", icon: Palette },
 ];
 
@@ -163,7 +165,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
       </header>
 
       {/* Mobile bottom tab bar — Slack-style primary navigation */}
-      <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-white/10 bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-6 border-t border-white/10 bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden">
         {NAV.map((n) => {
           const Icon = n.icon;
           return (
@@ -173,9 +175,9 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
               activeOptions={n.exact ? { exact: true } : undefined}
               activeProps={{ className: "text-foreground [&>span:first-child]:bg-white/10" }}
               inactiveProps={{ className: "text-muted-foreground" }}
-              className="flex flex-col items-center gap-1 py-2 text-[11px] font-medium transition-colors"
+              className="flex flex-col items-center gap-1 py-2 text-[10px] font-medium transition-colors"
             >
-              <span className="flex h-7 w-12 items-center justify-center rounded-full transition-colors">
+              <span className="flex h-7 w-10 items-center justify-center rounded-full transition-colors">
                 <Icon className="h-5 w-5" />
               </span>
               {n.short}

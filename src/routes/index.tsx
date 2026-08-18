@@ -17,6 +17,8 @@ export const Route = createFileRoute("/")({
 const PIPELINE = [
   { to: "/training/day-2/deliverable-framework", label: "Deliverable Framework", note: "Pipeline · formats · export specs" },
   { to: "/editing-guidelines", label: "Editing Guidelines", note: "Universal rules · do's & don'ts" },
+  { to: "/ai-credits", label: "AI Credits", note: "Stock vs AI · models · tries · budget" },
+  { to: "/storage-optimization", label: "Storage Optimization SOP", note: "Compress · raw cut · share · Friday cleanup" },
   { to: "/brand-guidelines", label: "Brand Guidelines", note: "Be10x · AI-TV · Profit Uni" },
   { to: "/editing-guidelines", label: "Quality & Consistency", note: "From a 3-second hook to a 12-minute course, every video carries the brand and meets the same standard of quality, clarity and consistency." },
 ];
